@@ -53,15 +53,8 @@ public class MainActivity extends Activity{
         ItemData data = new ItemData("Test regex", "test_regex");
         data.hasSub = false;
         datas.add(data);
-        datas.add(new ItemData("Release resource", "com.huajiao.animation.airplain.AnimateActivity"));
-        datas.add(new ItemData("Test Fresco", "com.huajiao.animation.fresco.FrescoTest"));
-        datas.add(new ItemData("Test Effect", "com.huajiao.animation.core.EffectActivity"));
-        datas.add(new ItemData("Test WebView", "com.huajiao.animation.WebActivity"));
-        datas.add(new ItemData("Test Path", "com.huajiao.animation.path.PathActivity"));
-        datas.add(new ItemData("Test Drag", "com.huajiao.animation.activity.DragActivity"));
-        datas.add(new ItemData("Test Copy and past", "com.huajiao.animation.activity.CopyActivity"));
-        datas.add(new ItemData("Test Partical", "com.huajiao.animation.activity.ParticalActivity"));
-        datas.add(new ItemData("Test KTV", "com.huajiao.animation.activity.KTVActivity"));
+        datas.add(new ItemData("RecycleView demo", "com.tomsky.androiddemo.activity.RecycleActivity"));
+
 
         return datas;
     }
