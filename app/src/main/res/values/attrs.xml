@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="search">
+        <attr name="search_line_color" format="color" />
+        <attr name="search_line_width" format="integer" />
+        <attr name="search_dot_size" format="integer" />
+    </declare-styleable>
+</resources>

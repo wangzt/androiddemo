@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/drawing_cache_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/screenshot_1">
+
+        <com.tomsky.androiddemo.view.ENLoadingView
+            android:id="@+id/view_loading"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="180dp"/>
+        
+        <com.tomsky.androiddemo.view.ENSearchView
+            android:id="@+id/view_search"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            app:search_line_color="#ffffff"
+            app:search_line_width="9"
+            app:search_dot_size="3" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_anim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start anim"/>
+
+    <Button
+        android:id="@+id/btn_capture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/btn_anim"
+        android:layout_marginLeft="10dp"
+        android:text="Capture"/>
+</RelativeLayout>
