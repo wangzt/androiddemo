@@ -19,24 +19,24 @@ public class GifRecorder {
     private boolean DEBUG = true;
     private static final String TAG = "wzt-gif";
 
+    public static final int GIF_MAX_WIDTH = 360;
+
     public static final int CAPTURE_QUEUE_SIZE = 5;
-    public static final int ENCODE_QUEUE_SIZE = 5;
 
     private LinkedBlockingQueue<Frame> captureQueue = new LinkedBlockingQueue<>(CAPTURE_QUEUE_SIZE);
-    private LinkedBlockingQueue<Frame> encodeQueue = new LinkedBlockingQueue<>(ENCODE_QUEUE_SIZE);
 
     private String gifFilePath;
     private int targetWidth, targetHeight;
 
     private EncodeThread encodeThread;
     public GifRecorder() {
-
+        gifFilePath = FileUtils.getCapturePath() +  "capture.gif";
     }
 
     public Bitmap scaleBitmap(Bitmap bmp) {
-        if (bmp.getWidth() > 720) {
-            int width = 720;
-            int height = (int) (720f * bmp.getHeight() / bmp.getWidth());
+        if (bmp.getWidth() > GIF_MAX_WIDTH) {
+            int width = GIF_MAX_WIDTH;
+            int height = (int) (1f * GIF_MAX_WIDTH * bmp.getHeight() / bmp.getWidth());
             return Bitmap.createScaledBitmap(bmp, width, height, true);
         }
         return bmp;
@@ -89,19 +89,20 @@ public class GifRecorder {
         private int count = 0;
         @Override
         public void run() {
-            final File gifFile = new File(FileUtils.getCapturePath(), System.currentTimeMillis() + ".gif");
-            gifFilePath = gifFile.getAbsolutePath();
+//            final File gifFile = new File(FileUtils.getCapturePath(), System.currentTimeMillis() + ".gif");
+//            gifFilePath = gifFile.getAbsolutePath();
+
             try {
-                if (!gifFile.exists()) {
-                    gifFile.createNewFile();
-                }
+//                if (!gifFile.exists()) {
+//                    gifFile.createNewFile();
+//                }
                 gifcodec gifCodec = new gifcodec();
                 gifCodec.init(gifFilePath, targetWidth, targetHeight, 0);
 
                 long ts = 0;
                 while (true) {
                     log(" encodeQueue size =" + captureQueue.size());
-                    if ((count >= 5 || stop) && captureQueue.isEmpty()) {
+                    if ((count >= CAPTURE_QUEUE_SIZE || stop) && captureQueue.isEmpty()) {
                         break;
                     }
 //                    if (gifFile.length() + getFrameSize() > maxFileSize) {
@@ -157,7 +158,7 @@ public class GifRecorder {
         private volatile boolean stop = false;
 
         private void exit() {
-            if (encodeQueue.isEmpty()) {
+            if (captureQueue.isEmpty()) {
                 this.stop = true;
                 this.interrupt();
             } else {

@@ -81,7 +81,7 @@ public class DrawingCacheActivity extends FragmentActivity implements View.OnCli
                                                 .createBitmap(dstWidth, dstHeight, Bitmap.Config.ARGB_8888);
                                         Canvas cv = new Canvas(newbmp);
                                         cv.drawBitmap(bgBmp, 0, 0, null);
-                                        cv.drawBitmap(bmp, 200, 400, null);
+                                        cv.drawBitmap(bmp, 100, 50, null);
                                         // save all clip
                                         cv.save(Canvas.ALL_SAVE_FLAG);// 保存
                                         // store
@@ -150,8 +150,8 @@ public class DrawingCacheActivity extends FragmentActivity implements View.OnCli
                 if (count < MAX_FRAME) {
                     Bitmap bmp = mContainerView.getDrawingCache();
                     if (bmp != null) {
-                        if (bmp.getWidth() > 720) {
-                            scale = 720f / bmp.getWidth();
+                        if (bmp.getWidth() > GifRecorder.GIF_MAX_WIDTH) {
+                            scale = 1f * GifRecorder.GIF_MAX_WIDTH / bmp.getWidth();
                             Bitmap bitmap = gifRecorder.scaleBitmap(bmp);
                             bgBmp = bitmap;
                         } else {
