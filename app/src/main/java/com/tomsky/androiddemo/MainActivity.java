@@ -9,8 +9,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 
+import com.huajiao.utils.Security;
 import com.tomsky.androiddemo.util.StringUtil;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,42 @@ public class MainActivity extends Activity{
             }
         });
 
+        String tsId = "125487166";
+        String guid = "TPqnPSdYXFGH8UP92x9QXw==";
+
+//        String key = getMD5code(tsId).substring(0, 16);
+        String key = tsId;
+
+        String code = Security.decode(guid, key);
+
+        Log.d("wzt-sec", "code:"+code);
+    }
+
+    public static String getMD5code(String string) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(string.getBytes());
+            byte b[] = md.digest();
+
+            int i;
+
+            StringBuffer buf = new StringBuffer("");
+            for (int offset = 0; offset < b.length; offset++) {
+                i = b[offset];
+                if (i < 0)
+                    i += 256;
+                if (i < 16)
+                    buf.append("0");
+                buf.append(Integer.toHexString(i));
+            }
+
+            return buf.toString();
+
+            //          return buf.toString().substring(8,24);
+
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     private List<ItemData> buildDatas() {
@@ -55,6 +93,8 @@ public class MainActivity extends Activity{
         datas.add(data);
         datas.add(new ItemData("RecycleView demo", "com.tomsky.androiddemo.activity.RecycleActivity"));
         datas.add(new ItemData("DrawingCache demo", "com.tomsky.androiddemo.activity.DrawingCacheActivity"));
+        datas.add(new ItemData("DrawingCache demo", "com.tomsky.androiddemo.activity.DrawingCacheActivity"));
+        datas.add(new ItemData("UI demo", "com.tomsky.androiddemo.activity.AndroidUIActivity"));
 
 
         return datas;
