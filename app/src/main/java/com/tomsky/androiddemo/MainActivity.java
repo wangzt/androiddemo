@@ -95,6 +95,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("DrawingCache demo", "com.tomsky.androiddemo.activity.DrawingCacheActivity"));
         datas.add(new ItemData("DrawingCache demo", "com.tomsky.androiddemo.activity.DrawingCacheActivity"));
         datas.add(new ItemData("UI demo", "com.tomsky.androiddemo.activity.AndroidUIActivity"));
+        datas.add(new ItemData("Rotation demo", "com.tomsky.androiddemo.activity.RotationActivity"));
 
 
         return datas;
