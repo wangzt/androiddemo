@@ -23,4 +23,13 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:text="Landscape"/>
+
+
+    <com.tomsky.androiddemo.view.GiftButton
+        android:id="@+id/gift_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="#ff0000"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

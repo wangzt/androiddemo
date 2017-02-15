@@ -3,6 +3,8 @@ package com.tomsky.androiddemo.util;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
+import com.tomsky.androiddemo.BaseApplication;
+
 /**
  * @author Jungly
  * jungly.ik@gmail.com
@@ -10,13 +12,13 @@ import android.util.DisplayMetrics;
  */
 public class UIUtils {
 
-    public static int px2sp(Context context, float pxValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+    public static int px2sp(float pxValue) {
+        final float fontScale = BaseApplication.getContext().getResources().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / fontScale + 0.5f);
     }
 
-    public static int dp2px(Context context, int dp) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+    public static int dp2px(int dp) {
+        DisplayMetrics displayMetrics = BaseApplication.getContext().getResources().getDisplayMetrics();
         return (int) ((dp * displayMetrics.density) + 0.5);
     }
 

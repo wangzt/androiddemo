@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.util.LogUtils;
+import com.tomsky.androiddemo.view.GiftButton;
 
 /**
  * Created by j-wangzhitao on 17-2-14.
@@ -20,6 +21,7 @@ public class RotationActivity extends FragmentActivity implements View.OnClickLi
     private static final String TAG = "rotation";
 
     private TextView mIndicatorTv;
+    private GiftButton mGiftBtn;
 
     private int currentOrientation = -1;
 
@@ -45,6 +47,8 @@ public class RotationActivity extends FragmentActivity implements View.OnClickLi
 
     private void initViews() {
         mIndicatorTv = (TextView) findViewById(R.id.indicator_tv);
+        mGiftBtn = (GiftButton) findViewById(R.id.gift_btn);
+
         findViewById(R.id.portrait_btn).setOnClickListener(this);
         findViewById(R.id.landscape_btn).setOnClickListener(this);
         mIndicatorTv.setText("orientation:"+currentOrientation);

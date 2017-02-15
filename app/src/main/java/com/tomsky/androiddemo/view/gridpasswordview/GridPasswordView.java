@@ -97,10 +97,10 @@ public class GridPasswordView extends LinearLayout implements PasswordView {
             mTextColor = ColorStateList.valueOf(getResources().getColor(android.R.color.primary_text_light));
         int textSize = ta.getDimensionPixelSize(R.styleable.gridPasswordView_gpvTextSize, -1);
         if (textSize != -1) {
-            this.mTextSize = UIUtils.px2sp(context, textSize);
+            this.mTextSize = UIUtils.px2sp(textSize);
         }
 
-        mLineWidth = (int) ta.getDimension(R.styleable.gridPasswordView_gpvLineWidth, UIUtils.dp2px(getContext(), 1));
+        mLineWidth = (int) ta.getDimension(R.styleable.gridPasswordView_gpvLineWidth, UIUtils.dp2px(1));
         mLineColor = ta.getColor(R.styleable.gridPasswordView_gpvLineColor, DEFAULT_LINECOLOR);
         mGridColor = ta.getColor(R.styleable.gridPasswordView_gpvGridColor, DEFAULT_GRIDCOLOR);
         mLineDrawable = ta.getDrawable(R.styleable.gridPasswordView_gpvLineColor);
