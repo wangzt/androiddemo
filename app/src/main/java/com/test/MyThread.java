@@ -1,5 +1,7 @@
 package com.test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.FutureTask;
 
 /**
@@ -46,5 +48,25 @@ public class MyThread {
 //            e.printStackTrace();
 //        }
 
+        List<String>  listA = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            listA.add(""+i);
+        }
+
+        List<String>  listB = new ArrayList<>();
+        listB.addAll(listA);
+        System.out.print("before A:\n");
+        for (String item: listA) {
+            System.out.print(item+"\n");
+        }
+        System.out.print("after A:\n");
+        listB.remove(1);
+        for (String item: listA) {
+            System.out.print(item+"\n");
+        }
+        System.out.print("after B:\n");
+        for (String item: listB) {
+            System.out.print(item+"\n");
+        }
     }
 }

@@ -2,12 +2,18 @@ package com.tomsky.androiddemo.activity;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.OrientationEventListener;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.util.LogUtils;
@@ -43,6 +49,8 @@ public class RotationActivity extends FragmentActivity implements View.OnClickLi
 
         initViews();
         startListener();
+
+        registerRotationObserver();
     }
 
     private void initViews() {
@@ -106,6 +114,7 @@ public class RotationActivity extends FragmentActivity implements View.OnClickLi
     protected void onDestroy() {
         super.onDestroy();
         stopListener();
+        unregisterRotationObserver();
     }
 
     /**
@@ -117,7 +126,7 @@ public class RotationActivity extends FragmentActivity implements View.OnClickLi
             public void onOrientationChanged(int rotation) {
 //                LogUtils.d(TAG, "rotation:"+rotation+", mClick:"+mClick+", mIsLand:"+mIsLand+", mClickedLand:"+mClickLand+", mClickedPort:"+mClickPort);
                 // 设置竖屏
-                if (((rotation >= 0) && (rotation <= 30)) || (rotation >= 330)) {
+                if (((rotation >= 0) && (rotation <= 45)) || (rotation >= 315)) {
                     if (mClick) {
                         if (mIsLand && !mClickLand) {
                             return;
@@ -129,13 +138,14 @@ public class RotationActivity extends FragmentActivity implements View.OnClickLi
                     } else {
                         if (mIsLand) {
                             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
                             mIsLand = false;
                             mClick = false;
                         }
                     }
                 }
                 // 设置横屏
-                else if (((rotation >= 230) && (rotation <= 310))) {
+                else if (((rotation >= 225) && (rotation <= 315))) {
                     if (mClick) {
                         if (!mIsLand && !mClickPort) {
                             return;
@@ -147,6 +157,25 @@ public class RotationActivity extends FragmentActivity implements View.OnClickLi
                     } else {
                         if (!mIsLand) {
                             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                            mIsLand = true;
+                            mClick = false;
+                        }
+                    }
+                }
+                // 设置逆向横屏
+                else if (((rotation >= 45) && (rotation <= 135))) {
+                    if (mClick) {
+                        if (!mIsLand && !mClickPort) {
+                            return;
+                        } else {
+                            mClickLand = true;
+                            mClick = false;
+                            mIsLand = true;
+                        }
+                    } else {
+                        if (!mIsLand) {
+                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
                             mIsLand = true;
                             mClick = false;
                         }
@@ -162,4 +191,25 @@ public class RotationActivity extends FragmentActivity implements View.OnClickLi
             mOrientationListener.disable();
         }
     }
+
+    private void registerRotationObserver() {
+        getContentResolver().registerContentObserver(Settings.System.getUriFor
+                        (Settings.System.ACCELEROMETER_ROTATION),
+                true, rotationObserver);
+    }
+
+    private void unregisterRotationObserver() {
+        getContentResolver().unregisterContentObserver(rotationObserver);
+    }
+
+    private ContentObserver rotationObserver = new ContentObserver(null) {
+        public static final String TAG = "ContentObserver";
+
+        @Override
+        public void onChange(boolean selfChange) {
+            boolean isOpen = android.provider.Settings.System.getInt(getContentResolver(),
+                    Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
+            Log.e(TAG,"call back , selfChange:"+selfChange+", rotate open:"+isOpen);
+        }
+    };
 }
