@@ -48,15 +48,15 @@ public class MainActivity extends Activity{
             }
         });
 
-        String tsId = "125487166";
-        String guid = "TPqnPSdYXFGH8UP92x9QXw==";
+//        String tsId = "125487166";
+//        String guid = "TPqnPSdYXFGH8UP92x9QXw==";
 
 //        String key = getMD5code(tsId).substring(0, 16);
-        String key = tsId;
-
-        String code = Security.decode(guid, key);
-
-        Log.d("wzt-sec", "code:"+code);
+//        String key = tsId;
+//
+//        String code = Security.decode(guid, key);
+//
+//        Log.d("wzt-sec", "code:"+code);
     }
 
     public static String getMD5code(String string) {
@@ -97,6 +97,8 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("UI demo", "com.tomsky.androiddemo.activity.AndroidUIActivity"));
         datas.add(new ItemData("Rotation demo", "com.tomsky.androiddemo.activity.RotationActivity"));
         datas.add(new ItemData("Camera demo", "com.tomsky.androiddemo.activity.CameraActivity"));
+        datas.add(new ItemData("Bili danmuku demo", "com.tomsky.androiddemo.activity.BiliDanmukuActivity"));
+        datas.add(new ItemData("Live danmuku demo", "com.tomsky.androiddemo.activity.LiveDanmuActivity"));
 
         return datas;
     }
