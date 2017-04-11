@@ -1,1 +1,1 @@
-include ':app', ':security', ':danmaku'
+include ':app', ':danmaku'

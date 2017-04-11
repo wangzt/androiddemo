@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 
-import com.huajiao.utils.Security;
 import com.tomsky.androiddemo.util.StringUtil;
 
 import java.security.MessageDigest;
