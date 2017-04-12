@@ -289,7 +289,7 @@ public class Camera2BasicFragment extends Fragment
     /**
      * A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
      */
-    private CameraCaptureSession.CaptureCallback mCaptureCallback
+    private CameraCaptureSession.CaptureCallback    mCaptureCallback
             = new CameraCaptureSession.CaptureCallback() {
 
         private void process(CaptureResult result) {
@@ -434,7 +434,7 @@ public class Camera2BasicFragment extends Fragment
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         view.findViewById(R.id.picture).setOnClickListener(this);
-        view.findViewById(R.id.info).setOnClickListener(this);
+        view.findViewById(R.id.flash).setOnClickListener(this);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
     }
 
@@ -483,7 +483,7 @@ public class Camera2BasicFragment extends Fragment
 
                 // We don't use a front facing camera in this sample.
                 Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
-                if (facing != null && facing == CameraCharacteristics.LENS_FACING_BACK) {
+                if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
                     continue;
                 }
 
@@ -691,7 +691,7 @@ public class Camera2BasicFragment extends Fragment
                                 mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
                                         CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
                                 // Flash is automatically enabled when necessary.
-                                setAutoFlash(mPreviewRequestBuilder);
+//                                setAutoFlash(mPreviewRequestBuilder);
 
                                 // Finally, we start displaying the camera preview.
                                 mPreviewRequest = mPreviewRequestBuilder.build();
@@ -883,16 +883,36 @@ public class Camera2BasicFragment extends Fragment
                 takePicture();
                 break;
             }
-            case R.id.info: {
-                Activity activity = getActivity();
-                if (null != activity) {
-                    new AlertDialog.Builder(activity)
-                            .setMessage("Picture")
-                            .setPositiveButton(android.R.string.ok, null)
-                            .show();
-                }
+            case R.id.flash: {
+                toggleFlash();
                 break;
             }
+        }
+    }
+
+    boolean isFlashOpen = false;
+    private void toggleFlash() {
+        if (!mFlashSupported)  {
+            isFlashOpen = false;
+            return;
+        }
+        try {
+            if (isFlashOpen) {
+                mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
+                        CameraMetadata.FLASH_MODE_OFF);
+            } else {
+                mPreviewRequestBuilder.set(CaptureRequest.FLASH_MODE,
+                        CameraMetadata.FLASH_MODE_TORCH);
+            }
+            mPreviewRequest = mPreviewRequestBuilder.build();
+            // After this, the camera will go back to the normal state of preview.
+            mState = STATE_PREVIEW;
+            mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback,
+                    mBackgroundHandler);
+
+            isFlashOpen = !isFlashOpen;
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
         }
     }
 
