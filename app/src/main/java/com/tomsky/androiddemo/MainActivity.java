@@ -92,7 +92,7 @@ public class MainActivity extends Activity{
         datas.add(data);
         datas.add(new ItemData("RecycleView demo", "com.tomsky.androiddemo.activity.RecycleActivity"));
         datas.add(new ItemData("DrawingCache demo", "com.tomsky.androiddemo.activity.DrawingCacheActivity"));
-        datas.add(new ItemData("DrawingCache demo", "com.tomsky.androiddemo.activity.DrawingCacheActivity"));
+        datas.add(new ItemData("Camera2 demo", "com.tomsky.androiddemo.activity.Camera2Activity"));
         datas.add(new ItemData("UI demo", "com.tomsky.androiddemo.activity.AndroidUIActivity"));
         datas.add(new ItemData("Rotation demo", "com.tomsky.androiddemo.activity.RotationActivity"));
         datas.add(new ItemData("Camera demo", "com.tomsky.androiddemo.activity.CameraActivity"));

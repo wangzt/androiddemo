@@ -12,4 +12,5 @@
 
     <string name="release">release</string>
     <string name="rotate">旋转屏幕</string>
+    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
 </resources>
