@@ -98,6 +98,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("Camera demo", "com.tomsky.androiddemo.activity.CameraActivity"));
         datas.add(new ItemData("Bili danmuku demo", "com.tomsky.androiddemo.activity.BiliDanmukuActivity"));
         datas.add(new ItemData("Live danmuku demo", "com.tomsky.androiddemo.activity.LiveDanmuActivity"));
+        datas.add(new ItemData("Lucky pan demo", "com.tomsky.androiddemo.activity.LuckyPanActivity"));
 
         return datas;
     }
