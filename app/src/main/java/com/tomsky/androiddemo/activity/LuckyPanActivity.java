@@ -45,4 +45,12 @@ public class LuckyPanActivity extends Activity {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mLuckyPanView.isPlay()) {
+            mLuckyPanView.onDestroy();
+        }
+    }
 }
