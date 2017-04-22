@@ -26,4 +26,19 @@
             android:layout_width="30dp"
             android:layout_height="30dp"/>
     </LinearLayout>
+
+    <com.tomsky.androiddemo.view.ClipView
+        android:id="@+id/my_clip_view"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:src="#ff0000"/>
+
+    <Button
+        android:id="@+id/btn_start_anim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Start"
+        android:layout_below="@id/my_clip_view"/>
 </RelativeLayout>
