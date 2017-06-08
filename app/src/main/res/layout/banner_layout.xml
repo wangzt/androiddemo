@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/banner_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"/>
+
+    <com.tomsky.androiddemo.view.banner.BannerIndicator
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/banner_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/banner_view_pager"
+        android:layout_marginBottom="5dp"
+        app:cycleRadius="3dp"
+        app:highlightScale="1.0"
+        app:count="2"
+        app:position="0"
+        app:cycleGap="7dp"/>
+</merge>
