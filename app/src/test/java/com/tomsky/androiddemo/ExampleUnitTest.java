@@ -2,6 +2,8 @@ package com.tomsky.androiddemo;
 
 import org.junit.Test;
 
+import master.flame.danmaku.danmaku.util.SystemClock;
+
 import static org.junit.Assert.*;
 
 /**
@@ -12,6 +14,12 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
+        System.out.println("------addition_isCorrect called------");
         assertEquals(4, 2 + 2);
+    }
+
+    @Test
+    public void method2() {
+        System.out.println("---------------method2 called---------------");
     }
 }
