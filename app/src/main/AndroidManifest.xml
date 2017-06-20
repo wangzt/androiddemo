@@ -62,6 +62,9 @@
 
         <activity android:name=".activity.BannerActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.TrashActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
