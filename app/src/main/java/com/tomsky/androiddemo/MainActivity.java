@@ -101,6 +101,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("Lucky pan demo", "com.tomsky.androiddemo.activity.LuckyPanActivity"));
         datas.add(new ItemData("Banner demo", "com.tomsky.androiddemo.activity.BannerActivity"));
         datas.add(new ItemData("DND demo", "com.tomsky.androiddemo.activity.TrashActivity"));
+        datas.add(new ItemData("Sticker demo", "com.tomsky.androiddemo.activity.StickerActivity"));
 
         return datas;
     }
