@@ -9,24 +9,22 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 
 /**
- * Created by j-wangzhitao on 17-6-22.
+ * Created by j-wangzhitao on 17-6-23.
  */
 
-public class StickerItem {
+public abstract class Sticker {
+
     public static final int TYPE_IMAGE = 0;
     public static final int TYPE_TEXT = 1;
-    private int mType = TYPE_IMAGE;
+
+    protected int mType = TYPE_IMAGE;
 
     protected RectF mRect = new RectF();
     protected PointF mStartPoint = new PointF(); // move操作的起始点
 
     protected Paint mLinePaint = new Paint();
 
-    public StickerItem() {
-        init();
-    }
-
-    public StickerItem(int type) {
+    public Sticker(int type) {
         this.mType = type;
         init();
     }
@@ -86,12 +84,7 @@ public class StickerItem {
         return mRect.centerY();
     }
 
-    public void onDraw(Canvas canvas) {
-        // do nothing
-        canvas.drawRect(mRect, mLinePaint);
-    }
+    public abstract void onDraw(Canvas canvas);
 
-    public Bitmap capture() {
-        return null;
-    }
+    public abstract Bitmap capture();
 }

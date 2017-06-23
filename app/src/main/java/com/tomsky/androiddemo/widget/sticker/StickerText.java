@@ -11,12 +11,12 @@ import com.tomsky.androiddemo.util.UIUtils;
  * Created by j-wangzhitao on 17-6-22.
  */
 
-public class StickerTextItem extends StickerItem {
+public class StickerText extends Sticker {
 
     private Paint mTextPaint = new Paint();
 
     private float mTextHeight;
-    public StickerTextItem() {
+    public StickerText() {
         super(TYPE_TEXT);
         int textSize = UIUtils.dp2px(18);
         mTextPaint.setColor(Color.RED);
@@ -27,7 +27,7 @@ public class StickerTextItem extends StickerItem {
 
     @Override
     public void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+        canvas.drawRect(mRect, mLinePaint);
         canvas.drawText("我是文字Ag", mRect.centerX(), mRect.centerY() + mTextHeight, mTextPaint);
     }
 

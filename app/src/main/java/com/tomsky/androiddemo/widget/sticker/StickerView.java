@@ -20,9 +20,9 @@ import java.util.List;
 
 public class StickerView extends View {
 
-    private List<StickerItem> mItems = new ArrayList<>();
+    private List<Sticker> mItems = new ArrayList<>();
 
-    private StickerItem mCurrentItem;
+    private Sticker mCurrentItem;
 
     private RectF mDeleteRect = new RectF();
 
@@ -115,7 +115,7 @@ public class StickerView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        for (StickerItem item: mItems) {
+        for (Sticker item: mItems) {
             item.onDraw(canvas);
         }
     }
@@ -126,7 +126,7 @@ public class StickerView extends View {
         boolean canTouch = false;
         int size = mItems.size();
         if (size > 0) {
-            StickerItem item = null;
+            Sticker item = null;
             for (int i = size - 1; i > -1; i--) {
                 item = mItems.get(i);
                 if (item != null && item.isPointInRect(x, y)) {
@@ -140,24 +140,24 @@ public class StickerView extends View {
         return canTouch;
     }
 
-    public void addItem(StickerItem item) {
+    public void addItem(Sticker item) {
         int width = UIUtils.dp2px(150);
         int height = UIUtils.dp2px(80);
         item.setRect(0,0,width, height);
 
         mItems.add(item);
-//        if (item.getType() == StickerItem.TYPE_TEXT) {
+//        if (item.getType() == StickerImage.TYPE_TEXT) {
             postInvalidate();
 //        }
     }
 
-    private void deleteItem(StickerItem item) {
+    private void deleteItem(Sticker item) {
         mItems.remove(item);
     }
 
     public Bitmap captureItem(int i) {
         if (i > -1 && i < mItems.size()) {
-            StickerItem item = mItems.get(i);
+            Sticker item = mItems.get(i);
             return item.capture();
         }
         return null;
@@ -165,7 +165,7 @@ public class StickerView extends View {
 
     public interface StickerDeleteListener {
         void changeDeleteState(boolean delete);
-        void onDelete(StickerItem item);
+        void onDelete(Sticker item);
     }
 
 }

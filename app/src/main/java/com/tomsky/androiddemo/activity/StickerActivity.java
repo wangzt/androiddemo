@@ -8,8 +8,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.tomsky.androiddemo.R;
-import com.tomsky.androiddemo.widget.sticker.StickerItem;
-import com.tomsky.androiddemo.widget.sticker.StickerTextItem;
+import com.tomsky.androiddemo.widget.sticker.Sticker;
+import com.tomsky.androiddemo.widget.sticker.StickerImage;
+import com.tomsky.androiddemo.widget.sticker.StickerText;
 import com.tomsky.androiddemo.widget.sticker.StickerView;
 
 /**
@@ -38,7 +39,7 @@ public class StickerActivity extends Activity implements StickerView.StickerDele
         findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StickerTextItem item = new StickerTextItem();
+                StickerText item = new StickerText();
                 mStickerView.addItem(item);
             }
         });
@@ -71,7 +72,7 @@ public class StickerActivity extends Activity implements StickerView.StickerDele
     }
 
     @Override
-    public void onDelete(StickerItem item) {
+    public void onDelete(Sticker item) {
         if (mDeleteContainer != null) {
             mDeleteContainer.setSelected(false);
         }
