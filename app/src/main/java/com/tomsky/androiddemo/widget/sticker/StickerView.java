@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.tomsky.androiddemo.util.LogUtils;
 import com.tomsky.androiddemo.util.UIUtils;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class StickerView extends View {
     private RectF mDeleteRect = new RectF();
 
     private boolean mForDelete = false;
+    private boolean mShowDelete = false;
 
     private StickerDeleteListener mDeleteListener;
 
@@ -79,6 +81,10 @@ public class StickerView extends View {
                         }
                         mForDelete = false;
                     }
+                    if (!mShowDelete && mCurrentItem.isMove(x, y)) {
+                        mShowDelete = true;
+                        LogUtils.d("wzt-stick", "---------is move");
+                    }
                     invalidate();
                     handled = true;
                 }
@@ -90,11 +96,15 @@ public class StickerView extends View {
                 }
                 mCurrentItem = null;
                 mForDelete = false;
+                mShowDelete = false;
                 invalidate();
                 break;
 
             case MotionEvent.ACTION_UP:
                 if (mCurrentItem != null) {
+                    if (mCurrentItem.isClick(x, y)) {
+                        LogUtils.d("wzt-stick", "---------is click");
+                    }
                     if (mDeleteRect.contains(mCurrentItem.centerX(), mCurrentItem.centerY())) {
                         deleteItem(mCurrentItem);
                         // delete
@@ -106,6 +116,7 @@ public class StickerView extends View {
                 }
                 mCurrentItem = null;
                 mForDelete = false;
+                mShowDelete = false;
                 invalidate();
                 break;
         }

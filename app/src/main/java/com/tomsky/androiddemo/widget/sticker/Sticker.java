@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
@@ -21,6 +22,7 @@ public abstract class Sticker {
 
     protected RectF mRect = new RectF();
     protected PointF mStartPoint = new PointF(); // move操作的起始点
+    protected PointF mDownPoint = new PointF(); // 点击操作的起始点
 
     protected Paint mLinePaint = new Paint();
 
@@ -52,6 +54,7 @@ public abstract class Sticker {
 
     public void onDown(float x, float y) {
         mStartPoint.set(x, y);
+        mDownPoint.set(x, y);
     }
 
     public void onMove(float toX, float toY, float width, float height) {
@@ -82,6 +85,24 @@ public abstract class Sticker {
 
     public float centerY() {
         return mRect.centerY();
+    }
+
+    public boolean isClick(float x, float y) {
+        float dx = x - mDownPoint.x;
+        float dy = y - mDownPoint.y;
+        if (Math.sqrt(dx*dx + dy*dy) < 20) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isMove(float x, float y) {
+        float dx = x - mDownPoint.x;
+        float dy = y - mDownPoint.y;
+        if (Math.sqrt(dx*dx + dy*dy) > 30) {
+            return true;
+        }
+        return false;
     }
 
     public abstract void onDraw(Canvas canvas);
