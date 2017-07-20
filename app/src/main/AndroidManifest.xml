@@ -68,6 +68,9 @@
 
         <activity android:name=".activity.StickerActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.OpenGLActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
