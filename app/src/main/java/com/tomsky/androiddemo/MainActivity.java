@@ -103,6 +103,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("DND demo", "com.tomsky.androiddemo.activity.TrashActivity"));
         datas.add(new ItemData("Sticker demo", "com.tomsky.androiddemo.activity.StickerActivity"));
         datas.add(new ItemData("OpenGL demo", "com.tomsky.androiddemo.activity.OpenGLActivity"));
+        datas.add(new ItemData("Abstract Parcel demo", "com.tomsky.androiddemo.activity.MutiCreaterActivity"));
 
         return datas;
     }

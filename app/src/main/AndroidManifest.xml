@@ -71,6 +71,12 @@
 
         <activity android:name=".activity.OpenGLActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.MutiCreaterActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.CreaterActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
