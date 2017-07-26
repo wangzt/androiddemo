@@ -17,7 +17,7 @@ public class BeanB extends BaseBean {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(TYPE_B);
+        dest.writeInt(type);
         super.writeToParcel(dest, flags);
         dest.writeByte(this.valB ? (byte) 1 : (byte) 0);
         dest.writeString(this.pB);
@@ -28,8 +28,9 @@ public class BeanB extends BaseBean {
         beanStr = "BStr";
     }
 
-    protected BeanB(Parcel in) {
+    protected BeanB(Parcel in, int type) {
         super(in);
+        this.type = type;
         this.valB = in.readByte() != 0;
         this.pB = in.readString();
     }
@@ -37,8 +38,7 @@ public class BeanB extends BaseBean {
     public static final Creator<BeanB> CREATOR = new Creator<BeanB>() {
         @Override
         public BeanB createFromParcel(Parcel source) {
-            source.readInt();
-            return new BeanB(source);
+            return new BeanB(source, source.readInt());
         }
 
         @Override
@@ -50,6 +50,7 @@ public class BeanB extends BaseBean {
     @Override
     public String toString() {
         return "BeanB{" +
+                "type=" + type +
                 "valB=" + valB +
                 ", pB='" + pB + '\'' +
                 ", beanStr=" + beanStr +

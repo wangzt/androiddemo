@@ -28,9 +28,9 @@ public class BeanA extends BaseBean {
         beanStr = "A_Str";
     }
 
-    protected BeanA(Parcel in) {
+    protected BeanA(Parcel in, int type) {
         super(in);
-        this.type = TYPE_A;
+        this.type = type;
         this.valA = in.readString();
         this.priceA = in.readInt();
     }
@@ -38,8 +38,7 @@ public class BeanA extends BaseBean {
     public static final Creator<BeanA> CREATOR = new Creator<BeanA>() {
         @Override
         public BeanA createFromParcel(Parcel source) {
-            source.readInt();
-            return new BeanA(source);
+            return new BeanA(source, source.readInt());
         }
 
         @Override
@@ -51,6 +50,7 @@ public class BeanA extends BaseBean {
     @Override
     public String toString() {
         return "BeanA{" +
+                "type='" + type + '\'' +
                 "valA='" + valA + '\'' +
                 ", priceA=" + priceA +
                 ", beanStr=" + beanStr +

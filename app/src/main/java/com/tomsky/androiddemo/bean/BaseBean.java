@@ -48,11 +48,11 @@ public abstract class BaseBean implements Parcelable {
         int type = in.readInt();
         switch (type) {
             case TYPE_A:
-                return new BeanA(in);
+                return new BeanA(in, type);
             case TYPE_B:
-                return new BeanB(in);
+                return new BeanB(in, type);
             case TYPE_C:
-                return new BeanC(in);
+                return new BeanC(in, type);
         }
         return null;
     }
