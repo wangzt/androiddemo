@@ -34,17 +34,18 @@ public class BeanB extends BaseBean {
         this.pB = in.readString();
     }
 
-//    public static final Creator<BeanB> CREATOR = new Creator<BeanB>() {
-//        @Override
-//        public BeanB createFromParcel(Parcel source) {
-//            return new BeanB(source);
-//        }
-//
-//        @Override
-//        public BeanB[] newArray(int size) {
-//            return new BeanB[size];
-//        }
-//    };
+    public static final Creator<BeanB> CREATOR = new Creator<BeanB>() {
+        @Override
+        public BeanB createFromParcel(Parcel source) {
+            source.readInt();
+            return new BeanB(source);
+        }
+
+        @Override
+        public BeanB[] newArray(int size) {
+            return new BeanB[size];
+        }
+    };
 
     @Override
     public String toString() {

@@ -57,9 +57,14 @@ public class MutiCreaterActivity extends Activity {
         BeanList beanList = new BeanList();
         beanList.beans = beans;
 
+        BeanA singleA = new BeanA();
+        singleA.valA = "singleA";
+        singleA.priceA = 200;
+
         Intent intent = new Intent();
         intent.setClass(this, CreaterActivity.class);
         intent.putExtra("my_list", beanList);
+        intent.putExtra("single_a", singleA);
         startActivity(intent);
     }
 

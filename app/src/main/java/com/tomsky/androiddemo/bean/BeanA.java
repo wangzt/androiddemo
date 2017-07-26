@@ -35,17 +35,18 @@ public class BeanA extends BaseBean {
         this.priceA = in.readInt();
     }
 
-//    public static final Creator<BeanA> CREATOR = new Creator<BeanA>() {
-//        @Override
-//        public BeanA createFromParcel(Parcel source) {
-//            return new BeanA(source);
-//        }
-//
-//        @Override
-//        public BeanA[] newArray(int size) {
-//            return new BeanA[size];
-//        }
-//    };
+    public static final Creator<BeanA> CREATOR = new Creator<BeanA>() {
+        @Override
+        public BeanA createFromParcel(Parcel source) {
+            source.readInt();
+            return new BeanA(source);
+        }
+
+        @Override
+        public BeanA[] newArray(int size) {
+            return new BeanA[size];
+        }
+    };
 
     @Override
     public String toString() {

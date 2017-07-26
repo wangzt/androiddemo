@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.bean.BaseBean;
+import com.tomsky.androiddemo.bean.BeanA;
 import com.tomsky.androiddemo.bean.BeanList;
 import com.tomsky.androiddemo.util.LogUtils;
 
@@ -28,6 +29,9 @@ public class CreaterActivity extends Activity {
                     LogUtils.d("wzt-bean", "=="+bean.toString());
                 }
             }
+
+            BeanA singleA = intent.getParcelableExtra("single_a");
+            LogUtils.d("wzt-bean", "--------"+singleA);
         }
     }
 }
