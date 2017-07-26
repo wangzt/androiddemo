@@ -12,6 +12,7 @@ import com.tomsky.androiddemo.bean.BeanA;
 import com.tomsky.androiddemo.bean.BeanB;
 import com.tomsky.androiddemo.bean.BeanC;
 import com.tomsky.androiddemo.bean.BeanList;
+import com.tomsky.androiddemo.bean.WraperBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,10 +62,18 @@ public class MutiCreaterActivity extends Activity {
         singleA.valA = "singleA";
         singleA.priceA = 200;
 
+        WraperBean wraperBean = new WraperBean();
+        wraperBean.name = "MyWraper";
+        BeanB innerB = new BeanB();
+        innerB.valB = false;
+        innerB.pB = "innerB";
+        wraperBean.baseBean = innerB;
+
         Intent intent = new Intent();
         intent.setClass(this, CreaterActivity.class);
         intent.putExtra("my_list", beanList);
         intent.putExtra("single_a", singleA);
+        intent.putExtra("wraper_bean", wraperBean);
         startActivity(intent);
     }
 
