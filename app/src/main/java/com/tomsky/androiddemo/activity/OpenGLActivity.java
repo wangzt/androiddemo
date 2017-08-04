@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.tomsky.androiddemo.R;
-import com.tomsky.androiddemo.view.opengl.OpenGLRender10;
 
 /**
  * Created by j-wangzhitao on 17-7-20.
@@ -29,8 +28,6 @@ public class OpenGLActivity extends Activity {
 
     private void initViews() {
         mGLSurfaceView = (GLSurfaceView) findViewById(R.id.gl_surface_view);
-        OpenGLRender10 render10 = new OpenGLRender10();
-        mGLSurfaceView.setRenderer(render10);
     }
 
 
