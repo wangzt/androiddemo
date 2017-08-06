@@ -10,6 +10,7 @@ import java.nio.FloatBuffer;
  * Created by j-wangzhitao on 17-8-4.
  */
 
+
 public class SixShape {
     private FloatBuffer mVertexBuffer;
     private FloatBuffer mColorBuffer;
@@ -58,13 +59,25 @@ public class SixShape {
         mColorBuffer.put(colorArray);
         mColorBuffer.position(0);
 
-        int vertexShader = loaderShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-        int fragmentShader = loaderShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
+        /**
+         *
+         * 着色器源代码被编译成一个目标形式（类似obj文件），编译之后，着色器对象可以连接到一个程序对象，程序对象可以连接多个着色器对象。
+         * 获得连接后的着色器对象的过程：
+         * 1、创建一个顶点着色器和一个片元着色器
+         * 2、将源代码连接到每个着色器对象
+         * 3、编译着色器对象
+         * 4、创建一个程序对象
+         * 5、将编译后的着色器对象连接到程序对象
+         * 6、连接程序对象
+         */
 
-        mProgram = GLES20.glCreateProgram();
-        GLES20.glAttachShader(mProgram, vertexShader);
-        GLES20.glAttachShader(mProgram, fragmentShader);
-        GLES20.glLinkProgram(mProgram);
+        int vertexShader = loaderShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode); // 顶点着色器
+        int fragmentShader = loaderShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode); // 片元着色器s
+
+        mProgram = GLES20.glCreateProgram(); // 创建一个程序对象
+        GLES20.glAttachShader(mProgram, vertexShader); // 将顶点着色器对象连接到程序对象
+        GLES20.glAttachShader(mProgram, fragmentShader); // 将片元着色器对象连接到程序对象
+        GLES20.glLinkProgram(mProgram); // 连接程序对象
 
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "aPosition");
         mColorHandle = GLES20.glGetAttribLocation(mProgram, "aColor");
@@ -86,9 +99,9 @@ public class SixShape {
     }
 
     private int loaderShader(int type, String shaderCode) {
-        int shader = GLES20.glCreateShader(type);
-        GLES20.glShaderSource(shader, shaderCode);
-        GLES20.glCompileShader(shader);
+        int shader = GLES20.glCreateShader(type); // 创建一个着色器
+        GLES20.glShaderSource(shader, shaderCode); // 将源代码连接到着色器对象
+        GLES20.glCompileShader(shader); // 编译着色器对象
         return shader;
     }
 
