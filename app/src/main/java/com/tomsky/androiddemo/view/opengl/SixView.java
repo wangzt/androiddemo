@@ -49,7 +49,7 @@ public class SixView extends GLSurfaceView {
 
         @Override
         public void onSurfaceChanged(GL10 gl, int width, int height) {
-            GLES20.glViewport(0, 0, width, height);
+            GLES20.glViewport(0, 0, width, height); // 设置视口，View左下角为(0,0)
             if (width < height) {
                 float ratio= (float) height / width;
                 // 设置正交投影
@@ -60,7 +60,7 @@ public class SixView extends GLSurfaceView {
                 Matrix.orthoM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 0, 5);
             }
             // 设置视图矩阵
-            Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 2,  0, 0, 0, 0, 1, 0);
+            Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 0,  0, 0, 1, 0, 1, 0);
         }
 
         @Override

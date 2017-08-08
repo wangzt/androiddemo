@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <com.tomsky.androiddemo.view.opengl.SixView
+    <com.tomsky.androiddemo.view.opengl.SquareView
         android:id="@+id/gl_surface_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
