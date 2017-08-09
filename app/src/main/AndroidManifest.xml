@@ -77,6 +77,10 @@
 
         <activity android:name=".activity.CreaterActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.AppbarActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme"/>
     </application>
 
 </manifest>
