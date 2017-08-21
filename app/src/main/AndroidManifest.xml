@@ -81,6 +81,11 @@
         <activity android:name=".activity.AppbarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"/>
+
+        <activity android:name=".activity.CoordinatorLayoutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CoordinatorTheme"/>
+
     </application>
 
 </manifest>

@@ -105,6 +105,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("OpenGL demo", "com.tomsky.androiddemo.activity.OpenGLActivity"));
         datas.add(new ItemData("Abstract Parcel demo", "com.tomsky.androiddemo.activity.MutiCreaterActivity"));
         datas.add(new ItemData("AppbarLayout demo", "com.tomsky.androiddemo.activity.AppbarActivity"));
+        datas.add(new ItemData("CoordinatorLayout demo", "com.tomsky.androiddemo.activity.CoordinatorLayoutActivity"));
 
         return datas;
     }

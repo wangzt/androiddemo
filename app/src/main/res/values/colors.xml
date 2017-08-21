@@ -8,4 +8,17 @@
     <color name="blue">#3F51B5</color>
     <color name="blue_dark">#303F9F</color>
     <color name="red">#ff0000</color>
+
+
+    <color name="swiperefresh_color_0">#FF4400</color>
+    <color name="swiperefresh_color_1">#FFCC00</color>
+    <color name="swiperefresh_color_2">#FF9900</color>
+    <color name="swiperefresh_color_3">#FF00DDFF</color>
+
+    <!-- 下拉刷新颜色 begin -->
+    <color name="swiperefresh_color1">#FF00DDFF</color>
+    <color name="swiperefresh_color2">#FFFFBB33</color>
+    <color name="swiperefresh_color3">#FFFF4444</color>
+    <color name="swiperefresh_color4">#FFAA66CC</color>
+    <!-- 下拉刷新颜色 end -->
 </resources>
