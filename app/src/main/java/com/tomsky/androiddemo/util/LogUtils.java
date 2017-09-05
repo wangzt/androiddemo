@@ -2,12 +2,14 @@ package com.tomsky.androiddemo.util;
 
 import android.util.Log;
 
+import com.tomsky.androiddemo.BuildConfig;
+
 /**
  * Created by j-wangzhitao on 17-2-14.
  */
 
 public class LogUtils {
-    static final boolean DEBUG = true;
+    public static final boolean DEBUG = BuildConfig.DEBUG;
 
     public static void i(String tag, String msg) {
         if (DEBUG) {
