@@ -91,6 +91,16 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="adjustResize|stateHidden"
             />
+
+        <activity android:name=".activity.AIDLActivity"
+            android:screenOrientation="portrait"/>
+
+        <service android:name="com.tomsky.androiddemo.UploadService"
+            android:process=":back">
+            <intent-filter>
+                    <action android:name="com.tomsky.androiddemo.upload" />
+                </intent-filter>
+            </service>
     </application>
 
 </manifest>
