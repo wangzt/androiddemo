@@ -6,4 +6,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="连接Service"/>
+
+    <Button
+        android:id="@+id/btn_unbind_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/btn_service"
+        android:layout_marginLeft="10dp"
+        android:text="断开Service"/>
 </RelativeLayout>

@@ -28,6 +28,71 @@ public class AIDLActivity extends AppCompatActivity implements View.OnClickListe
     private IUploadInterface mUploadInterface;
     private boolean mBound = false;
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_aidl);
+
+        findViewById(R.id.btn_service).setOnClickListener(this);
+        findViewById(R.id.btn_unbind_service).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_service:
+                tryUpload();
+                break;
+
+            case R.id.btn_unbind_service:
+                try {
+                    unbindService(mServiceConnection);
+                } catch (Exception e) {
+                }
+                mBound = false;
+                break;
+        }
+    }
+
+    private void tryUpload() {
+        if (!mBound) {
+            attempBindService();
+            LogUtils.e(TAG, "当前与服务端处于未连接状态，正在尝试重连，请稍后再试");
+        }
+        if (mUploadInterface == null) {
+            return;
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString("key", "hello world");
+        bundle.putInt("status", 1);
+        try {
+            mUploadInterface.startUpload(bundle);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService();
+    }
+
+    private void attempBindService() {
+        Intent intent = new Intent();
+        intent.setPackage("com.tomsky.androiddemo");
+        intent.setAction("com.tomsky.androiddemo.upload");
+        bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private void stopService() {
+        if (mBound) {
+            unbindService(mServiceConnection);
+            mBound = false;
+        }
+    }
+
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -72,61 +137,4 @@ public class AIDLActivity extends AppCompatActivity implements View.OnClickListe
             attempBindService();
         }
     };
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aidl);
-
-        findViewById(R.id.btn_service).setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_service:
-                tryUpload();
-                break;
-        }
-    }
-
-    private void tryUpload() {
-        if (!mBound) {
-            attempBindService();
-            LogUtils.e(TAG, "当前与服务端处于未连接状态，正在尝试重连，请稍后再试");
-        }
-        if (mUploadInterface == null) {
-            return;
-        }
-
-        Bundle bundle = new Bundle();
-        bundle.putString("key", "hello world");
-        bundle.putInt("status", 1);
-        try {
-            mUploadInterface.startUpload(bundle);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        stopService();
-    }
-
-    private void attempBindService() {
-        Intent intent = new Intent();
-        intent.setPackage("com.tomsky.androiddemo");
-        intent.setAction("com.tomsky.androiddemo.upload");
-        bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    private void stopService() {
-        if (mBound) {
-            unbindService(mServiceConnection);
-            mBound = false;
-        }
-    }
-
 }
