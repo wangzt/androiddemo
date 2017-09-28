@@ -76,7 +76,7 @@ task rename(type: Copy) {
 
 afterEvaluate {  
     tasks.matching {  
-        it.name.equals("generateDebugSources") || it.name.equals("generateReleaseSources") 
+        it.name == "generateDebugSources" || it.name == "generateReleaseSources"
     }.each { tk -> 
         tk.dependsOn(rename)  
     }  
