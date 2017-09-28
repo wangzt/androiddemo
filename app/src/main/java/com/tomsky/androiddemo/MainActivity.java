@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 
+import com.tomsky.androiddemo.api.BaseBean;
+import com.tomsky.androiddemo.api.BaseMethod;
 import com.tomsky.androiddemo.util.StringUtil;
 
 import java.security.MessageDigest;
@@ -46,6 +48,12 @@ public class MainActivity extends Activity{
                 }
             }
         });
+
+        BaseBean baseBean = new BaseBean();
+        baseBean.setUid("11111111111");
+        baseBean.setUname("my name");
+        baseBean.setAge(18);
+        BaseMethod.printBaseBean(baseBean);
 
 //        String tsId = "125487166";
 //        String guid = "TPqnPSdYXFGH8UP92x9QXw==";

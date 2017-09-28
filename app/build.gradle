@@ -17,10 +17,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets{  
+        main{ 
+            java.srcDirs = ['src/main/java', 'build/tmp'] 
+        }  
+    } 
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: 'build/tmp', include: ['*.java'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -35,3 +42,42 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
 }
+
+
+// task compileApi(type: JavaCompile) {
+    // doFirst {
+        //println "buildDir: $buildDir"
+        // println "projectDir: $projectDir"
+        //println "rootDir: $rootDir"
+        // javaCompile {
+            // source = src/main/java
+            // include 'com/tomsky/androiddemo/api/*.api'
+            //classpath = sourceSets.main.compileClasspath
+            // destinationDir = src/main/java
+        // }
+    // }
+// }
+
+task rename(type: Copy) {
+    def destDir = file("build/tmp/com/tomsky/androiddemo/api")
+    destDir.mkdirs()
+
+    from 'src/main/java/com/tomsky/androiddemo/api'
+    into 'build/tmp/com/tomsky/androiddemo/api'
+    //使用闭包映射文件名
+    rename { String fileName ->
+        fileName.replace('.api', '.java')
+    }
+    // 使用正则表达式映射文件名
+    //rename '(.+)-staging-(.+)', '$1$2'
+    //rename(/(.+)-staging-(.+)/, '$1$2')
+}
+
+
+afterEvaluate {  
+    tasks.matching {  
+        it.name.equals("generateDebugSources") || it.name.equals("generateReleaseSources") 
+    }.each { tk -> 
+        tk.dependsOn(rename)  
+    }  
+} 
