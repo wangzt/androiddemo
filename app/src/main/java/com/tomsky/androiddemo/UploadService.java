@@ -24,7 +24,7 @@ public class UploadService extends Service {
 
         @Override
         public void startUpload(Bundle bundle) throws RemoteException {
-            LogUtils.e("AIDLActivity", "---startUpload");
+            LogUtils.e("AIDLActivity", "---startUpload=====");
             new Thread(new UploadThread(bundle)).start();
         }
 
@@ -75,6 +75,10 @@ public class UploadService extends Service {
         }
 
         mCallbackList.finishBroadcast();
+    }
+
+    private void test1() {
+        LogUtils.e("AIDLActivity", "------test1");
     }
 
     private void test2() {
