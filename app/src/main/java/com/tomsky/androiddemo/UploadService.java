@@ -76,4 +76,8 @@ public class UploadService extends Service {
 
         mCallbackList.finishBroadcast();
     }
+
+    private void test2() {
+        LogUtils.d("AIDLActivity", "--------------test2");
+    }
 }
