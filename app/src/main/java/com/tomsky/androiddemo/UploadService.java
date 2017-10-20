@@ -8,6 +8,7 @@ import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 
+import com.tomsky.androiddemo.provider.SPHelper;
 import com.tomsky.androiddemo.service.IUploadCallback;
 import com.tomsky.androiddemo.service.IUploadInterface;
 import com.tomsky.androiddemo.util.LogUtils;
@@ -25,6 +26,7 @@ public class UploadService extends Service {
         @Override
         public void startUpload(Bundle bundle) throws RemoteException {
             LogUtils.e("AIDLActivity", "---startUpload=====");
+            SPHelper.init(BaseApplication.getContext());
             new Thread(new UploadThread(bundle)).start();
         }
 
@@ -50,11 +52,13 @@ public class UploadService extends Service {
         @Override
         public void run() {
             try {
+                SPHelper.save("isDebug", true);
                 Thread.sleep(5000);
                 Bundle bundle = new Bundle();
                 bundle.putString("ack", key);
                 bundle.putInt("st", status);
-                LogUtils.e("AIDLActivity", "---onServer callback-----");
+                boolean isDebug = SPHelper.getBoolean("isDebug", false);
+                LogUtils.e("AIDLActivity", "---onServer callback-----, isDebug:"+isDebug);
                 callback(bundle);
             } catch (InterruptedException e) {
                 e.printStackTrace();

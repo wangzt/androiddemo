@@ -100,7 +100,13 @@
             <intent-filter>
                     <action android:name="com.tomsky.androiddemo.upload" />
                 </intent-filter>
-            </service>
+        </service>
+
+        <provider
+            android:authorities="com.tomsky.sphelper"
+            android:name=".provider.SPContentProvider"
+            android:exported="false"/>
+
     </application>
 
 </manifest>
