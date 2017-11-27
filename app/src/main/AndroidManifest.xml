@@ -95,6 +95,9 @@
         <activity android:name=".activity.AIDLActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.RXJavaActivity"
+            android:screenOrientation="portrait"/>
+
         <service android:name="com.tomsky.androiddemo.UploadService"
             android:process=":back">
             <intent-filter>
