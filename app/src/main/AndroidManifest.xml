@@ -19,7 +19,7 @@
         android:name=".BaseApplication"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/BaseAppTheme">
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -96,6 +96,9 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".activity.RXJavaActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.AnimDemoActivity"
             android:screenOrientation="portrait"/>
 
         <service android:name="com.tomsky.androiddemo.UploadService"

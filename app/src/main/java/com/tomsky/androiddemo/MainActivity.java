@@ -117,6 +117,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("CoordinatorLayout demo", "com.tomsky.androiddemo.activity.CoordinatorLayoutActivity"));
         datas.add(new ItemData("AIDL demo", "com.tomsky.androiddemo.activity.AIDLActivity"));
         datas.add(new ItemData("RXJava demo", "com.tomsky.androiddemo.activity.RXJavaActivity"));
+        datas.add(new ItemData("Anim demo", "com.tomsky.androiddemo.activity.AnimDemoActivity"));
 
         return datas;
     }
