@@ -1,31 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerVertical="true">
-        <View
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
-        <TextView
-            android:id="@+id/ui_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:ellipsize="marquee"
-            android:layout_weight="1"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbCCCCCCCCCCCCCCcccccccddddddddddddddd"/>
-
-        <View
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
-    </LinearLayout>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.tomsky.androiddemo.view.ClipView
         android:id="@+id/my_clip_view"
@@ -41,4 +18,45 @@
         android:layout_centerHorizontal="true"
         android:text="Start"
         android:layout_below="@id/my_clip_view"/>
+
+    <LinearLayout
+        android:id="@+id/ellipsize_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/btn_start_anim">
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+        <TextView
+            android:id="@+id/ui_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:layout_weight="1"
+            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbCCCCCCCCCCCCCCcccccccddddddddddddddd"/>
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+    </LinearLayout>
+
+    <com.tomsky.androiddemo.view.SimpleRatingBar
+        android:id="@+id/ratingBar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ellipsize_view"
+        android:layout_margin="8dp"
+        app:srb_fillColor="@color/default_rating_color"
+        app:srb_starBackgroundColor="#666666"
+        app:srb_numberOfStars="5"
+        app:srb_starSize="50dp"
+        app:srb_stepSize="0.5"
+        app:srb_rating="2.5"
+        app:srb_drawBorderEnabled="false"
+        app:srb_starsSeparation="10dp"/>
 </RelativeLayout>

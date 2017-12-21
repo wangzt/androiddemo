@@ -10,6 +10,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.view.ClipView;
+import com.tomsky.androiddemo.view.SimpleRatingBar;
 
 /**
  * Created by j-wangzhitao on 17-1-12.
@@ -18,6 +19,8 @@ import com.tomsky.androiddemo.view.ClipView;
 public class AndroidUIActivity extends Activity {
 
     private ClipView mClipView;
+
+    private SimpleRatingBar mRatingBar;
 
     private int left = 0;
     private int right = 0;
@@ -29,6 +32,7 @@ public class AndroidUIActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_android_ui);
         mClipView = (ClipView) findViewById(R.id.my_clip_view);
+        mRatingBar = (SimpleRatingBar) findViewById(R.id.ratingBar1);
 
         findViewById(R.id.btn_start_anim).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +55,8 @@ public class AndroidUIActivity extends Activity {
                     }
                 });
                 valueAnimator.start();
+
+                mRatingBar.setRating(4.5f);
             }
         });
     }
