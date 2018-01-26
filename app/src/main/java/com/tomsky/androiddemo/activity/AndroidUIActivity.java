@@ -5,6 +5,7 @@ import android.animation.IntArrayEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -26,6 +27,8 @@ public class AndroidUIActivity extends Activity {
     private int right = 0;
 
     private boolean start = false;
+
+    private int mRate = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,23 @@ public class AndroidUIActivity extends Activity {
                 valueAnimator.start();
 
                 mRatingBar.setRating(4.5f);
+            }
+        });
+
+        mRatingBar.setOnRatingBarChangeListener(new SimpleRatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(SimpleRatingBar simpleRatingBar, float rating, boolean fromUser) {
+                Log.d("wzt-rate", "---------new: rate:"+rating+", oldRate:"+mRate);
+                int newRate = (int) rating;
+                if (newRate == 0) {
+                    mRatingBar.setRating(1);
+                    return;
+                }
+                if (newRate > 1 && newRate == mRate) {
+                    mRatingBar.setRating(newRate - 1);
+                } else {
+                    mRate = newRate;
+                }
             }
         });
     }

@@ -55,8 +55,7 @@
         app:srb_starBackgroundColor="#666666"
         app:srb_numberOfStars="5"
         app:srb_starSize="50dp"
-        app:srb_stepSize="0.5"
-        app:srb_rating="2.5"
+        app:srb_stepSize="1"
         app:srb_drawBorderEnabled="false"
         app:srb_starsSeparation="10dp"/>
 </RelativeLayout>

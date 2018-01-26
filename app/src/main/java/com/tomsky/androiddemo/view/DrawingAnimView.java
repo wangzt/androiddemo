@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.RelativeLayout;
 
 import com.tomsky.androiddemo.animation.evaluator.RectEvaluator;
@@ -91,7 +92,7 @@ public class DrawingAnimView extends RelativeLayout {
 
         ValueAnimator animator = ValueAnimator.ofObject(new ScalePosEvaluator(), start, end);
         animator.setDuration(ANIM_DURATION);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.setInterpolator(new AccelerateInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
