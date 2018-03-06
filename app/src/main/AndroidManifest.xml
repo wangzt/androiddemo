@@ -101,6 +101,9 @@
         <activity android:name=".activity.AnimDemoActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.ConstraintActivity"
+            android:screenOrientation="portrait"/>
+
         <service android:name="com.tomsky.androiddemo.UploadService"
             android:process=":back">
             <intent-filter>

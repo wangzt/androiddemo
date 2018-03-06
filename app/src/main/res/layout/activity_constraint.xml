@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/test_pbtn1"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:background="#00f"
+        android:text="pa_btn1"/>
+
+    <Button
+        android:id="@+id/test_pbtn2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="#770"
+        android:text="test_pbtn2"
+        android:layout_toRightOf="@id/test_pbtn1"
+        android:layout_alignParentRight="true"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/test_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/test_pbtn1"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:id="@+id/test_banner"
+            android:layout_width="120dp"
+            android:layout_height="0dp"
+            android:text="Banner"
+            android:gravity="center"
+            android:background="#765"
+            app:layout_constraintDimensionRatio="2:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+        
+        <Button
+            android:id="@+id/test_btn1"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="#f0b"
+            app:layout_constraintTop_toBottomOf="@id/test_banner"
+            android:text="btn1"/>
+
+        <Button
+            android:id="@+id/test_btn2"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="#0fb"
+            app:layout_constraintLeft_toRightOf="@id/test_btn1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/test_banner"
+            android:text="btn2"/>
+
+
+        <TextView
+            android:id="@+id/tab1"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="#f67"
+            android:text="Tab1"
+            android:gravity="center"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tab2"/>
+
+        <TextView
+            android:id="@+id/tab2"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="#A67"
+            android:text="Tab2"
+            android:gravity="center"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/tab1"
+            app:layout_constraintRight_toLeftOf="@+id/tab3"/>
+
+        <TextView
+            android:id="@+id/tab3"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="#767"
+            android:text="Tab3"
+            android:gravity="center"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/tab2"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_h"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.9"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9"/>
+
+        <TextView
+            android:id="@+id/float_btn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#612"
+            app:layout_constraintRight_toLeftOf="@id/guideline_v"
+            app:layout_constraintBottom_toTopOf="@id/guideline_h"
+            android:text="Float"
+            android:gravity="center"/>
+
+
+    </android.support.constraint.ConstraintLayout>
+</RelativeLayout>

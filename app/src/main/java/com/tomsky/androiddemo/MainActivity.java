@@ -37,6 +37,10 @@ public class MainActivity extends Activity{
                     if (data.hasSub) {
                         Intent intent = new Intent();
                         intent.setClassName(MainActivity.this, data.name);
+                        intent.putExtra("just_for_like", 100L);
+                        for (int i = 0; i < 3000; i++) {
+                            intent.putExtra("my_extra_"+i, "gfapdgdapgfjkgpaergkdfgsdfvalue_"+i);
+                        }
                         startActivity(intent);
                     } else {
                         if (data.name.equals("test_regex")) {
@@ -118,6 +122,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("AIDL demo", "com.tomsky.androiddemo.activity.AIDLActivity"));
         datas.add(new ItemData("RXJava demo", "com.tomsky.androiddemo.activity.RXJavaActivity"));
         datas.add(new ItemData("Anim demo", "com.tomsky.androiddemo.activity.AnimDemoActivity"));
+        datas.add(new ItemData("Constraint demo", "com.tomsky.androiddemo.activity.ConstraintActivity"));
 
         return datas;
     }
