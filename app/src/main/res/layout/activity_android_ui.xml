@@ -58,4 +58,27 @@
         app:srb_stepSize="1"
         app:srb_drawBorderEnabled="false"
         app:srb_starsSeparation="10dp"/>
+
+    <RelativeLayout
+        android:id="@+id/proom_cover_header_iv"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_centerInParent="true"
+        android:background="#ff0000">
+
+        <ImageView
+            android:id="@+id/proom_cover_breath_light"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_breathlight"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/anim_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="Anim btn"/>
 </RelativeLayout>

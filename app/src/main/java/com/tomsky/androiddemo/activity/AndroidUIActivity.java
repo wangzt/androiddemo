@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.view.ClipView;
@@ -29,6 +32,11 @@ public class AndroidUIActivity extends Activity {
     private boolean start = false;
 
     private int mRate = 0;
+
+    private ImageView mBreathView;
+    private Animation mAnimation;
+
+    private boolean isAnimStart = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +84,26 @@ public class AndroidUIActivity extends Activity {
                     mRatingBar.setRating(newRate - 1);
                 } else {
                     mRate = newRate;
+                }
+            }
+        });
+
+        mBreathView = (ImageView) findViewById(R.id.proom_cover_breath_light);
+        mAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.breath_anim);
+
+        findViewById(R.id.anim_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isAnimStart) {
+                    isAnimStart = false;
+                    if (mBreathView != null) {
+                        mBreathView.clearAnimation();
+                    }
+                } else {
+                    isAnimStart = true;
+                    if (mBreathView != null && mAnimation != null) {
+                        mBreathView.startAnimation(mAnimation);
+                    }
                 }
             }
         });
