@@ -123,6 +123,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("RXJava demo", "com.tomsky.androiddemo.activity.RXJavaActivity"));
         datas.add(new ItemData("Anim demo", "com.tomsky.androiddemo.activity.AnimDemoActivity"));
         datas.add(new ItemData("Constraint demo", "com.tomsky.androiddemo.activity.ConstraintActivity"));
+        datas.add(new ItemData("Dialog activity", "com.tomsky.androiddemo.activity.DialogActivity"));
 
         return datas;
     }

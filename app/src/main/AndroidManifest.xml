@@ -104,6 +104,10 @@
         <activity android:name=".activity.ConstraintActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.DialogActivity"
+            android:theme="@style/ActivityDialog"
+            android:screenOrientation="portrait"/>
+
         <service android:name="com.tomsky.androiddemo.UploadService"
             android:process=":back">
             <intent-filter>
