@@ -18,6 +18,7 @@
         <item name="textAllCaps">false</item>
     </style>
 
+
     <style name="GridPasswordView" />
 
     <style name="GridPasswordView.TextView">
