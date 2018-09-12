@@ -1,1 +1,1 @@
-include ':app', ':danmaku'
+include ':app', ':danmaku', ':topsnackbar'

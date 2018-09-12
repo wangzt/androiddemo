@@ -51,6 +51,7 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
 
     api project(':danmaku')
+    api project(':topsnackbar')
     testImplementation 'junit:junit:4.12'
 }
 

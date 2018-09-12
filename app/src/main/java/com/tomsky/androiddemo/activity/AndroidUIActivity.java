@@ -5,6 +5,8 @@ import android.animation.IntArrayEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -12,7 +14,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.tomsky.androiddemo.R;
+import com.tomsky.androiddemo.view.CircleProgressBar;
 import com.tomsky.androiddemo.view.ClipView;
 import com.tomsky.androiddemo.view.SimpleRatingBar;
 
@@ -20,7 +24,7 @@ import com.tomsky.androiddemo.view.SimpleRatingBar;
  * Created by j-wangzhitao on 17-1-12.
  */
 
-public class AndroidUIActivity extends Activity {
+public class AndroidUIActivity extends AppCompatActivity {
 
     private ClipView mClipView;
 
@@ -36,6 +40,10 @@ public class AndroidUIActivity extends Activity {
     private ImageView mBreathView;
     private Animation mAnimation;
 
+    private CircleProgressBar mProgressBar;
+
+    private View mRootLayout;
+
     private boolean isAnimStart = false;
 
     @Override
@@ -44,6 +52,8 @@ public class AndroidUIActivity extends Activity {
         setContentView(R.layout.activity_android_ui);
         mClipView = (ClipView) findViewById(R.id.my_clip_view);
         mRatingBar = (SimpleRatingBar) findViewById(R.id.ratingBar1);
+
+        mRootLayout = findViewById(R.id.my_ui_layout);
 
         findViewById(R.id.btn_start_anim).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +115,21 @@ public class AndroidUIActivity extends Activity {
                         mBreathView.startAnimation(mAnimation);
                     }
                 }
+            }
+        });
+
+        mProgressBar = (CircleProgressBar) findViewById(R.id.my_circle_bar);
+        mProgressBar.setMax(100);
+
+        findViewById(R.id.snackbar_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Snackbar snackbar = Snackbar.make(mRootLayout, "My first snack bar", Snackbar.LENGTH_LONG);
+//                snackbar.show();
+
+//                TSnackbar tSnackbar = TSnackbar.make(mRootLayout, "TSnackBar test", TSnackbar.LENGTH_LONG);
+//                tSnackbar.show();
+                mProgressBar.setProgress((int) (Math.random() * 100));
             }
         });
     }
