@@ -4,6 +4,7 @@ import android.animation.FloatArrayEvaluator;
 import android.animation.IntArrayEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.androidadvance.topsnackbar.TSnackbar;
+import com.tencent.mmkv.MMKV;
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.view.CircleProgressBar;
 import com.tomsky.androiddemo.view.ClipView;
@@ -132,5 +134,9 @@ public class AndroidUIActivity extends AppCompatActivity {
                 mProgressBar.setProgress((int) (Math.random() * 100));
             }
         });
+
+        MMKV kv = MMKV.defaultMMKV();
+        kv.encode("name", "tomsky");
+        Log.d("wzt-kv", "name:"+kv.decodeString("name"));
     }
 }
