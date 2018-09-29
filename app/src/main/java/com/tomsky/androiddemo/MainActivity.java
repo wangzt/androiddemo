@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.tomsky.androiddemo.api.BaseBean;
 import com.tomsky.androiddemo.api.BaseMethod;
 import com.tomsky.androiddemo.util.StringUtil;
+import com.tomsky.androiddemo.util.UIUtils;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class MainActivity extends Activity{
 //
 //        String code = Security.decode(guid, key);
 //
-//        Log.d("wzt-sec", "code:"+code);
+        Log.d("wzt-sec", "status bar height:"+ UIUtils.getStatusBarHeight());
     }
 
     public static String getMD5code(String string) {

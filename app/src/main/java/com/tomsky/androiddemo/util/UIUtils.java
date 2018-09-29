@@ -22,4 +22,14 @@ public class UIUtils {
         return (int) ((dp * displayMetrics.density) + 0.5);
     }
 
+    public static int getStatusBarHeight() {
+        int height = 0;
+        int resourceId = BaseApplication.getContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            height = BaseApplication.getContext().getResources().getDimensionPixelSize(resourceId);
+        }
+
+        return height;
+    }
+
 }
