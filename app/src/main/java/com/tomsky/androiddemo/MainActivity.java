@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.tomsky.androiddemo.api.BaseBean;
 import com.tomsky.androiddemo.api.BaseMethod;
+import com.tomsky.androiddemo.util.RegexUtils;
 import com.tomsky.androiddemo.util.StringUtil;
 import com.tomsky.androiddemo.util.UIUtils;
 
@@ -69,6 +70,7 @@ public class MainActivity extends Activity{
 //        String code = Security.decode(guid, key);
 //
         Log.d("wzt-sec", "status bar height:"+ UIUtils.getStatusBarHeight());
+        RegexUtils.matchDollar();
     }
 
     public static String getMD5code(String string) {
