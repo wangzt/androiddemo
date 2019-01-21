@@ -99,4 +99,13 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"/>
+
+    <ImageView
+        android:id="@+id/my_clip_image"
+        android:layout_width="25dp"
+        android:layout_height="21dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/my_clip_drawable"/>
 </RelativeLayout>

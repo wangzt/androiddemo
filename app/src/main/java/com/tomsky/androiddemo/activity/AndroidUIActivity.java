@@ -5,6 +5,9 @@ import android.animation.IntArrayEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -44,9 +47,12 @@ public class AndroidUIActivity extends AppCompatActivity {
 
     private CircleProgressBar mProgressBar;
 
+    private ClipDrawable mClipDrawable;
     private View mRootLayout;
 
     private boolean isAnimStart = false;
+
+    private int level = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,16 +112,26 @@ public class AndroidUIActivity extends AppCompatActivity {
         findViewById(R.id.anim_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isAnimStart) {
-                    isAnimStart = false;
-                    if (mBreathView != null) {
-                        mBreathView.clearAnimation();
+//                if (isAnimStart) {
+//                    isAnimStart = false;
+//                    if (mBreathView != null) {
+//                        mBreathView.clearAnimation();
+//                    }
+//                } else {
+//                    isAnimStart = true;
+//                    if (mBreathView != null && mAnimation != null) {
+//                        mBreathView.startAnimation(mAnimation);
+//                    }
+//                }
+
+                Log.d("wzt-clip", "click, clipDrawable:"+mClipDrawable+", level:"+level);
+                if (mClipDrawable != null) {
+                    if (level > 10000) {
+                        level = 0;
+                    } else {
+                        level +=1000;
                     }
-                } else {
-                    isAnimStart = true;
-                    if (mBreathView != null && mAnimation != null) {
-                        mBreathView.startAnimation(mAnimation);
-                    }
+                    mClipDrawable.setLevel(level);
                 }
             }
         });
@@ -138,5 +154,14 @@ public class AndroidUIActivity extends AppCompatActivity {
         MMKV kv = MMKV.defaultMMKV();
         kv.encode("name", "tomsky");
         Log.d("wzt-kv", "name:"+kv.decodeString("name"));
+
+        ImageView clipView  = findViewById(R.id.my_clip_image);
+        Drawable drawable = clipView.getDrawable();
+        if (drawable instanceof LayerDrawable) {
+            Drawable clipDrawable = ((LayerDrawable)drawable).getDrawable(0);
+            if (clipDrawable instanceof ClipDrawable) {
+                mClipDrawable = (ClipDrawable)clipDrawable;
+            }
+        }
     }
 }

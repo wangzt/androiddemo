@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/my_clip_drawable_top">
+        <clip android:drawable="@drawable/icon_bar_full_heart3x"
+            android:clipOrientation="vertical"
+            android:gravity="bottom"/>
+    </item>
+    <item>
+        <bitmap android:src="@drawable/icon_bar_empty_heart3x"/>
+    </item>
+</layer-list>
