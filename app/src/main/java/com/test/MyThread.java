@@ -37,16 +37,16 @@ public class MyThread {
     }
 
     public static void main(String[] args) {
-//        Thread1 t1 = new Thread1();
-//        Thread t2 = new Thread2();
-//
-//        try {
-//            t1.start();
-//            t1.join(); // join() 方法是让调用该方法的主线程执行run()时暂时卡住，等run()执行完成后， 主线程再调用执行join()后面的代码
-//            t2.start();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        Thread1 t1 = new Thread1();
+        Thread t2 = new Thread2();
+
+        try {
+            t1.start();
+            t1.join(); // join() 方法是让调用该方法的主线程执行run()时暂时卡住，等run()执行完成后， 主线程再调用执行join()后面的代码
+            t2.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         List<String>  listA = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
