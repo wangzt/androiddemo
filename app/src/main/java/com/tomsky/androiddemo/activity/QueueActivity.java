@@ -36,6 +36,9 @@ public class QueueActivity extends Activity implements WeakHandler.IHandler {
     private String mCurrentMsg;
     private AtomicBoolean mStop = new AtomicBoolean(false);
 
+
+    private boolean mIsVisibile = true;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,17 @@ public class QueueActivity extends Activity implements WeakHandler.IHandler {
             public void onClick(View v) {
                 product();
 
+            }
+        });
+
+        findViewById(R.id.queue_visible_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mIsVisibile) {
+                    mIsVisibile = false;
+                } else {
+                    mIsVisibile = true;
+                }
             }
         });
     }
@@ -66,6 +80,10 @@ public class QueueActivity extends Activity implements WeakHandler.IHandler {
                 }
                 break;
         }
+    }
+
+    public void clear() {
+        mQueue.clear();
     }
 
     private void product() {
@@ -125,7 +143,9 @@ public class QueueActivity extends Activity implements WeakHandler.IHandler {
                     e.printStackTrace();
                     Log.d(TAG, "###error for "+msg);
                 }
-                Log.d(TAG, "===end do " + msg);
+                if (mIsVisibile) {
+                    Log.d(TAG, "===end do " + msg);
+                }
                 mRunning[type].set(false);
 
                 boolean sendMsg = true;

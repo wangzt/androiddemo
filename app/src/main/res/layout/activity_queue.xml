@@ -8,4 +8,11 @@
         android:layout_height="50dp"
         android:layout_centerInParent="true"
         android:text="测试"/>
+
+    <Button
+        android:id="@+id/queue_visible_btn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:text="可见性"/>
 </RelativeLayout>
