@@ -125,6 +125,9 @@
         <activity android:name=".activity.QueueActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.MyFlutterActivity"
+            android:screenOrientation="portrait"/>
+
         <service android:name="com.tomsky.androiddemo.UploadService"
             android:process=":back">
             <intent-filter>

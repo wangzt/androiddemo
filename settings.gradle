@@ -1,1 +1,7 @@
 include ':app', ':danmaku', ':topsnackbar'
+
+setBinding(new Binding([gradle: this]))
+evaluate(new File(                                                      // new
+        settingsDir.parentFile,                                               // new
+        'androiddemo/my_flutter/.android/include_flutter.groovy'                          // new
+))
