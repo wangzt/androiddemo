@@ -78,6 +78,7 @@ public class BannerActivity extends Activity {
             @Override
             public void onClick(View v) {
                 mSwitcherWrapper.pause();
+                btn1.setText("滚动关");
                 if (first) {
                     first = false;
                     mTextSwitcher.setTextList(mList2);
@@ -88,6 +89,7 @@ public class BannerActivity extends Activity {
                     btn2.setText("列表1");
                 }
                 if (mTextSwitcher.size() > 0) {
+                    btn1.setText("滚动开");
                     mSwitcherWrapper.start();
                 }
             }
