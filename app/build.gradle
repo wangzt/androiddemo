@@ -26,7 +26,11 @@ android {
         main{ 
             java.srcDirs = ['src/main/java', 'build/tmp/interface']
         }  
-    } 
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 }
 
 dependencies {

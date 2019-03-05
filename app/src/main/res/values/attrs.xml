@@ -62,4 +62,12 @@
             <enum name="right" value="1"/>
         </attr>
     </declare-styleable>
+    
+    <declare-styleable name="TextViewSwitcher">
+        <attr name="tx_color" format="color"/>
+        <attr name="tx_size" format="dimension"/>
+        <attr name="tx_gravity" format="integer"/>
+        <attr name="tx_animIn" format="reference"/>
+        <attr name="tx_animOut" format="reference"/>
+    </declare-styleable>
 </resources>

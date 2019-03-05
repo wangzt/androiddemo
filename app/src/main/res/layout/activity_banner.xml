@@ -7,4 +7,26 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_centerVertical="true"/>
+
+    <com.tomsky.androiddemo.widget.switcher.TextViewSwitcher
+        android:id="@+id/text_switcher"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"/>
+    <Button
+        android:id="@+id/btn_switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="滚动关"/>
+
+    <Button
+        android:id="@+id/btn_switcher_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="列表1"/>
 </RelativeLayout>
