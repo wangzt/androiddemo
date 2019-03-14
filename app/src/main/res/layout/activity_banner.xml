@@ -35,4 +35,24 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:text="列表1"/>
+
+    <com.tomsky.androiddemo.widget.switcher.MixViewSwitcher
+        android:id="@+id/mix_switcher"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"/>
+    <Button
+        android:id="@+id/mix_switcher_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="滚动关"/>
+
+    <Button
+        android:id="@+id/mix_switcher_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="列表1"/>
+
 </RelativeLayout>

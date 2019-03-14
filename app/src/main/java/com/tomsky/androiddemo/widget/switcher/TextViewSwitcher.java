@@ -39,7 +39,7 @@ public class TextViewSwitcher extends TextSwitcher implements ISwitcher {
     public TextViewSwitcher(Context context) {
         super(context);
 
-        init();
+        init(context);
     }
 
     public TextViewSwitcher(Context context, AttributeSet attrs) {
@@ -60,10 +60,10 @@ public class TextViewSwitcher extends TextSwitcher implements ISwitcher {
             textGravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
         }
 
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(Context context) {
         setFactory(new ViewFactory() {
             @Override
             public View makeView() {
@@ -86,7 +86,6 @@ public class TextViewSwitcher extends TextSwitcher implements ISwitcher {
             }
         });
 
-        Context context = getContext();
         setInAnimation(AnimationUtils.loadAnimation(context.getApplicationContext(), animIn));
         setOutAnimation(AnimationUtils.loadAnimation(context.getApplicationContext(), animOut));
     }

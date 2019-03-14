@@ -1,15 +1,19 @@
 package com.tomsky.androiddemo.activity;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.view.banner.BannerView;
 import com.tomsky.androiddemo.widget.switcher.ISwitcher;
+import com.tomsky.androiddemo.widget.switcher.MixViewSwitcher;
 import com.tomsky.androiddemo.widget.switcher.SwitcherWrapper;
 import com.tomsky.androiddemo.widget.switcher.TextViewSwitcher;
 
@@ -31,6 +35,12 @@ public class BannerActivity extends Activity {
     private List<String> mList2 = new ArrayList<>();
 
     private boolean first = true;
+
+
+    private Button mMixBtn;
+    private Button mMixResetBtn;
+    private MixViewSwitcher mMixViewSwitcher;
+    private boolean mixFirst = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,14 +109,64 @@ public class BannerActivity extends Activity {
                 }
             }
         });
+
+
+        mMixViewSwitcher = findViewById(R.id.mix_switcher);
+        initMixData(Color.GREEN, 0, 0);
+        mMixBtn = findViewById(R.id.mix_switcher_btn);
+        mMixBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mMixViewSwitcher.isFlipping()) {
+                    mMixViewSwitcher.stopFlipping();
+                    mMixBtn.setText("滚动关");
+                } else {
+                    mMixViewSwitcher.startFlipping();
+                    mMixBtn.setText("滚动开");
+                }
+            }
+        });
+
+        mMixResetBtn = findViewById(R.id.mix_switcher_reset);
+        mMixResetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMixViewSwitcher.stopFlipping();
+                mMixViewSwitcher.removeAllViews();
+                if (mixFirst) {
+                    initMixData(Color.RED, 2, 1);
+                } else {
+                    initMixData(Color.GREEN, 0, 0);
+                }
+                mixFirst = !mixFirst;
+
+                if (mMixViewSwitcher.getChildCount() > 1) {
+                    mMixViewSwitcher.startFlipping();
+                }
+            }
+        });
+    }
+
+    private void initMixData(int color, int textSize, int listIndex) {
+        View view1 = new View(BannerActivity.this);
+        view1.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        view1.setBackgroundColor(color);
+        mMixViewSwitcher.addView(view1);
+
+        for (int i = 0; i < textSize; i++) {
+            TextView view2 = new TextView(BannerActivity.this);
+            view2.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+            view2.setText(listIndex+"--我是文字"+i);
+            mMixViewSwitcher.addView(view2);
+        }
     }
 
     private void initData() {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 2; i++) {
             mList1.add("队列一我是第 "+i+" 个");
         }
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 3; i++) {
             mList2.add("队列二我是第 "+i+" 个");
         }
     }
