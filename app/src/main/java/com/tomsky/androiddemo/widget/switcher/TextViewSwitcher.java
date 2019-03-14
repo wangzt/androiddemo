@@ -137,8 +137,13 @@ public class TextViewSwitcher extends TextSwitcher implements ISwitcher {
     }
 
     private void updateDesc() {
-        if (mPosition < mTexts.size()) {
-            this.setText(mTexts.get(mPosition));
+        int size = size();
+        if (mPosition < size) {
+            if (size == 1) {
+                this.setCurrentText(mTexts.get(mPosition));
+            } else {
+                this.setText(mTexts.get(mPosition));
+            }
         }
     }
 }

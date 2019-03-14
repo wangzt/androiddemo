@@ -88,20 +88,25 @@ public class BannerActivity extends Activity {
                     mTextSwitcher.setTextList(mList1);
                     btn2.setText("列表1");
                 }
-                if (mTextSwitcher.size() > 0) {
+                int size = mTextSwitcher.size();
+                if (size > 0) {
                     btn1.setText("滚动开");
-                    mSwitcherWrapper.start();
+                    if (size > 1) {
+                        mSwitcherWrapper.start();
+                    } else {
+                        mTextSwitcher.next();
+                    }
                 }
             }
         });
     }
 
     private void initData() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 1; i++) {
             mList1.add("队列一我是第 "+i+" 个");
         }
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             mList2.add("队列二我是第 "+i+" 个");
         }
     }
