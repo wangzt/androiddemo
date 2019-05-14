@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 27
@@ -24,7 +26,7 @@ android {
 
     sourceSets{  
         main{ 
-            java.srcDirs = ['src/main/java', 'build/tmp/interface']
+            java.srcDirs = ['src/main/java', 'build/tmp/interface', 'src/main/kotlin']
         }  
     }
     compileOptions {
@@ -50,20 +52,13 @@ dependencies {
     api 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.tencent:mmkv:1.0.10'
 
-    // for dagger2
-    api 'com.google.dagger:dagger:2.15'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
-
-    // bellow is for using classes in dagger.android
-    api 'com.google.dagger:dagger-android:2.15'
-    api 'com.google.dagger:dagger-android-support:2.15'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.15'
 
     api project(':danmaku')
     api project(':topsnackbar')
     testImplementation 'junit:junit:4.12'
 
     implementation project(':flutter')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 
@@ -123,4 +118,7 @@ task buildApiJar(type: Jar, dependsOn: ['compileDebugSources']) {
 task testPath() {
     File file = new File('test.txt')
     print 'file path:'+file.getAbsolutePath()
+}
+repositories {
+    mavenCentral()
 }
