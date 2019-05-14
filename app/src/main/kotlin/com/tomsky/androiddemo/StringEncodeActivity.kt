@@ -27,6 +27,7 @@ import android.widget.TextView
 import com.tomsky.androiddemo.R
 import com.tomsky.androiddemo.customedit.CustomEditHelper
 import com.tomsky.androiddemo.customedit.CustomEditText
+import com.tomsky.androiddemo.eastat.EastAtHelper
 import com.tomsky.androiddemo.util.UIUtils
 import kotlinx.android.synthetic.main.activity_appbar.view.*
 
@@ -39,11 +40,12 @@ class StringEncodeActivity : AppCompatActivity(), InputListener{
         const val TYPE_AT = 2
     }
 
-    var editInput: CustomEditText? = null
+    var editInput: EditText? = null
     var textOutput:TextView? = null
     var inputDialog:InputDialog? = null
 //    var editHelper:CustomEditHelper = CustomEditHelper()
 
+    var eastAtHelper: EastAtHelper = EastAtHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +57,7 @@ class StringEncodeActivity : AppCompatActivity(), InputListener{
 
 //        editHelper.init(editInput)
 
+        eastAtHelper.init(editInput!!)
 
         editInput?.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -119,6 +122,7 @@ class StringEncodeActivity : AppCompatActivity(), InputListener{
                 if (text.isEmpty()) {
                     return
                 }
+                eastAtHelper.appendPoundText(text)
 //                editHelper.appendPoundText(text)
 
             }
@@ -126,6 +130,7 @@ class StringEncodeActivity : AppCompatActivity(), InputListener{
                 if (text.isEmpty()) {
                     return
                 }
+                eastAtHelper.appendAtText(text)
 //                editHelper.appendAtText(text)
             }
         }
