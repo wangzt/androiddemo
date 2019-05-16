@@ -28,6 +28,7 @@ import com.tomsky.androiddemo.R
 import com.tomsky.androiddemo.customedit.CustomEditHelper
 import com.tomsky.androiddemo.customedit.CustomEditText
 import com.tomsky.androiddemo.eastat.EastAtHelper
+import com.tomsky.androiddemo.eastat.KeyCodeDeleteEditText
 import com.tomsky.androiddemo.util.UIUtils
 import kotlinx.android.synthetic.main.activity_appbar.view.*
 
@@ -40,7 +41,7 @@ class StringEncodeActivity : AppCompatActivity(), InputListener{
         const val TYPE_AT = 2
     }
 
-    var editInput: EditText? = null
+    var editInput: KeyCodeDeleteEditText? = null
     var textOutput:TextView? = null
     var inputDialog:InputDialog? = null
 //    var editHelper:CustomEditHelper = CustomEditHelper()
@@ -85,10 +86,8 @@ class StringEncodeActivity : AppCompatActivity(), InputListener{
 
         })
 
-
-
         findViewById<View>(R.id.btn_convert).setOnClickListener {
-
+            eastAtHelper.checkCurrentSpan()
         }
     }
 

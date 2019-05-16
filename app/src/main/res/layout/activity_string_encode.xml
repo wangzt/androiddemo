@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
+    <com.tomsky.androiddemo.eastat.KeyCodeDeleteEditText
         android:id="@+id/et_input"
         android:layout_width="0dp"
         android:layout_height="200dp"
