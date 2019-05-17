@@ -50,7 +50,7 @@ class EastAtHelper : DeleteKeyEventListener{
     }
 
     fun appendAtText(text: String) {
-        // TODO:删除已经加入的'＠'符号
+        // 删除已经加入的'＠'符号
         var user = User("123456", text)
 
         var length = (editText?.text as SpannableStringBuilder).length
@@ -71,10 +71,12 @@ class EastAtHelper : DeleteKeyEventListener{
         }
 
         if (start == length) { // append
-            (editText?.text as SpannableStringBuilder).append(newUserSpannable(user)).append(" ")
+//            (editText?.text as SpannableStringBuilder).append(newUserSpannable(user)).append(" ")
+            (editText?.text as SpannableStringBuilder).append(newUserSpannable(user))
         } else { // insert
             var span:Spannable = newUserSpannable(user)
-            (editText?.text as SpannableStringBuilder).insert(preIndex, span).insert(preIndex + span.length, " ")
+//            (editText?.text as SpannableStringBuilder).insert(preIndex, span).insert(preIndex + span.length, " ")
+            (editText?.text as SpannableStringBuilder).insert(preIndex, span)
         }
 
         Log.d(TAG, "appendAtText, start:$start, end:$end, length:$length, preIndex:$preIndex")
@@ -82,7 +84,7 @@ class EastAtHelper : DeleteKeyEventListener{
     }
 
     fun appendPoundText(text: String) {
-        // TODO:删除已经加入的'#'符号
+        // 删除已经加入的'#'符号
         var user = Pound("$text")
         var length = (editText?.text as SpannableStringBuilder).length
         var start = Selection.getSelectionStart(editText?.text)
@@ -102,10 +104,12 @@ class EastAtHelper : DeleteKeyEventListener{
         }
 
         if (start == length) { // append
-            (editText?.text as SpannableStringBuilder).append(newPoundSpannable(user)).append(" ")
+//            (editText?.text as SpannableStringBuilder).append(newPoundSpannable(user)).append(" ")
+            (editText?.text as SpannableStringBuilder).append(newPoundSpannable(user))
         } else { // insert
             var span:Spannable = newPoundSpannable(user)
-            (editText?.text as SpannableStringBuilder).insert(preIndex, span).insert(preIndex + span.length, " ")
+//            (editText?.text as SpannableStringBuilder).insert(preIndex, span).insert(preIndex + span.length, " ")
+            (editText?.text as SpannableStringBuilder).insert(preIndex, span)
         }
         Log.d(TAG, "appendPoundText, start:$start, end:$end, length:$length, preIndex:$preIndex")
 
@@ -117,10 +121,12 @@ class EastAtHelper : DeleteKeyEventListener{
 
         if (length > 1) {
 
+            var users:List<User> = ArrayList()
             (editText?.text as SpannableStringBuilder).getSpans(0, length, User::class.java).forEach {
                 Log.d(TAG, "at str: ${it.name}, start:${editText?.text?.getSpanStart(it)}, end:${editText?.text?.getSpanEnd(it)}")
             }
 
+            var pounds:List<Pound> = ArrayList()
             (editText?.text as SpannableStringBuilder).getSpans(0, length, Pound::class.java).forEach {
                 Log.d(TAG, "pound str: ${it.name}, start:${editText?.text?.getSpanStart(it)}, end:${editText?.text?.getSpanEnd(it)}")
             }
