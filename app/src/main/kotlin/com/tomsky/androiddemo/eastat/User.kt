@@ -27,7 +27,7 @@ data class Pound(var name:String):DataBindingSpan,
         DirtySpan {
 
     fun getSpannedName(): Spannable {
-        return SpannableString("#$name").apply {
+        return SpannableString("#$name#").apply {
             setSpan(ForegroundColorSpan(Color.BLUE), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
     }
@@ -35,6 +35,6 @@ data class Pound(var name:String):DataBindingSpan,
     override fun isDirty(text: Spannable): Boolean {
         val spanStart = text.getSpanStart(this)
         val spanEnd = text.getSpanEnd(this)
-        return spanStart >= 0 && spanEnd >= 0 && text.substring(spanStart, spanEnd) != "#$name"
+        return spanStart >= 0 && spanEnd >= 0 && text.substring(spanStart, spanEnd) != "#$name#"
     }
 }
