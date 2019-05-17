@@ -13,6 +13,7 @@ import com.iyao.eastat.span.DataBindingSpan
 import com.iyao.eastat.watcher.SelectionSpanWatcher
 import com.iyao.sample.Pound
 import com.iyao.sample.User
+import org.json.JSONArray
 
 class EastAtHelper : DeleteKeyEventListener{
     override fun onDeleteClick(v: KeyCodeDeleteEditText): Boolean {
@@ -114,22 +115,5 @@ class EastAtHelper : DeleteKeyEventListener{
         Log.d(TAG, "appendPoundText, start:$start, end:$end, length:$length, preIndex:$preIndex")
 
 
-    }
-
-    fun checkCurrentSpan() {
-        var length = editText?.text?.length ?: 0
-
-        if (length > 1) {
-
-            var users:List<User> = ArrayList()
-            (editText?.text as SpannableStringBuilder).getSpans(0, length, User::class.java).forEach {
-                Log.d(TAG, "at str: ${it.name}, start:${editText?.text?.getSpanStart(it)}, end:${editText?.text?.getSpanEnd(it)}")
-            }
-
-            var pounds:List<Pound> = ArrayList()
-            (editText?.text as SpannableStringBuilder).getSpans(0, length, Pound::class.java).forEach {
-                Log.d(TAG, "pound str: ${it.name}, start:${editText?.text?.getSpanStart(it)}, end:${editText?.text?.getSpanEnd(it)}")
-            }
-        }
     }
 }
