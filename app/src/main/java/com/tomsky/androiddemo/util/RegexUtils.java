@@ -1,5 +1,6 @@
 package com.tomsky.androiddemo.util;
 
+import android.net.Uri;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -53,5 +54,20 @@ public class RegexUtils {
 //        String photo1 = "${user_photo}";
 //        String photo2 = "${anchor_photo}";
 //        Log.d("wzt-regex", "1:"+photo1.equals("${user_photo}") +", 2:"+photo2.equals("${anchor_photo}"));
+    }
+
+    public static void testComma() {
+        String str = "你好啊,我很好,Ta也很好";
+        String repStr = str.replace(",", "\\,");
+        String uriExp = Uri.encode(str);
+        Log.d("wzt-comma", "repStr:"+repStr);
+        String repDecode = repStr.replace("\\," ,",");
+        Log.d("wzt-comma", "repDecode:"+repDecode);
+
+        Log.d("wzt-comma", "uriExp:"+uriExp);
+        String uriDecode = Uri.decode(uriExp);
+        Log.d("wzt-comma", "uriDecode:"+uriDecode);
+
+
     }
 }

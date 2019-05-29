@@ -46,9 +46,10 @@ public class MainActivity extends Activity{
                         startActivity(intent);
                     } else {
                         if (data.name.equals("test_regex")) {
-                            String topic = "#AB你好#CD不删#EF你好#HY存在";
-                            Log.d("wzt-regex", "topic_ori:"+topic);
-                            Log.d("wzt-regex", "topic_result:"+ StringUtil.removeTopic(topic));
+//                            String topic = "#AB你好#CD不删#EF你好#HY存在";
+//                            Log.d("wzt-regex", "topic_ori:"+topic);
+//                            Log.d("wzt-regex", "topic_result:"+ StringUtil.removeTopic(topic));
+                            RegexUtils.testComma();
                         }
                     }
                 }
