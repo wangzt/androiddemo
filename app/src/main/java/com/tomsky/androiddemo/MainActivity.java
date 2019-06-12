@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.tomsky.androiddemo.api.BaseBean;
 import com.tomsky.androiddemo.api.BaseMethod;
+import com.tomsky.androiddemo.util.AlgorithmUtils;
 import com.tomsky.androiddemo.util.RegexUtils;
 import com.tomsky.androiddemo.util.StringUtil;
 import com.tomsky.androiddemo.util.UIUtils;
@@ -49,7 +50,8 @@ public class MainActivity extends Activity{
 //                            String topic = "#AB你好#CD不删#EF你好#HY存在";
 //                            Log.d("wzt-regex", "topic_ori:"+topic);
 //                            Log.d("wzt-regex", "topic_result:"+ StringUtil.removeTopic(topic));
-                            RegexUtils.testComma();
+//                            RegexUtils.testComma();
+                            AlgorithmUtils.testMergePoints();
                         }
                     }
                 }

@@ -116,4 +116,32 @@ class EastAtHelper : DeleteKeyEventListener{
 
 
     }
+
+    private fun getTags():ArrayList<String> {
+        var tagSet = HashSet<String>()
+        var length = editText?.text?.length ?: 0
+        if (length > 0) {
+            (editText?.text as SpannableStringBuilder).getSpans(0, length, Pound::class.java).forEach {
+                //                Log.d(TAG, "pound str: ${it.name}, start:${editTv?.text?.getSpanStart(it)}, end:${editTv?.text?.getSpanEnd(it)}")
+                tagSet.add(it.name)
+            }
+        }
+        var tags = ArrayList<String>()
+        tags.addAll(tagSet)
+        return tags
+    }
+
+    private fun getUsers():ArrayList<String> {
+        var userSet = HashSet<String>()
+        var length = editText?.text?.length ?: 0
+        if (length > 0) {
+            (editText?.text as SpannableStringBuilder).getSpans(0, length, User::class.java).forEach {
+                //                Log.d(TAG, "pound str: ${it.name}, start:${editTv?.text?.getSpanStart(it)}, end:${editTv?.text?.getSpanEnd(it)}")
+                userSet.add("${it.id}-${it.name}")
+            }
+        }
+        var users = ArrayList<String>()
+        users.addAll(userSet)
+        return users
+    }
 }
