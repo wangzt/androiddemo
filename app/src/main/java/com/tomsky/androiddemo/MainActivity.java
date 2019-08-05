@@ -133,6 +133,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("Queue activity", "com.tomsky.androiddemo.activity.QueueActivity"));
         datas.add(new ItemData("String Encode activity", "com.tomsky.androiddemo.StringEncodeActivity"));
         datas.add(new ItemData("Flutter activity", "com.tomsky.androiddemo.activity.MyFlutterActivity"));
+        datas.add(new ItemData("Dynamic activity", "com.tomsky.androiddemo.activity.DynamicUIActivity"));
 
         return datas;
     }

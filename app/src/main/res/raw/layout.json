@@ -1,0 +1,37 @@
+{
+    "name": "root",
+    "desc": "画布",
+    "prop": {
+        "layout": {
+            "l": 0,
+            "t": 0,
+            "w": 375,
+            "h": 420
+        },
+        "bgColor": {
+            "color": "00FF00",
+            "alpha": 1
+        }
+    },
+    "child": [
+        {
+            "name": "view",
+            "desc": "view测试",
+            "prop": {
+                "layout": {
+                    "l": 10,
+                    "t": 10,
+                    "w": 50,
+                    "h": 50
+                },
+                "round": {
+                    "cornerRadius": 25,
+                    "borderWidth": 2,
+                    "borderColor": {
+                        "color": "FF0000"
+                    }
+                }
+            }
+        }
+    ]
+}
