@@ -48,18 +48,15 @@ public abstract class ProomBaseView {
     protected boolean centerLand = false;
     protected boolean centerPort = false;
 
-    protected boolean widthAudo = false;
-    protected boolean heightAudo = false;
+    protected boolean widthAuto = false;
+    protected boolean heightAuto = false;
 
     /**
      * 以上是解析出来的属性
      * ======================================
      */
 
-    protected int rootLeft = Integer.MIN_VALUE; // 相对于rootView的位置，用于减少层级
-    protected int rootTop = Integer.MIN_VALUE; // 相对于rootView的位置，用于减少层级
-
-    protected boolean isLinearLayout = false;
+    protected ConstraintLayout.LayoutParams layoutParams;
 
     protected int viewId;
 
@@ -110,23 +107,9 @@ public abstract class ProomBaseView {
 
         if (layoutObj.has(ProomBaseView.P_L)) {
             l = ProomLayoutUtils.scaleSize((float)layoutObj.optDouble(ProomBaseView.P_L));
-            if (!centerLand && !centerPort) {
-                if (parentView == null) {
-                    rootLeft = l;
-                } else if (parentView.rootLeft > Integer.MIN_VALUE) {
-                    rootLeft = parentView.rootLeft + l;
-                }
-            }
         }
         if (layoutObj.has(ProomBaseView.P_T)) {
             t = ProomLayoutUtils.scaleSize((float)layoutObj.optDouble(ProomBaseView.P_T));
-            if (!centerLand && !centerPort) {
-                if (parentView == null) {
-                    rootTop = t;
-                } else if (parentView.rootTop > Integer.MIN_VALUE) {
-                    rootTop = parentView.rootTop + t;
-                }
-            }
         }
         if (layoutObj.has(ProomBaseView.P_W)) {
             w = ProomLayoutUtils.scaleSize((float)layoutObj.optDouble(ProomBaseView.P_W));
@@ -145,11 +128,11 @@ public abstract class ProomBaseView {
 
 
         if (layoutObj.has(ProomBaseView.P_WIDTH_AUTO)) {
-            widthAudo = ProomLayoutUtils.parseBoolean(layoutObj.optString(ProomBaseView.P_WIDTH_AUTO), false);
+            widthAuto = ProomLayoutUtils.parseBoolean(layoutObj.optString(ProomBaseView.P_WIDTH_AUTO), false);
         }
 
         if (layoutObj.has(ProomBaseView.P_HEIGHT_AUTO)) {
-            heightAudo = ProomLayoutUtils.parseBoolean(layoutObj.optString(ProomBaseView.P_HEIGHT_AUTO), false);
+            heightAuto = ProomLayoutUtils.parseBoolean(layoutObj.optString(ProomBaseView.P_HEIGHT_AUTO), false);
         }
 
     }
@@ -199,6 +182,64 @@ public abstract class ProomBaseView {
         return drawable;
     }
 
+    protected ConstraintLayout.LayoutParams calcLayoutParams(ProomRootView rootView, ProomBaseView parentView) {
+        int width = w;
+        int height = h;
+        if (widthAuto) {
+            width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+        }
+        if (heightAuto) {
+            height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+        }
+        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(width, height);
+        int parentId = rootView.getId();
+        if (parentView != null) {
+            parentId = parentView.viewId;
+        }
+        if (centerLand) {
+            lp.leftToLeft = parentId;
+            lp.rightToRight = parentId;
+            if (b > Integer.MIN_VALUE) {
+                lp.bottomToBottom = parentId;
+                lp.bottomMargin = b;
+            } else {
+                lp.topToTop = parentId;
+                lp.topMargin = t;
+            }
+        } else if (centerPort) {
+            lp.topToTop = parentId;
+            lp.bottomToBottom = parentId;
+            if (r > Integer.MIN_VALUE) {
+                lp.rightToRight = parentId;
+                lp.rightMargin = r;
+            } else {
+                lp.leftToLeft = parentId;
+                lp.leftMargin = l;
+            }
+        } else {
+            if (r > Integer.MIN_VALUE) {
+                lp.rightToRight = parentId;
+                lp.rightMargin = r;
+            } else {
+                lp.leftToLeft = parentId;
+                lp.leftMargin = l;
+            }
+            if (b > Integer.MIN_VALUE) {
+                lp.bottomToBottom = parentId;
+                lp.bottomMargin = b;
+            } else {
+                lp.topToTop = parentId;
+                lp.topMargin = t;
+            }
+        }
+
+        return lp;
+    }
+
     public abstract View getView();
+
+    public ConstraintLayout.LayoutParams getLayoutParams() {
+        return layoutParams;
+    }
 
 }

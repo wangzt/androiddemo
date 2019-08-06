@@ -61,9 +61,6 @@ public class ProomRootView {
             int size = child.length();
             for (int i = 0; i < size; i++) {
                 ProomBaseView subView = ProomLayoutManager.parseSubView(child.optJSONObject(i), this, null);
-                if (subView != null && subView.getView() != null) {
-                    rootView.addView(subView.getView());
-                }
             }
         }
     }

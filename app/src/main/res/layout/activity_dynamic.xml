@@ -46,10 +46,38 @@
         android:visibility="gone"
         android:layout_centerInParent="true"/>
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:actualImageScaleType="centerCrop"/>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+        <android.support.constraint.ConstraintLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00ffff">
+
+
+            <View
+                android:id="@+id/left_view"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="#ff0000"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+
+            <TextView
+                app:layout_constraintLeft_toRightOf="@id/left_view"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="fdsfsafsafadfasaxxx"/>
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
     <Button
         android:id="@+id/add_btn"
         android:layout_width="wrap_content"

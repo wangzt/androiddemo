@@ -41,15 +41,15 @@
                     "l": 10,
                     "t": 80,
                     "w": 80,
-                    "h": 50
+                    "h": 50,
+                    "centerLand": true
                 },
-                "text": "centerfafasfasfdfa",
+                "text": "center",
                 "textSize": 12,
                 "textColor": {
                     "color": "FF0000"
                 },
                 "gravity": 0,
-                "ellipsize": 1,
                 "round": {
                     "cornerRadius": 5,
                     "borderWidth": 2,
@@ -60,24 +60,60 @@
             }
         },
         {
-            "name": "image",
-            "desc": "图片测试",
+            "name": "view",
+            "desc": "横向居中",
             "prop": {
                 "layout": {
-                    "l": 10,
-                    "t": 140,
-                    "w": 60,
-                    "h": 60
+                    "t": 10,
+                    "r": 20,
+                    "h": 80,
+                    "widthAuto": true
                 },
-                "round": {
-                    "cornerRadius": 30,
-                    "borderWidth": 2,
-                    "borderColor": {
-                        "color": "FF00FF"
+                "bgColor": {
+                    "color": "ffc107"
+                }
+            },
+            "child": [
+                {
+                    "name": "image",
+                    "desc": "图片测试",
+                    "prop": {
+                        "round": {
+                            "cornerRadius": 30,
+                            "borderWidth": 2,
+                            "borderColor": {
+                                "color": "FF00FF"
+                            }
+                        },
+                        "src": "http://image.huajiao.com/2b04df3ecc1d94afddff082d139c6f15.jpg",
+                        "layout": {
+                            "l": 0,
+                            "t": 10,
+                            "w": 60,
+                            "h": 60
+                        }
                     }
                 },
-                "src": "http://image.huajiao.com/2b04df3ecc1d94afddff082d139c6f15.jpg"
-            }
+                {
+                    "name": "label",
+                    "desc": "文字",
+                    "prop": {
+                        "layout": {
+                            "l": 70,
+                            "centerPort": true,
+                            "widthAuto": true
+                        },
+                        "text": "xxxxxyyyfapdfsafsaf",
+                        "textSize": 15,
+                        "textColor": {
+                            "color": "000000"
+                        },
+                        "bgColor": {
+                            "color": "ffffff"
+                        }
+                    }
+                }
+            ]
         }
     ]
 }

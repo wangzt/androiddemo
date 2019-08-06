@@ -31,24 +31,12 @@ public class ProomImageView extends ProomBaseView {
     protected View generateView(JSONObject jsonObject, ProomRootView rootView, ProomBaseView parentView) {
         view = new SimpleDraweeView(rootView.getContext());
 
-        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(w, h);
+        layoutParams = calcLayoutParams(rootView, parentView);
+        view.setLayoutParams(layoutParams);
         if (parentView == null) {
-            int rootId = rootView.getId();
-            lp.topToTop = rootId;
-            lp.leftToLeft = rootId;
-            if (centerLand) {
-                lp.rightToRight = rootId;
-            } else if (centerPort) {
-                lp.bottomToBottom = rootId;
-            } else {
-                lp.leftMargin = l;
-                lp.topMargin = t;
-            }
-        } else {
-
+            rootView.addView(view);
         }
 
-        view.setLayoutParams(lp);
         return view;
     }
 
@@ -87,6 +75,7 @@ public class ProomImageView extends ProomBaseView {
             }
         }
 
+        view.setBackgroundColor(Color.RED);
 
         UIUtils.displayImage(view, src);
     }

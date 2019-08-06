@@ -38,76 +38,10 @@ public class ProomLabelView extends ProomBaseView {
     protected View generateView(JSONObject jsonObject, ProomRootView rootView, ProomBaseView parentView) {
         view = new TextView(rootView.getContext());
 
+        layoutParams = calcLayoutParams(rootView, parentView);
+        view.setLayoutParams(layoutParams);
         if (parentView == null) {
-            int width = w;
-            int height = h;
-            if (widthAudo) {
-                width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-            } else if (heightAudo) {
-                height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-            }
-            ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(width, height);
-            int rootId = rootView.getId();
-            if (centerLand) {
-                lp.leftToLeft = rootId;
-                lp.rightToRight = rootId;
-                lp.topToTop = rootId;
-                lp.topMargin = t;
-            } else if (centerPort) {
-                lp.topToTop = rootId;
-                lp.bottomToBottom = rootId;
-            } else {
-                lp.leftToLeft = rootId;
-                lp.topToTop = rootId;
-                lp.leftMargin = l;
-                lp.topMargin = t;
-            }
-            view.setLayoutParams(lp);
-        } else {
-            if (parentView.isLinearLayout) {
-                int width = w;
-                int height = h;
-                if (widthAudo) {
-                    width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                } else if (heightAudo) {
-                    height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                }
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, height);
-                lp.leftMargin = l;
-                lp.topMargin = t;
-                view.setLayoutParams(lp);
-            } else {
-                int width = w;
-                int height = h;
-                if (widthAudo) {
-                    width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-                } else if (heightAudo) {
-                    height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-                }
-                ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(width, height);
-                int parentId = parentView.viewId;
-                if (centerLand) {
-                    lp.leftToLeft = parentId;
-                    lp.rightToRight = parentId;
-                } else if (centerPort) {
-                    lp.topToTop = parentId;
-                    lp.bottomToBottom = parentId;
-                } else {
-                    if (rootLeft > Integer.MIN_VALUE && rootTop > Integer.MIN_VALUE) {
-                        lp.leftToLeft = rootView.getId();
-                        lp.topToTop = rootView.getId();
-                        lp.leftMargin = rootLeft;
-                        lp.topMargin = rootTop;
-                    } else {
-                        lp.leftToLeft = parentId;
-                        lp.topToTop = parentId;
-                        lp.leftMargin = l;
-                        lp.topMargin = t;
-                    }
-
-                }
-                view.setLayoutParams(lp);
-            }
+            rootView.addView(view);
         }
 
         return view;
