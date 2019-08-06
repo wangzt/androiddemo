@@ -42,7 +42,7 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
 
     private WeakHandler mHandler = new WeakHandler(this);
     private static final int MSG_LAYOUT = 100;
-    private static final int MSG_START_MARQUEE = 101;
+    private static final int MSG_ON_ATTACH = 101;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,14 +112,12 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
                 RelativeLayout container = findViewById(R.id.dynamic_container);
                 container.addView(rootView.getView());
                 ProomLayoutManager.getInstance().setRootView(rootView);
-                if (rootView.hasMarquee()) {
-                    mHandler.sendEmptyMessage(MSG_START_MARQUEE);
-                }
+                mHandler.sendEmptyMessage(MSG_ON_ATTACH);
                 break;
-            case MSG_START_MARQUEE:
+            case MSG_ON_ATTACH:
                 ProomRootView rView = ProomLayoutManager.getInstance().getRootView();
                 if (rView != null) {
-                    rView.setMarquee();
+                    rView.onAttach();
                 }
                 break;
         }

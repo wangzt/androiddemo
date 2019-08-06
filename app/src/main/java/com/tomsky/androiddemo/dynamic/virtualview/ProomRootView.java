@@ -86,17 +86,17 @@ public class ProomRootView {
         }
     }
 
+    public void onAttach() {
+        if (marqueeLabelViewList.size() > 0) {
+            for (ProomLabelView labelView: marqueeLabelViewList) {
+                labelView.onAttach();
+            }
+        }
+
+    }
+
     public void addMarqueeLabelView(ProomLabelView labelView) {
         marqueeLabelViewList.add(labelView);
     }
 
-    public boolean hasMarquee() {
-        return marqueeLabelViewList.size() > 0;
-    }
-
-    public void setMarquee() {
-        for (ProomLabelView labelView: marqueeLabelViewList) {
-            labelView.setMarquee();
-        }
-    }
 }

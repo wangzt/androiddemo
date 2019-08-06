@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tomsky.androiddemo.dynamic.ProomLayoutUtils;
-import com.tomsky.androiddemo.util.UIUtils;
 
 import org.json.JSONObject;
 
@@ -27,9 +26,9 @@ public class ProomLabelView extends ProomBaseView {
     private String text;
     private float textSize;
     private int maxWidth;
-    private int ellipsize;
+    private int ellipsize; // 0:省略号, 1: 截断, 2:跑马灯
     private int maxLines = 1;
-    private int gravity;
+    private int gravity; // 0: left, 1: right, 2: center
 
     private TextView view;
 
@@ -146,11 +145,11 @@ public class ProomLabelView extends ProomBaseView {
         if (ellipsize == 0) {
             view.setEllipsize(TextUtils.TruncateAt.END);
             hasMarqueue = false;
+        } else if (ellipsize == 1) {
+            hasMarqueue = false;
         } else if (ellipsize == 2) {
             hasMarqueue = true;
             rootView.addMarqueeLabelView(this);
-        } else {
-            hasMarqueue = false;
         }
 
         if (maxWidth > 0) {
@@ -183,11 +182,8 @@ public class ProomLabelView extends ProomBaseView {
         return view;
     }
 
-    public boolean hasMarquee() {
-        return hasMarqueue;
-    }
-
-    public void setMarquee() {
+    @Override
+    public void onAttach() {
         if (view != null) {
             view.setEllipsize(TextUtils.TruncateAt.MARQUEE);
             view.setSelected(true);

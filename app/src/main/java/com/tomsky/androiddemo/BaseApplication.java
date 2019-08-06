@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.tencent.mmkv.MMKV;
 
 /**
@@ -19,6 +20,7 @@ public class BaseApplication extends Application {
         mContext = this;
         String rootDir = MMKV.initialize(this);
         Log.d("wzt-kv", "kv root: "+rootDir);
+        Fresco.initialize(this);
     }
 
     public static Context getContext() {

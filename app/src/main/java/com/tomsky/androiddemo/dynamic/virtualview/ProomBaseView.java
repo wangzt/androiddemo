@@ -85,7 +85,11 @@ public abstract class ProomBaseView {
 
     protected abstract View generateView(JSONObject jsonObject, ProomRootView rootView, ProomBaseView parentView);
 
+    protected abstract void parseSubProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView);
+
     protected abstract void parseData(JSONObject dataObject);
+
+    protected abstract void onAttach();
 
     protected void parseProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView) {
 
@@ -150,7 +154,6 @@ public abstract class ProomBaseView {
 
     }
 
-    protected abstract void parseSubProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView);
 
     protected void parseBackground(View view, JSONObject bgColorObj, JSONObject roundObj) {
         if (bgColorObj != null) {
@@ -191,7 +194,7 @@ public abstract class ProomBaseView {
         }
 
         if (cornerRadius > 0) {
-            drawable.setCornerRadius((float) cornerRadius);
+            drawable.setCornerRadius(ProomLayoutUtils.scaleFloatSize((float) cornerRadius));
         }
         return drawable;
     }

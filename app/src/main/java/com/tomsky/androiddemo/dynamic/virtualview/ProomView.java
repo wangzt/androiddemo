@@ -185,6 +185,11 @@ public class ProomView extends ProomBaseView {
     }
 
     @Override
+    protected void onAttach() {
+
+    }
+
+    @Override
     public View getView() {
         return view;
     }

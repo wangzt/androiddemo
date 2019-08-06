@@ -46,6 +46,10 @@
         android:visibility="gone"
         android:layout_centerInParent="true"/>
 
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:actualImageScaleType="centerCrop"/>
     <Button
         android:id="@+id/add_btn"
         android:layout_width="wrap_content"

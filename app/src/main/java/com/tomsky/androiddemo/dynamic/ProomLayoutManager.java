@@ -3,6 +3,7 @@ package com.tomsky.androiddemo.dynamic;
 import android.content.Context;
 
 import com.tomsky.androiddemo.dynamic.virtualview.ProomBaseView;
+import com.tomsky.androiddemo.dynamic.virtualview.ProomImageView;
 import com.tomsky.androiddemo.dynamic.virtualview.ProomLabelView;
 import com.tomsky.androiddemo.dynamic.virtualview.ProomView;
 import com.tomsky.androiddemo.dynamic.virtualview.ProomRootView;
@@ -57,6 +58,8 @@ public class ProomLayoutManager {
             subView = new ProomView();
         } else if (ProomLabelView.NAME.equals(name)) {
             subView = new ProomLabelView();
+        } else if (ProomImageView.NAME.equals(name)) {
+            subView = new ProomImageView();
         }
 
         if (subView != null) {
