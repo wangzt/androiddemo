@@ -22,8 +22,6 @@ public class ProomView extends ProomBaseView {
 
     private List<ProomBaseView> child = new ArrayList<>();
 
-    private boolean addRoot = true;
-
     @Override
     protected View generateView(JSONObject jsonObject, ProomRootView rootView, ProomBaseView parentView) {
         child.clear();
@@ -45,23 +43,10 @@ public class ProomView extends ProomBaseView {
         int size = subViews.size();
         if (size > 0) {
             if (widthAuto || heightAuto) {
-                addRoot = false;
+                addToLayout(rootView, parentView, subViews);
+            } else {
+                addToRoot(rootView, parentView, subViews);
             }
-            ConstraintLayout layout = new ConstraintLayout(rootView.getContext());
-            layoutParams = calcLayoutParams(rootView, parentView);
-            layout.setLayoutParams(layoutParams);
-            if (parentView == null) {
-                rootView.addView(layout);
-            }
-            for (int i = 0; i < size; i++) {
-                ProomBaseView subView = subViews.get(i);
-                if (addRoot) {
-                    rootView.addView(subView.getView());
-                } else {
-                    layout.addView(subView.getView());
-                }
-            }
-            view = layout;
         } else {
             view = new View(rootView.getContext());
             layoutParams = calcLayoutParams(rootView, parentView);
@@ -76,6 +61,31 @@ public class ProomView extends ProomBaseView {
         }
 
         return view;
+    }
+
+    private void addToLayout(ProomRootView rootView, ProomBaseView parentView, List<ProomBaseView> subViews) {
+        ConstraintLayout layout = new ConstraintLayout(rootView.getContext());
+        layoutParams = calcLayoutParams(rootView, parentView);
+        layout.setLayoutParams(layoutParams);
+        if (parentView == null) {
+            rootView.addView(layout);
+        }
+        for (ProomBaseView subView: subViews) {
+            layout.addView(subView.getView());
+        }
+        view = layout;
+    }
+
+    private void addToRoot(ProomRootView rootView, ProomBaseView parentView, List<ProomBaseView> subViews) {
+        view = new View(rootView.getContext());
+        layoutParams = calcLayoutParams(rootView, parentView);
+        view.setLayoutParams(layoutParams);
+        if (parentView == null) {
+            rootView.addView(view);
+        }
+        for (ProomBaseView subView: subViews) {
+            rootView.addView(subView.getView());
+        }
     }
 
     @Override

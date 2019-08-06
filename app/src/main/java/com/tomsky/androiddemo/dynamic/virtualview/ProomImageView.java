@@ -75,8 +75,6 @@ public class ProomImageView extends ProomBaseView {
             }
         }
 
-        view.setBackgroundColor(Color.RED);
-
         UIUtils.displayImage(view, src);
     }
 
