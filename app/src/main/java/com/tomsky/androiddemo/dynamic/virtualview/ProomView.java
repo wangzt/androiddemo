@@ -20,14 +20,13 @@ public class ProomView extends ProomBaseView {
 
     private View view;
 
-    @Override
-    protected void parseProp(JSONObject pObj, ConstraintLayout rootView, ProomBaseView parentView) {
-        super.parseProp(pObj, rootView, parentView);
+    private List<ProomBaseView> child = new ArrayList<>();
 
-    }
 
     @Override
-    protected View generateView(JSONObject jsonObject, ConstraintLayout rootView, ProomBaseView parentView) {
+    protected View generateView(JSONObject jsonObject, ProomRootView rootView, ProomBaseView parentView) {
+        child.clear();
+
         List<ProomBaseView> subViews = new ArrayList<>();
         boolean absoluteConstraint = false; // 是否需要做成独立的ConstraintLayout
         if (jsonObject.has(P_CHILD)) {
@@ -119,6 +118,7 @@ public class ProomView extends ProomBaseView {
                     }
                 }
             }
+            child.addAll(subViews);
         } else {
             view = new View(rootView.getContext());
             int rootId = rootView.getId();
@@ -143,12 +143,14 @@ public class ProomView extends ProomBaseView {
                         view.setLayoutParams(lp);
                     } else {
                         ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(w, h);
-                        lp.leftToLeft = rootId;
-                        lp.topToTop = rootId;
                         if (rootLeft > Integer.MIN_VALUE && rootTop > Integer.MIN_VALUE) {
+                            lp.leftToLeft = rootId;
+                            lp.topToTop = rootId;
                             lp.leftMargin = rootLeft;
                             lp.topMargin = rootTop;
                         } else {
+                            lp.leftToLeft = parentView.viewId;
+                            lp.topToTop = parentView.viewId;
                             lp.leftMargin = l;
                             lp.topMargin = t;
                         }
@@ -170,6 +172,16 @@ public class ProomView extends ProomBaseView {
         }
 
         return view;
+    }
+
+    @Override
+    protected void parseSubProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView) {
+
+    }
+
+    @Override
+    protected void parseData(JSONObject jsonObject) {
+
     }
 
     @Override

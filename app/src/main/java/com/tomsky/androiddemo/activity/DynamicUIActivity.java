@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.dynamic.ProomLayoutManager;
 import com.tomsky.androiddemo.dynamic.virtualview.ProomRootView;
+import com.tomsky.androiddemo.util.RegexUtils;
 import com.tomsky.androiddemo.util.UIUtils;
 import com.tomsky.androiddemo.util.WeakHandler;
 
@@ -29,6 +30,8 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DynamicUIActivity extends FragmentActivity implements WeakHandler.IHandler {
 
@@ -39,6 +42,7 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
 
     private WeakHandler mHandler = new WeakHandler(this);
     private static final int MSG_LAYOUT = 100;
+    private static final int MSG_START_MARQUEE = 101;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,15 +90,46 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
 
 
 //        setBorder();
+
+//        String src = "xx <aa <bbb> <bbb> aa> yy";
+//
+//        String regex = "<[^<>]*(((?'Open'<)[^<>]*)+((?'-Open'>)[^<>]*)+)*(?(Open)(?!))>";
+//
+//        Pattern r = Pattern.compile("<[^<>]*((\\(?'Open'<)[^<>]*)+(\\(?'-Open'>)[^<>]*\\)+\\)*\\(?(Open)(?!)\\)>");
+//        Matcher m = r.matcher(src);
+//        while (m.find()) {
+//            String key = m.group(1);
+//            Log.d("wzt-regex", "key:"+key);
+//        }
+
     }
 
     @Override
     public void handleMessage(Message msg) {
-        if (msg.what == MSG_LAYOUT) {
-            ProomRootView rootView = (ProomRootView) msg.obj;
-            RelativeLayout container = findViewById(R.id.dynamic_container);
-            container.addView(rootView.getView());
+        switch (msg.what) {
+            case MSG_LAYOUT:
+                ProomRootView rootView = (ProomRootView) msg.obj;
+                RelativeLayout container = findViewById(R.id.dynamic_container);
+                container.addView(rootView.getView());
+                ProomLayoutManager.getInstance().setRootView(rootView);
+                if (rootView.hasMarquee()) {
+                    mHandler.sendEmptyMessage(MSG_START_MARQUEE);
+                }
+                break;
+            case MSG_START_MARQUEE:
+                ProomRootView rView = ProomLayoutManager.getInstance().getRootView();
+                if (rView != null) {
+                    rView.setMarquee();
+                }
+                break;
         }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ProomLayoutManager.getInstance().onDestroy();
     }
 
     private String readLayout() {

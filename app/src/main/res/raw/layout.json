@@ -32,6 +32,32 @@
                     }
                 }
             }
+        },
+        {
+            "name": "label",
+            "desc": "文字",
+            "prop": {
+                "layout": {
+                    "l": 10,
+                    "t": 80,
+                    "w": 80,
+                    "h": 50,
+                    "centerLand": true
+                },
+                "text": "center",
+                "textSize": 12,
+                "textColor": {
+                    "color": "FF0000"
+                },
+                "gravity": 2,
+                "round": {
+                    "cornerRadius": 5,
+                    "borderWidth": 2,
+                    "borderColor": {
+                        "color": "0000ff"
+                    }
+                }
+            }
         }
     ]
 }

@@ -22,6 +22,19 @@ public class ProomLayoutUtils {
         return (int) (scale * size);
     }
 
+    public static float scaleFloatSize(float size) {
+        if (scale < 0) {
+            DisplayMetrics metrics = BaseApplication.getContext().getResources().getDisplayMetrics();
+            int width = metrics.widthPixels;
+            int height = metrics.heightPixels;
+            if (width > height) {
+                width = height;
+            }
+            scale = (width * 1.0f)/BASE_WIDTH;
+        }
+        return scale * size;
+    }
+
     public static int parseColor(String colorString, float alpha) {
         if (TextUtils.isEmpty(colorString) || colorString.length() != 6) {
             throw new IllegalArgumentException("Unknown color");

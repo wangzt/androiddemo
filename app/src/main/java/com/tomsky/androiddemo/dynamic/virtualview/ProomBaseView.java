@@ -4,7 +4,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.tomsky.androiddemo.dynamic.ProomLayoutUtils;
 
@@ -34,6 +33,8 @@ public abstract class ProomBaseView {
     public static final String P_BORDER_WIDTH = "borderWidth";
     public static final String P_BORDER_COLOR = "borderColor";
 
+    public static final String P_DATA = "data";
+
     protected int l = Integer.MIN_VALUE;
     protected int t = Integer.MIN_VALUE;
     protected int w = Integer.MIN_VALUE;
@@ -41,6 +42,8 @@ public abstract class ProomBaseView {
 
     protected int r = Integer.MIN_VALUE;
     protected int b = Integer.MIN_VALUE;
+
+    protected int borderWidth = 0;
 
     protected boolean centerLand = false;
     protected boolean centerPort = false;
@@ -62,7 +65,7 @@ public abstract class ProomBaseView {
 
     protected boolean valid = true;
     
-    public final void parseView(JSONObject jsonObject, ConstraintLayout rootView, ProomBaseView parentView) {
+    public final void parseView(JSONObject jsonObject, ProomRootView rootView, ProomBaseView parentView) {
         viewId = ViewCompat.generateViewId();
 
         JSONObject pObj = jsonObject.optJSONObject(ProomBaseView.P_PROP);
@@ -75,12 +78,16 @@ public abstract class ProomBaseView {
         if (view != null) {
             parseBackground(view, pObj.optJSONObject(ProomBaseView.P_BG_COLOR), pObj.optJSONObject(ProomBaseView.P_ROUND));
         }
+        parseSubProp(pObj, rootView, parentView);
 
+        parseData(jsonObject.optJSONObject(ProomBaseView.P_DATA));
     }
 
-    protected abstract View generateView(JSONObject jsonObject, ConstraintLayout rootView, ProomBaseView parentView);
+    protected abstract View generateView(JSONObject jsonObject, ProomRootView rootView, ProomBaseView parentView);
 
-    protected void parseProp(JSONObject pObj, ConstraintLayout rootView, ProomBaseView parentView) {
+    protected abstract void parseData(JSONObject dataObject);
+
+    protected void parseProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView) {
 
         JSONObject layoutObj = pObj.optJSONObject(ProomBaseView.P_LAYOUT);
 
@@ -143,7 +150,9 @@ public abstract class ProomBaseView {
 
     }
 
-    private void parseBackground(View view, JSONObject bgColorObj, JSONObject roundObj) {
+    protected abstract void parseSubProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView);
+
+    protected void parseBackground(View view, JSONObject bgColorObj, JSONObject roundObj) {
         if (bgColorObj != null) {
             try {
                 int color = ProomLayoutUtils.parseColor(bgColorObj.optString(ProomBaseView.P_COLOR), (float)bgColorObj.optDouble(ProomBaseView.P_ALPHA, -1));
@@ -169,14 +178,15 @@ public abstract class ProomBaseView {
 
     private GradientDrawable parseRoundDrawable(JSONObject roundObj) {
         GradientDrawable drawable = new GradientDrawable();
-        double borderWidth = roundObj.optDouble(ProomBaseView.P_BORDER_WIDTH, -1);
+        double borderW = roundObj.optDouble(ProomBaseView.P_BORDER_WIDTH, -1);
         double cornerRadius = roundObj.optDouble(ProomBaseView.P_CORNER_RADIUS, -1);
 
         JSONObject borderColorObj = roundObj.optJSONObject(ProomBaseView.P_BORDER_COLOR);
         if (borderColorObj != null) {
             int borderColor = ProomLayoutUtils.parseColor(borderColorObj.optString(ProomBaseView.P_COLOR), (float)borderColorObj.optDouble(ProomBaseView.P_ALPHA, -1));
-            if (borderWidth > 0) {
-                drawable.setStroke(ProomLayoutUtils.scaleSize((float) borderWidth), borderColor);
+            if (borderW > 0) {
+                borderWidth = ProomLayoutUtils.scaleSize((float) borderW);
+                drawable.setStroke(borderWidth, borderColor);
             }
         }
 
