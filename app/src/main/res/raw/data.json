@@ -1,0 +1,53 @@
+{
+    "sync": {
+        "p_game": {
+            "scores": [
+                {
+                    "uid": "100",
+                    "nickname": "nickname_100",
+                    "cc": {
+                        "value": [
+                            1, 10, 100
+                        ]
+                    }
+
+                },
+                {
+                    "uid": "200",
+                    "nickname": "nickname_200",
+                    "cc": {
+                        "value": [
+                            2, 20, 200
+                        ]
+                    }
+
+                },
+                {
+                    "uid": "300",
+                    "nickname": "nickname_300",
+                    "cc": {
+                        "value": [
+                            3, 30, 300
+                        ]
+                    }
+                }
+            ]
+        },
+
+        "p_user": [
+            {
+                "pos": 1,
+                "uid": "100"
+            },
+            {
+                "pos": 2,
+                "uid": "200"
+            },
+            {
+                "pos": 3,
+                "uid": "300"
+            }
+        ]
+    }
+
+}

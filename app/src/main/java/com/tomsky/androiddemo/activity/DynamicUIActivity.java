@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tomsky.androiddemo.R;
+import com.tomsky.androiddemo.dynamic.ProomDataCenter;
 import com.tomsky.androiddemo.dynamic.ProomLayoutManager;
 import com.tomsky.androiddemo.dynamic.virtualview.ProomRootView;
 import com.tomsky.androiddemo.util.RegexUtils;
@@ -53,15 +54,16 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
         findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (hasAdd) return;
-                hasAdd = true;
-
-                new Thread() {
-                    @Override
-                    public void run() {
-                        addSubView();
-                    }
-                }.start();
+                ProomDataCenter.parseKey(readData());
+//                if (hasAdd) return;
+//                hasAdd = true;
+//
+//                new Thread() {
+//                    @Override
+//                    public void run() {
+//                        addSubView();
+//                    }
+//                }.start();
             }
         });
 //
@@ -102,6 +104,7 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
 //            Log.d("wzt-regex", "key:"+key);
 //        }
 
+
     }
 
     @Override
@@ -134,6 +137,26 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
         String result = "";
         try {
             InputStream is = getResources().openRawResource(R.raw.layout);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            int len = -1;
+            byte[] buffer = new byte[1024];
+            while ((len = is.read(buffer)) != -1) {
+                baos.write(buffer, 0, len);
+            }
+            result = baos.toString();
+            is.close();
+        } catch (Exception e) {
+            Log.e("wzt-layout", "read layout error", e);
+        }
+
+        return result;
+    }
+
+    private String readData() {
+        String result = "";
+        try {
+            InputStream is = getResources().openRawResource(R.raw.data);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
             int len = -1;

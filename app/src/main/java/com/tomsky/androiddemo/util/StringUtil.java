@@ -4,6 +4,7 @@
  */
 package com.tomsky.androiddemo.util;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,6 +39,15 @@ public class StringUtil {
         Matcher matcher = pattern.matcher(str);
         String result = matcher.replaceAll("");
         return result;
+    }
+
+    public static String listToString(List list, char separator) {
+        StringBuilder sb = new StringBuilder();
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            sb.append(list.get(i)).append(separator);
+        }
+        return sb.toString().substring(0, sb.toString().length() - 1);
     }
     
 }
