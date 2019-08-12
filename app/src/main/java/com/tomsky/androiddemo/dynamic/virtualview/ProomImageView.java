@@ -42,40 +42,62 @@ public class ProomImageView extends ProomBaseView {
 
     @Override
     protected void parseSubProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView) {
-        src = pObj.optString(P_SRC);
-        defaultSrc = pObj.optString(P_DEFAULT_SRC);
-        contentMode = pObj.optInt(P_CONTENT_MODE, 0);
+        updateViewProp(pObj, rootView, parentView);
+    }
 
-        GenericDraweeHierarchy hierarchy = view.getHierarchy();
-        if (contentMode == 0) {
-            hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP);
-        } else if (contentMode == 1) {
-            hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
-        } else if (contentMode == 2) {
-            hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_XY);
+    private void updateViewProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView) {
+        if (pObj.has(P_DEFAULT_SRC)) {
+            defaultSrc = pObj.optString(P_DEFAULT_SRC);
+            // TODO:显示默认图
+//            GenericDraweeHierarchy hierarchy = view.getHierarchy();
+//            hierarchy.setFailureImage();
         }
 
-        JSONObject roundObj = pObj.optJSONObject(P_ROUND);
-        if (roundObj != null) {
-            double borderW = roundObj.optDouble(ProomBaseView.P_BORDER_WIDTH, -1);
-            double cornerRadius = roundObj.optDouble(ProomBaseView.P_CORNER_RADIUS, -1);
-
-            JSONObject borderColorObj = roundObj.optJSONObject(ProomBaseView.P_BORDER_COLOR);
-
-            if (cornerRadius > 0) {
-                RoundingParams roundingParams = RoundingParams.fromCornersRadius(ProomLayoutUtils.scaleFloatSize((float)cornerRadius));
-                if (borderColorObj != null) {
-                    int borderColor = ProomLayoutUtils.parseColor(borderColorObj.optString(ProomBaseView.P_COLOR), (float)borderColorObj.optDouble(ProomBaseView.P_ALPHA, -1));
-                    if (borderW > 0) {
-                        borderWidth = ProomLayoutUtils.scaleSize((float) borderW);
-                        roundingParams.setBorder(borderColor, borderWidth);
-                    }
-                }
-                hierarchy.setRoundingParams(roundingParams);
+        if (pObj.has(P_CONTENT_MODE)) {
+            contentMode = pObj.optInt(P_CONTENT_MODE, 0);
+            GenericDraweeHierarchy hierarchy = view.getHierarchy();
+            if (contentMode == 0) {
+                hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP);
+            } else if (contentMode == 1) {
+                hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
+            } else if (contentMode == 2) {
+                hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_XY);
             }
+        } else if (!hasAttach) {
+            GenericDraweeHierarchy hierarchy = view.getHierarchy();
+            hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP);
         }
 
-        UIUtils.displayImage(view, src);
+
+
+        if (pObj.has(P_ROUND)) {
+            JSONObject roundObj = pObj.optJSONObject(P_ROUND);
+            if (roundObj != null) {
+                double borderW = roundObj.optDouble(ProomBaseView.P_BORDER_WIDTH, -1);
+                double cornerRadius = roundObj.optDouble(ProomBaseView.P_CORNER_RADIUS, -1);
+
+                JSONObject borderColorObj = roundObj.optJSONObject(ProomBaseView.P_BORDER_COLOR);
+
+                if (cornerRadius > 0) {
+                    GenericDraweeHierarchy hierarchy = view.getHierarchy();
+                    RoundingParams roundingParams = RoundingParams.fromCornersRadius(ProomLayoutUtils.scaleFloatSize((float)cornerRadius));
+                    if (borderColorObj != null) {
+                        int borderColor = ProomLayoutUtils.parseColor(borderColorObj.optString(ProomBaseView.P_COLOR), (float)borderColorObj.optDouble(ProomBaseView.P_ALPHA, -1));
+                        if (borderW > 0) {
+                            borderWidth = ProomLayoutUtils.scaleSize((float) borderW);
+                            roundingParams.setBorder(borderColor, borderWidth);
+                        }
+                    }
+                    hierarchy.setRoundingParams(roundingParams);
+                }
+            }
+
+        }
+
+        if (pObj.has(P_SRC)) {
+            src = pObj.optString(P_SRC);
+            UIUtils.displayImage(view, src);
+        }
     }
 
     @Override
@@ -85,7 +107,7 @@ public class ProomImageView extends ProomBaseView {
 
     @Override
     protected void onAttach() {
-
+        hasAttach = true;
     }
 
     @Override
@@ -96,5 +118,14 @@ public class ProomImageView extends ProomBaseView {
     @Override
     protected void updateViewValue(String prop, String value) {
 
+    }
+
+    @Override
+    public void updateViewPropByH5(ProomRootView rootView, JSONObject pObj) {
+        if (parseLayout(pObj)) {
+            layoutParams = calcLayoutParams(rootView, parentView);
+            view.setLayoutParams(layoutParams);
+        }
+        updateViewProp(pObj, rootView, parentView);
     }
 }

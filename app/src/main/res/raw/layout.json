@@ -17,6 +17,7 @@
         {
             "name": "view",
             "desc": "view测试",
+            "id": "test_circle",
             "prop": {
                 "layout": {
                     "l": 10,
@@ -36,6 +37,7 @@
         {
             "name": "label",
             "desc": "文字",
+            "id": "test_label",
             "prop": {
                 "layout": {
                     "l": 10,
@@ -57,14 +59,12 @@
                         "color": "0000ff"
                     }
                 }
-            },
-            "data" : {
-                "text" : "sync:p_game.scores[uid=$sync:p_user[pos=2].uid].nickname"
             }
         },
         {
             "name": "view",
             "desc": "横向居中",
+            "id": "test_container",
             "prop": {
                 "layout": {
                     "t": 10,

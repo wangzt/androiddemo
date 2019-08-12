@@ -2,7 +2,6 @@ package com.tomsky.androiddemo.dynamic.virtualview;
 
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
-import android.widget.LinearLayout;
 
 
 import com.tomsky.androiddemo.dynamic.ProomLayoutManager;
@@ -107,4 +106,13 @@ public class ProomView extends ProomBaseView {
     protected void updateViewValue(String prop, String value) {
 
     }
+
+    @Override
+    public void updateViewPropByH5(ProomRootView rootView, JSONObject pObj) {
+        if (parseLayout(pObj)) {
+            layoutParams = calcLayoutParams(rootView, parentView);
+            view.setLayoutParams(layoutParams);
+        }
+    }
+
 }

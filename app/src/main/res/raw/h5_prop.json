@@ -1,0 +1,14 @@
+{
+    "layout": {
+        "l": 10,
+        "t": 120,
+        "w": 180,
+        "h": 50
+    },
+    "text": "center",
+    "textSize": 15,
+    "textColor": {
+        "color": "FFFF00"
+    },
+    "gravity": 2
+}

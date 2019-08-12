@@ -141,8 +141,7 @@ public class Expression {
         if (canCalc) {
             if (currentFrame != null) {
                 String result = currentFrame.calcValue(data);
-                Log.d(TAG, currentFrame.propString());
-                Log.d(TAG, "result:"+result);
+                Log.d(TAG, currentFrame.propString()+" : " + result);
                 value = result;
             }
         }

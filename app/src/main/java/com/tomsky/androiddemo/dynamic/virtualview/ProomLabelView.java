@@ -6,12 +6,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.tomsky.androiddemo.dynamic.Expression;
 import com.tomsky.androiddemo.dynamic.ProomLayoutUtils;
 
 import org.json.JSONObject;
-
-import java.util.Collection;
 
 public class ProomLabelView extends ProomBaseView {
     public static final String NAME = "label";
@@ -50,59 +47,83 @@ public class ProomLabelView extends ProomBaseView {
 
     @Override
     protected void parseSubProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView) {
-        text = pObj.optString(P_TEXT);
-        textSize = ProomLayoutUtils.scaleFloatSize((float) pObj.optDouble(P_TEXT_SIZE));
-        gravity = pObj.optInt(P_GRAVITY, 0);
-        maxLines = pObj.optInt(P_MAX_LINES, 1);
-        double pWidth = pObj.optDouble(P_MAX_WIDTH, -1f);
-        if (pWidth > 0) {
-            maxWidth = ProomLayoutUtils.scaleSize((float) pWidth);
-        }
-        ellipsize = pObj.optInt(P_ELLIPSIZE, 0);
-
-        view.setText(text);
-        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
-
-        if (gravity == 0) {
-            view.setGravity(Gravity.CENTER_VERTICAL|Gravity.LEFT);
-        } else if (gravity == 1) {
-            view.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
-        } else if (gravity == 2) {
-            view.setGravity(Gravity.CENTER);
-        }
-
-        if (maxLines == 1) {
-            view.setSingleLine(true);
-        } else {
-            view.setMaxLines(maxLines);
-        }
-
-        if (ellipsize == 0) {
-            view.setEllipsize(TextUtils.TruncateAt.END);
-            hasMarqueue = false;
-        } else if (ellipsize == 1) {
-            hasMarqueue = false;
-        } else if (ellipsize == 2) {
-            hasMarqueue = true;
-            rootView.addMarqueeLabelView(this);
-        }
-
-        if (maxWidth > 0) {
-            view.setMaxWidth(maxWidth);
-        }
+        updateViewProp(pObj, rootView, parentView);
         if (borderWidth > 0) {
             int padding = borderWidth;
             view.setPadding(padding, padding, padding, padding);
         }
+    }
+
+    private void updateViewProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView) {
+        if (pObj.has(P_TEXT)) {
+            text = pObj.optString(P_TEXT);
+            view.setText(text);
+        }
+        if (pObj.has(P_TEXT_SIZE)) {
+            textSize = ProomLayoutUtils.scaleFloatSize((float) pObj.optDouble(P_TEXT_SIZE));
+            view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        }
+        if (pObj.has(P_GRAVITY)) {
+            gravity = pObj.optInt(P_GRAVITY, 0);
+            if (gravity == 0) {
+                view.setGravity(Gravity.CENTER_VERTICAL|Gravity.LEFT);
+            } else if (gravity == 1) {
+                view.setGravity(Gravity.CENTER_VERTICAL|Gravity.RIGHT);
+            } else if (gravity == 2) {
+                view.setGravity(Gravity.CENTER);
+            }
+        }
+
+        if (pObj.has(P_MAX_LINES)) {
+            maxLines = pObj.optInt(P_MAX_LINES, 1);
+            if (maxLines == 1) {
+                view.setSingleLine(true);
+            } else {
+                view.setMaxLines(maxLines);
+            }
+        } else if (!hasAttach) {
+            maxLines = 1;
+            view.setSingleLine(true);
+        }
 
 
-        JSONObject colorObj = pObj.optJSONObject(P_TEXT_COLOR);
-        if (colorObj != null) {
-            try {
-                int color = ProomLayoutUtils.parseColor(colorObj.optString(ProomBaseView.P_COLOR), (float)colorObj.optDouble(ProomBaseView.P_ALPHA, -1));
-                view.setTextColor(color);
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (pObj.has(P_MAX_WIDTH)) {
+            double pWidth = pObj.optDouble(P_MAX_WIDTH, -1f);
+            if (pWidth > 0) {
+                maxWidth = ProomLayoutUtils.scaleSize((float) pWidth);
+            }
+            if (maxWidth > 0) {
+                view.setMaxWidth(maxWidth);
+            }
+        }
+
+        if (pObj.has(P_ELLIPSIZE)) {
+            ellipsize = pObj.optInt(P_ELLIPSIZE, 0);
+            if (ellipsize == 0) {
+                view.setEllipsize(TextUtils.TruncateAt.END);
+                hasMarqueue = false;
+            } else if (ellipsize == 1) {
+                hasMarqueue = false;
+            } else if (ellipsize == 2) {
+                if (!hasMarqueue) {
+                    hasMarqueue = true;
+                    rootView.addMarqueeLabelView(this);
+                }
+            }
+        } else if (!hasAttach) { // 第一次没有配置
+            hasMarqueue = false;
+            view.setEllipsize(TextUtils.TruncateAt.END);
+        }
+
+        if (pObj.has(P_TEXT_COLOR)) {
+            JSONObject colorObj = pObj.optJSONObject(P_TEXT_COLOR);
+            if (colorObj != null) {
+                try {
+                    int color = ProomLayoutUtils.parseColor(colorObj.optString(ProomBaseView.P_COLOR), (float)colorObj.optDouble(ProomBaseView.P_ALPHA, -1));
+                    view.setTextColor(color);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -122,6 +143,7 @@ public class ProomLabelView extends ProomBaseView {
                 view.setFocusableInTouchMode(true);
                 view.setMarqueeRepeatLimit(-1);
             }
+            hasAttach = true;
         }
     }
 
@@ -135,4 +157,19 @@ public class ProomLabelView extends ProomBaseView {
             }
         }
     }
+
+    @Override
+    public void updateViewPropByH5(ProomRootView rootView, JSONObject pObj) {
+        if (parseLayout(pObj)) {
+            layoutParams = calcLayoutParams(rootView, parentView);
+            view.setLayoutParams(layoutParams);
+        }
+        updateViewProp(pObj, rootView, parentView);
+        if (view != null) {
+            if (pObj.has(ProomBaseView.P_BG_COLOR) || pObj.has(ProomBaseView.P_ROUND)) {
+                parseBackground(view, pObj.optJSONObject(ProomBaseView.P_BG_COLOR), pObj.optJSONObject(ProomBaseView.P_ROUND));
+            }
+        }
+    }
+
 }

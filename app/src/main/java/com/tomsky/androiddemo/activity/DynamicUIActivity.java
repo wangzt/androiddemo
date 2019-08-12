@@ -93,6 +93,21 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
                 }.start();
             }
         });
+
+        findViewById(R.id.h5_update_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    String str = readKeyData(R.raw.h5_prop);
+                    JSONObject pObj = new JSONObject(str);
+                    ProomLayoutManager.getInstance().updateViewPropById("test_label", pObj);
+                } catch (Exception e) {
+                    Log.e("wzt-update", "h5-error", e);
+                }
+
+
+            }
+        });
 //
 //        TextView tv = findViewById(R.id.test_text);
 //        tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);

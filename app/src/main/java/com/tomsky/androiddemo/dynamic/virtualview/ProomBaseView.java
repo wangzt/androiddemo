@@ -73,11 +73,15 @@ public abstract class ProomBaseView implements ProomDataObsever {
      * ======================================
      */
 
+    protected ProomBaseView parentView;
+
     protected ConstraintLayout.LayoutParams layoutParams;
 
     protected int viewId; // 对应view的id
 
     protected boolean valid = true;
+
+    protected boolean hasAttach = false;
 
     protected boolean dataChanged = false;
 
@@ -97,7 +101,9 @@ public abstract class ProomBaseView implements ProomDataObsever {
         }
         ProomLayoutManager.getInstance().addChildView(id, this);
 
-        parseProp(pObj, rootView, parentView);
+        if (!parseLayout(pObj)) {
+            valid = false;
+        }
         View view = generateView(jsonObject, rootView, parentView);
         if (view != null) {
             parseBackground(view, pObj.optJSONObject(ProomBaseView.P_BG_COLOR), pObj.optJSONObject(ProomBaseView.P_ROUND));
@@ -105,6 +111,8 @@ public abstract class ProomBaseView implements ProomDataObsever {
         parseSubProp(pObj, rootView, parentView);
 
         parseData(jsonObject.optJSONObject(ProomBaseView.P_DATA));
+
+        this.parentView = parentView;
     }
 
     /**
@@ -175,17 +183,31 @@ public abstract class ProomBaseView implements ProomDataObsever {
     protected abstract void updateViewValue(String prop, String value);
 
     /**
+     * H5更新本地view属性
+     *
+     * @param rootView
+     * @param pObj
+     */
+    public abstract void updateViewPropByH5(ProomRootView rootView, JSONObject pObj);
+
+    /**
+     * H5更新本地view数据表达式
+     *
+     * @param dataObject
+     */
+    public void updateViewDataByH5(JSONObject dataObject) {
+
+    }
+
+    /**
      * 第一次加入主布局中，主线程调用
      */
     protected abstract void onAttach();
 
-    protected void parseProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView) {
-
-        JSONObject layoutObj = pObj.optJSONObject(ProomBaseView.P_LAYOUT);
-
+    protected boolean parseLayout(JSONObject pObj) {
+        JSONObject layoutObj = pObj.optJSONObject(P_LAYOUT);
         if (layoutObj == null) {
-            valid = false;
-            return;
+            return false;
         }
 
         if (layoutObj.has(ProomBaseView.P_CENTER_LAND)) {
@@ -226,6 +248,7 @@ public abstract class ProomBaseView implements ProomDataObsever {
             heightAuto = ProomLayoutUtils.parseBoolean(layoutObj.optString(ProomBaseView.P_HEIGHT_AUTO), false);
         }
 
+        return true;
     }
 
 

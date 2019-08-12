@@ -51,12 +51,31 @@ public class ProomLayoutManager {
     }
 
     /**
-     * 根据data更新布局的属性
+     * 根据data更新布局的属性，主线程调用
      */
     public void updateViewByData() {
         List<ProomBaseView> views = new ArrayList<>(childViews.values());
         for (ProomBaseView view: views) {
             view.updateViewByData();
+        }
+    }
+
+    /**
+     * H5更新控件属性, 主线程调用
+     *
+     * @param id
+     * @param pObj
+     */
+    public void updateViewPropById(String id, JSONObject pObj) {
+        if (rootView != null) {
+            if (rootView.isRootId(id)) {
+                rootView.updateViewPropByH5(pObj);
+            } else {
+                ProomBaseView childView = childViews.get(id);
+                if (childView != null) {
+                    childView.updateViewPropByH5(rootView, pObj);
+                }
+            }
         }
     }
 
