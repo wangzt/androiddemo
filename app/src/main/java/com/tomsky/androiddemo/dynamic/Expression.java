@@ -1,5 +1,6 @@
 package com.tomsky.androiddemo.dynamic;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.tomsky.androiddemo.util.StringUtil;
@@ -14,26 +15,72 @@ import java.util.Stack;
 public class Expression {
 
     private static final String TAG = "wzt-exp";
+
+    private String prop;
     private String src; // sync:p_game.scores[uid=$sync:p_user[pos=0].uid].nickname  原始数据 sync.p_game.scores.2.nickname
 
-    private StackFrame mStackFrame;
+    private String value; // 最终算出来的值
 
-    public Expression(String src) {
+    private List<String> observable = new ArrayList<>();
+
+    public Expression(String key,String src) {
+        this.prop = key;
         this.src = src;
     }
 
-    public void parse(JSONObject data) {
-//        String[] splits = src.split(":|\\.|\\[|\\]|\\=");
-//        for (String str: splits) {
-//            Log.d(TAG, str);
-//        }
+    public String getProp() {
+        return prop;
+    }
 
+    public String getValue() {
+        return value;
+    }
+
+    public Expression parseKey() {
+        char[] keyArray = src.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        boolean isKey = false;
+        for (char c:keyArray) {
+            if (':' == c) {
+                sb = new StringBuilder();
+                isKey = true;
+            } else if ('.' == c) {
+                if (sb.length() > 0) {
+                    if (isKey) {
+                        observable.add(sb.toString());
+                    }
+                    sb = new StringBuilder();
+                }
+                isKey = false;
+            } else if ('[' == c) {
+                if (sb.length() > 0) {
+                    if (isKey) {
+                        observable.add(sb.toString());
+                    }
+                    sb = new StringBuilder();
+                }
+                isKey = false;
+            } else if (']' == c) {
+
+            } else if ('$' == c) {
+
+            } else {
+                sb.append(c);
+            }
+        }
+
+        return this;
+    }
+
+    public void parseValue(JSONObject data) {
+        if (data == null) return;
 
         StackFrame currentFrame = new StackFrame();
         StringBuilder sb = new StringBuilder();
 
         Stack<StackFrame> stack = new Stack<>();
 
+        boolean canCalc = true;
 
         char[] keyArray = src.toCharArray();
         for (char c:keyArray) {
@@ -66,6 +113,10 @@ public class Expression {
                     currentFrame = stackFrame;
                 } else {
                     currentFrame.add(value);
+                    if (!currentFrame.canCalc) {
+                        canCalc = false;
+                        break;
+                    }
                     currentFrame.calcValue(data);
                     if (!stack.isEmpty()) {
                         StackFrame stackFrame = stack.pop();
@@ -85,17 +136,25 @@ public class Expression {
             currentFrame.add(sb.toString());
         }
 
-        mStackFrame = currentFrame;
 
-        if (mStackFrame != null) {
-            Log.d(TAG, mStackFrame.propString());
-            Log.d(TAG, "result:"+mStackFrame.calcValue(data));
+
+        if (canCalc) {
+            if (currentFrame != null) {
+                String result = currentFrame.calcValue(data);
+                Log.d(TAG, currentFrame.propString());
+                Log.d(TAG, "result:"+result);
+                value = result;
+            }
         }
 
     }
 
+    public boolean hasKeyChanged(String key) {
+        return observable.contains(key);
+    }
 
-    public class StackFrame {
+    public static class StackFrame {
+        boolean canCalc = true;
         boolean shouldCalc = false;
         String key;
         String value;
@@ -110,10 +169,19 @@ public class Expression {
         }
 
         public void parseJSON(JSONObject dataObject, StackFrame subFrame) {
+            if (dataObject == null) {
+                canCalc = false;
+                return;
+            }
+            canCalc = true;
             JSONObject jsonObject = dataObject;
             String val = "";
             for (String prop: propList) {
                 Object obj = jsonObject.opt(prop);
+                if (obj == null) {
+                    canCalc = false;
+                    break;
+                }
                 if (obj instanceof JSONObject) {
                     jsonObject = (JSONObject) obj;
                 } else if (obj instanceof JSONArray) {
@@ -142,31 +210,33 @@ public class Expression {
                 }
             }
 
-            if (!"".equals(val)) {
+            if (!"".equals(val) && canCalc) {
                 propList.add(val);
             }
         }
 
         public String calcValue(JSONObject dataObject) {
-            Object obj = dataObject;
-            int len = propList.size();
-            try {
-                for (int i = 0; i < len; i++) {
-                    String prop = propList.get(i);
-                    if (obj instanceof JSONObject) {
-                        obj = ((JSONObject)obj).opt(prop);
-                    } else if (obj instanceof JSONArray) {
-                        int index = Integer.valueOf(prop);
-                        obj = ((JSONArray)obj).opt(index);
-                    } else if (i == len - 1) {
+            if (canCalc) {
+                Object obj = dataObject;
+                int len = propList.size();
+                try {
+                    for (int i = 0; i < len; i++) {
+                        String prop = propList.get(i);
+                        if (obj instanceof JSONObject) {
+                            obj = ((JSONObject)obj).opt(prop);
+                        } else if (obj instanceof JSONArray) {
+                            int index = Integer.valueOf(prop);
+                            obj = ((JSONArray)obj).opt(index);
+                        } else if (i == len - 1) {
+                            value = String.valueOf(obj);
+                        }
+                    }
+                    if (value == null && obj != null) {
                         value = String.valueOf(obj);
                     }
+                } catch (Exception e) {
+                    Log.e(TAG, "error", e);
                 }
-                if (value == null && obj != null) {
-                    value = String.valueOf(obj);
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "error", e);
             }
 
 

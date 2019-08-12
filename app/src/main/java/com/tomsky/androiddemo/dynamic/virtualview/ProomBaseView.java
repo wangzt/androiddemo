@@ -3,16 +3,29 @@ package com.tomsky.androiddemo.dynamic.virtualview;
 import android.graphics.drawable.GradientDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewCompat;
+import android.text.TextUtils;
 import android.view.View;
 
+import com.tomsky.androiddemo.dynamic.Expression;
+import com.tomsky.androiddemo.dynamic.ProomDataCenter;
+import com.tomsky.androiddemo.dynamic.ProomDataObsever;
+import com.tomsky.androiddemo.dynamic.ProomLayoutManager;
 import com.tomsky.androiddemo.dynamic.ProomLayoutUtils;
 
 import org.json.JSONObject;
 
-public abstract class ProomBaseView {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+public abstract class ProomBaseView implements ProomDataObsever {
     public static final String P_NAME = "name";
     public static final String P_PROP = "prop";
     public static final String P_LAYOUT = "layout";
+    public static final String P_ID = "id";
     public static final String P_L = "l";
     public static final String P_T = "t";
     public static final String P_R = "r";
@@ -43,6 +56,8 @@ public abstract class ProomBaseView {
     protected int r = Integer.MIN_VALUE;
     protected int b = Integer.MIN_VALUE;
 
+    protected String id; // 对应节点的id
+
     protected int borderWidth = 0;
 
     protected boolean centerLand = false;
@@ -51,6 +66,8 @@ public abstract class ProomBaseView {
     protected boolean widthAuto = false;
     protected boolean heightAuto = false;
 
+    protected Map<String, Expression> datas = new HashMap<>();
+
     /**
      * 以上是解析出来的属性
      * ======================================
@@ -58,10 +75,12 @@ public abstract class ProomBaseView {
 
     protected ConstraintLayout.LayoutParams layoutParams;
 
-    protected int viewId;
+    protected int viewId; // 对应view的id
 
     protected boolean valid = true;
-    
+
+    protected boolean dataChanged = false;
+
     public final void parseView(JSONObject jsonObject, ProomRootView rootView, ProomBaseView parentView) {
         viewId = ViewCompat.generateViewId();
 
@@ -70,6 +89,14 @@ public abstract class ProomBaseView {
             valid = false;
             return;
         }
+        String pId = jsonObject.optString(ProomBaseView.P_ID);
+        if (TextUtils.isEmpty(pId)) {
+            id = String.valueOf(viewId);
+        } else {
+            id = pId;
+        }
+        ProomLayoutManager.getInstance().addChildView(id, this);
+
         parseProp(pObj, rootView, parentView);
         View view = generateView(jsonObject, rootView, parentView);
         if (view != null) {
@@ -80,12 +107,76 @@ public abstract class ProomBaseView {
         parseData(jsonObject.optJSONObject(ProomBaseView.P_DATA));
     }
 
+    /**
+     * 生成对应的view
+     *
+     * @param jsonObject
+     * @param rootView
+     * @param parentView
+     * @return
+     */
     protected abstract View generateView(JSONObject jsonObject, ProomRootView rootView, ProomBaseView parentView);
 
+    /**
+     * 子类型解析各自特殊的属性
+     * @param pObj
+     * @param rootView
+     * @param parentView
+     */
     protected abstract void parseSubProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView);
 
-    protected abstract void parseData(JSONObject dataObject);
+    /**
+     * 解析表达式，子线程调用
+     * @param dataObject
+     */
+    protected void parseData(JSONObject dataObject) {
+        if (dataObject != null) {
+            Iterator<String> props = dataObject.keys();
+            while (props.hasNext()) {
+                String prop = props.next();
+                String src = dataObject.optString(prop);
+                if (!TextUtils.isEmpty(src)) {
+                    datas.put(prop, new Expression(prop, src).parseKey());
+                }
+            }
+        }
+        if (datas.size() > 0) {
+            ProomDataCenter.getInstance().addObserver(this);
+        }
+    }
 
+    /**
+     * 根据表达式更新属性值，子线程调用
+     * @param key
+     */
+    @Override
+    public void onDataChanged(String key) {
+        JSONObject data = ProomDataCenter.getInstance().getData();
+        Collection<Expression> dataExp = datas.values();
+        for (Expression exp: dataExp) {
+            if (exp.hasKeyChanged(key)) {
+                exp.parseValue(data);
+                dataChanged = true;
+            }
+        }
+    }
+
+    /**
+     * 根据表达式更新控件属性值，主线程调用
+     */
+    public void updateViewByData() {
+        dataChanged = false;
+        List<Expression> dataList = new ArrayList<>(datas.values());
+        for (Expression exp: dataList) {
+            updateViewValue(exp.getProp(), exp.getValue());
+        }
+    }
+
+    protected abstract void updateViewValue(String prop, String value);
+
+    /**
+     * 第一次加入主布局中，主线程调用
+     */
     protected abstract void onAttach();
 
     protected void parseProp(JSONObject pObj, ProomRootView rootView, ProomBaseView parentView) {
@@ -138,6 +229,13 @@ public abstract class ProomBaseView {
     }
 
 
+    /**
+     * 解析背景色和边框
+     *
+     * @param view
+     * @param bgColorObj
+     * @param roundObj
+     */
     protected void parseBackground(View view, JSONObject bgColorObj, JSONObject roundObj) {
         if (bgColorObj != null) {
             try {
@@ -182,6 +280,13 @@ public abstract class ProomBaseView {
         return drawable;
     }
 
+    /**
+     * 计算控件对应的 LayoutParams
+     *
+     * @param rootView
+     * @param parentView
+     * @return
+     */
     protected ConstraintLayout.LayoutParams calcLayoutParams(ProomRootView rootView, ProomBaseView parentView) {
         int width = w;
         int height = h;

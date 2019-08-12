@@ -47,7 +47,16 @@
                 "pos": 3,
                 "uid": "300"
             }
-        ]
+        ],
+        "p_test": {
+            "user": {
+                "link": 1234,
+                "anchor": {
+                    "u_name": "hhhh",
+                    "avatar": "http://xxx.yyy"
+                }
+            }
+        }
     }
 
 }

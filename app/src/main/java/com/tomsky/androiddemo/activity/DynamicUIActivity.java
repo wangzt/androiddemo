@@ -26,6 +26,7 @@ import com.tomsky.androiddemo.util.RegexUtils;
 import com.tomsky.androiddemo.util.UIUtils;
 import com.tomsky.androiddemo.util.WeakHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,6 +45,7 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
     private WeakHandler mHandler = new WeakHandler(this);
     private static final int MSG_LAYOUT = 100;
     private static final int MSG_ON_ATTACH = 101;
+    private static final int MSG_UPDATE_VIEW = 102;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,16 +56,41 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
         findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProomDataCenter.parseKey(readData());
-//                if (hasAdd) return;
-//                hasAdd = true;
-//
-//                new Thread() {
-//                    @Override
-//                    public void run() {
-//                        addSubView();
-//                    }
-//                }.start();
+//                ProomDataCenter.parseKey(readData());
+                if (hasAdd) return;
+                hasAdd = true;
+
+                new Thread() {
+                    @Override
+                    public void run() {
+                        addSubView();
+                    }
+                }.start();
+            }
+        });
+
+        findViewById(R.id.update_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            String gameStr = readKeyData(R.raw.p_game);
+                            JSONObject jsonObject = new JSONObject(gameStr);
+
+                            ProomDataCenter.getInstance().addSyncData("p_game", jsonObject.optJSONObject("p_game"));
+
+                            String userStr = readKeyData(R.raw.p_user);
+                            JSONObject jsonArray = new JSONObject(userStr);
+                            ProomDataCenter.getInstance().addSyncData("p_user", jsonArray.optJSONArray("p_user"));
+                            mHandler.sendEmptyMessage(MSG_UPDATE_VIEW);
+                        } catch (Exception e) {
+                            Log.e("wzt-update", "error", e);
+                        }
+
+                    }
+                }.start();
             }
         });
 //
@@ -105,6 +132,7 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
 //        }
 
 
+        ProomDataCenter.getInstance().init();
     }
 
     @Override
@@ -123,6 +151,10 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
                     rView.onAttach();
                 }
                 break;
+            case MSG_UPDATE_VIEW:
+                ProomLayoutManager.getInstance().updateViewByData();
+                break;
+
         }
 
     }
@@ -131,6 +163,7 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
     protected void onDestroy() {
         super.onDestroy();
         ProomLayoutManager.getInstance().onDestroy();
+        ProomDataCenter.getInstance().onDestroy();
     }
 
     private String readLayout() {
@@ -157,6 +190,26 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
         String result = "";
         try {
             InputStream is = getResources().openRawResource(R.raw.data);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            int len = -1;
+            byte[] buffer = new byte[1024];
+            while ((len = is.read(buffer)) != -1) {
+                baos.write(buffer, 0, len);
+            }
+            result = baos.toString();
+            is.close();
+        } catch (Exception e) {
+            Log.e("wzt-layout", "read layout error", e);
+        }
+
+        return result;
+    }
+
+    private String readKeyData(int data) {
+        String result = "";
+        try {
+            InputStream is = getResources().openRawResource(data);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
             int len = -1;

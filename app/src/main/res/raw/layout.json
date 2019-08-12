@@ -57,6 +57,9 @@
                         "color": "0000ff"
                     }
                 }
+            },
+            "data" : {
+                "text" : "sync:p_game.scores[uid=$sync:p_user[pos=2].uid].nickname"
             }
         },
         {
@@ -111,6 +114,9 @@
                         "bgColor": {
                             "color": "ffffff"
                         }
+                    },
+                    "data" : {
+                        "text" : "sync:p_game.scores[uid=$sync:p_user[pos=3].uid].nickname"
                     }
                 }
             ]

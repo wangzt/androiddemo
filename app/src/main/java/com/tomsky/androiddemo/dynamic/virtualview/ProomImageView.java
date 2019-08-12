@@ -84,10 +84,6 @@ public class ProomImageView extends ProomBaseView {
     }
 
     @Override
-    protected void parseData(JSONObject dataObject) {
-    }
-
-    @Override
     protected void onAttach() {
 
     }
@@ -95,5 +91,10 @@ public class ProomImageView extends ProomBaseView {
     @Override
     public View getView() {
         return view;
+    }
+
+    @Override
+    protected void updateViewValue(String prop, String value) {
+
     }
 }

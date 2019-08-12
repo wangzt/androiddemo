@@ -1,16 +1,17 @@
 package com.tomsky.androiddemo.dynamic.virtualview;
 
-import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tomsky.androiddemo.dynamic.Expression;
 import com.tomsky.androiddemo.dynamic.ProomLayoutUtils;
 
 import org.json.JSONObject;
+
+import java.util.Collection;
 
 public class ProomLabelView extends ProomBaseView {
     public static final String NAME = "label";
@@ -107,11 +108,6 @@ public class ProomLabelView extends ProomBaseView {
     }
 
     @Override
-    protected void parseData(JSONObject jsonObject) {
-
-    }
-
-    @Override
     public View getView() {
         return view;
     }
@@ -119,11 +115,24 @@ public class ProomLabelView extends ProomBaseView {
     @Override
     public void onAttach() {
         if (view != null) {
-            view.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            view.setSelected(true);
-            view.setFocusable(true);
-            view.setFocusableInTouchMode(true);
-            view.setMarqueeRepeatLimit(-1);
+            if (hasMarqueue) {
+                view.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                view.setSelected(true);
+                view.setFocusable(true);
+                view.setFocusableInTouchMode(true);
+                view.setMarqueeRepeatLimit(-1);
+            }
+        }
+    }
+
+    @Override
+    protected void updateViewValue(String prop, String value) {
+        if (view == null) return;
+
+        if (P_TEXT.equals(prop)) {
+            if (value != null) {
+                view.setText(value);
+            }
         }
     }
 }
