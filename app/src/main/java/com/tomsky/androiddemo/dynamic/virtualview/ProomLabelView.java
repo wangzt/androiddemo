@@ -32,13 +32,17 @@ public class ProomLabelView extends ProomBaseView {
 
     private boolean hasMarqueue;// 是否需要跑马灯
 
+    public ProomLabelView(boolean needAddView) {
+        super(needAddView);
+    }
+
     @Override
     protected View generateView(JSONObject jsonObject, ProomRootView rootView, ProomBaseView parentView) {
         view = new TextView(rootView.getContext());
 
         layoutParams = calcLayoutParams(rootView, parentView);
         view.setLayoutParams(layoutParams);
-        if (parentView == null) {
+        if (parentView == null && needAddView) {
             rootView.addView(view);
         }
 
@@ -164,6 +168,7 @@ public class ProomLabelView extends ProomBaseView {
             layoutParams = calcLayoutParams(rootView, parentView);
             view.setLayoutParams(layoutParams);
         }
+        parseViewVisible(pObj);
         updateViewProp(pObj, rootView, parentView);
         if (view != null) {
             if (pObj.has(ProomBaseView.P_BG_COLOR) || pObj.has(ProomBaseView.P_ROUND)) {

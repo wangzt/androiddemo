@@ -10,5 +10,12 @@
     "textColor": {
         "color": "FFFF00"
     },
-    "gravity": 2
+    "gravity": 2,
+    "round": {
+      "cornerRadius": 0,
+      "borderWidth": 0,
+      "borderColor": {
+        "color": "0000ff"
+      }
+    }
 }

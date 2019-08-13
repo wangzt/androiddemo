@@ -1,0 +1,17 @@
+{
+    "name": "view",
+    "desc": "view测试",
+    "id": "test_h5_view",
+    "prop": {
+        "layout": {
+            "l": 10,
+            "t": 20,
+            "w": 50,
+            "h": 50
+        },
+        "bgColor": {
+            "color": "00FFFF",
+            "alpha": 1
+        }
+    }
+}

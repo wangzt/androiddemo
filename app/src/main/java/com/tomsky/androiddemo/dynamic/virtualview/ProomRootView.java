@@ -6,10 +6,12 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.tomsky.androiddemo.dynamic.ProomLayoutManager;
 import com.tomsky.androiddemo.dynamic.ProomLayoutUtils;
+import com.tomsky.androiddemo.util.ThreadUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,6 +24,8 @@ public class ProomRootView {
     private ConstraintLayout rootView;
     private int rootId;
     private List<ProomLabelView> marqueeLabelViewList = new ArrayList<>();
+
+    private List<ProomBaseView> child = new ArrayList<>();
 
     private String id;
 
@@ -71,11 +75,12 @@ public class ProomRootView {
     }
 
     public void parseSubViews(JSONObject json) {
-        JSONArray child = json.optJSONArray(ProomView.P_CHILD);
-        if (child != null) {
-            int size = child.length();
+        JSONArray childArray = json.optJSONArray(ProomView.P_CHILD);
+        if (childArray != null) {
+            int size = childArray.length();
             for (int i = 0; i < size; i++) {
-                ProomLayoutManager.parseSubView(child.optJSONObject(i), this, null);
+                ProomBaseView subView = ProomLayoutManager.parseSubView(childArray.optJSONObject(i), this, null, true, false);
+                child.add(subView);
             }
         }
     }
@@ -88,6 +93,42 @@ public class ProomRootView {
         if (pObj != null) {
             parseProp(pObj);
         }
+    }
+
+    public void addViewByJSON(int index, JSONObject viewObject) {
+        ProomBaseView subView = ProomLayoutManager.parseSubView(viewObject, this, null, false, true);
+        if (subView != null && subView.getView() != null) {
+            int size = child.size();
+            if (size > 0) {
+                if (index > -1 && index < size) {
+                    ProomBaseView childView = child.get(index);
+                    View view = childView.getView();
+                    if (view != null) {
+                        int realIndex = ((ConstraintLayout)view.getParent()).indexOfChild(view);
+                        child.add(index, subView);
+                        addViewToRoot(subView.getView(), realIndex);
+                    }
+                } else {
+                    child.add(subView);
+                    addViewToRoot(subView.getView(), -1);
+
+                }
+            } else { // 没有child的情况
+                child.add(subView);
+                addViewToRoot(subView.getView(), -1);
+
+            }
+        }
+    }
+
+    private void addViewToRoot(View subView, int index) {
+        final ProomView.ViewAddData addData = new ProomView.ViewAddData(rootView, subView, index);
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                addData.addView();
+            }
+        });
     }
 
     public ConstraintLayout getView() {

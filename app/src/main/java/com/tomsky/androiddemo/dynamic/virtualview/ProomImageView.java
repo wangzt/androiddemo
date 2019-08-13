@@ -27,13 +27,17 @@ public class ProomImageView extends ProomBaseView {
 
     private SimpleDraweeView view;
 
+    public ProomImageView(boolean needAddView) {
+        super(needAddView);
+    }
+
     @Override
     protected View generateView(JSONObject jsonObject, ProomRootView rootView, ProomBaseView parentView) {
         view = new SimpleDraweeView(rootView.getContext());
 
         layoutParams = calcLayoutParams(rootView, parentView);
         view.setLayoutParams(layoutParams);
-        if (parentView == null) {
+        if (parentView == null && needAddView) {
             rootView.addView(view);
         }
 
@@ -126,6 +130,7 @@ public class ProomImageView extends ProomBaseView {
             layoutParams = calcLayoutParams(rootView, parentView);
             view.setLayoutParams(layoutParams);
         }
+        parseViewVisible(pObj);
         updateViewProp(pObj, rootView, parentView);
     }
 }

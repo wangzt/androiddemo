@@ -37,6 +37,8 @@ import java.util.regex.Pattern;
 
 public class DynamicUIActivity extends FragmentActivity implements WeakHandler.IHandler {
 
+    private static final String TAG = "wzt-dynamic";
+
 //    private ConstraintLayout container;
 //    private int containerId = R.id.dynamic_container;
 
@@ -86,7 +88,7 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
                             ProomDataCenter.getInstance().addSyncData("p_user", jsonArray.optJSONArray("p_user"));
                             mHandler.sendEmptyMessage(MSG_UPDATE_VIEW);
                         } catch (Exception e) {
-                            Log.e("wzt-update", "error", e);
+                            Log.e(TAG, "update", e);
                         }
 
                     }
@@ -97,15 +99,42 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
         findViewById(R.id.h5_update_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    String str = readKeyData(R.raw.h5_prop);
-                    JSONObject pObj = new JSONObject(str);
-                    ProomLayoutManager.getInstance().updateViewPropById("test_label", pObj);
-                } catch (Exception e) {
-                    Log.e("wzt-update", "h5-error", e);
-                }
+//                try {
+//                    String str = readKeyData(R.raw.h5_prop);
+//                    JSONObject pObj = new JSONObject(str);
+//                    ProomLayoutManager.getInstance().updateViewPropById("test_label", pObj);
+//                } catch (Exception e) {
+//                    Log.e(TAG, "update-h5-prop", e);
+//                }
 
 
+//                new Thread() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            String str = readKeyData(R.raw.h5_data);
+//                            JSONObject pObj = new JSONObject(str);
+//                            ProomLayoutManager.getInstance().updateViewDataById("test_wrap_label", pObj);
+//                        } catch (Exception e) {
+//                            Log.e(TAG, "update-h5-data", e);
+//                        }
+//
+//                    }
+//                }.start();
+
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            String str = readKeyData(R.raw.h5_view);
+                            JSONObject vObj = new JSONObject(str);
+                            ProomLayoutManager.getInstance().addViewByJSON("test_container", 0, vObj);
+                        } catch (Exception e) {
+                            Log.e(TAG, "update-h5-view", e);
+                        }
+
+                    }
+                }.start();
             }
         });
 //
@@ -148,6 +177,7 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
 
 
         ProomDataCenter.getInstance().init();
+
     }
 
     @Override

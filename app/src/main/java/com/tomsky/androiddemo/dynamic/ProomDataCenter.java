@@ -7,8 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ProomDataCenter {
 
@@ -20,7 +20,7 @@ public class ProomDataCenter {
 
     private JSONObject syncData;
 
-    private List<ProomDataObsever> obsevers = new ArrayList<>();
+    private Set<ProomDataObsever> obsevers = new HashSet<>();
 
     private ProomDataCenter() {
     }
@@ -85,6 +85,10 @@ public class ProomDataCenter {
 
     public void clearObserver() {
         obsevers.clear();
+    }
+
+    public void removeObserver(ProomDataObsever obsever) {
+        obsevers.remove(obsever);
     }
 
     private void onDataChanged(String key) {

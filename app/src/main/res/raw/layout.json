@@ -1,6 +1,7 @@
 {
     "name": "root",
     "desc": "画布",
+    "id": "test_root",
     "prop": {
         "layout": {
             "l": 0,
@@ -100,6 +101,7 @@
                 {
                     "name": "label",
                     "desc": "文字",
+                    "id": "test_wrap_label",
                     "prop": {
                         "layout": {
                             "l": 70,

@@ -79,6 +79,53 @@ public class ProomLayoutManager {
         }
     }
 
+    /**
+     * H5更新控件data表达式，整体替换
+     *
+     * 建议子线程调用
+     *
+     * @param id
+     * @param dataObj
+     */
+    public void updateViewDataById(String id, JSONObject dataObj) {
+        ProomBaseView childView = childViews.get(id);
+        if (childView != null) {
+            childView.updateViewDataByH5(dataObj);
+        }
+    }
+
+    /**
+     * 删除控件，主线程调用
+     *
+     * @param id
+     */
+    public void removeViewById(String id) {
+        ProomBaseView proomBaseView = childViews.remove(id);
+        if (proomBaseView != null) {
+            proomBaseView.removeFromParent();
+        }
+    }
+
+    /**
+     * 添加view，子线程调用
+     *
+     * @param parentId 要插入子view的父容器id
+     * @param index 要插入子view的index
+     * @param jsonObject
+     */
+    public void addViewByJSON(String parentId, int index, JSONObject jsonObject) {
+        if (rootView != null) {
+            if (rootView.isRootId(parentId)) {
+                rootView.addViewByJSON(index, jsonObject);
+            } else {
+                ProomBaseView childView = childViews.get(parentId);
+                if (childView != null && childView instanceof ProomView) {
+                    ((ProomView)childView).addViewByJSON(index, jsonObject, rootView);
+                }
+            }
+        }
+    }
+
     public void clearChildView() {
         childViews.clear();
     }
@@ -97,17 +144,17 @@ public class ProomLayoutManager {
         return rootView;
     }
 
-    public static ProomBaseView parseSubView(JSONObject jsonObject, ProomRootView rootView, ProomView parentView) {
+    public static ProomBaseView parseSubView(JSONObject jsonObject, ProomRootView rootView, ProomView parentView, boolean needAddView, boolean addChildToLayout) {
         if (jsonObject == null) return null;
 
         String name = jsonObject.optString(ProomView.P_NAME);
         ProomBaseView subView = null;
         if (ProomView.NAME.equals(name)) {
-            subView = new ProomView();
+            subView = new ProomView(needAddView, addChildToLayout);
         } else if (ProomLabelView.NAME.equals(name)) {
-            subView = new ProomLabelView();
+            subView = new ProomLabelView(needAddView);
         } else if (ProomImageView.NAME.equals(name)) {
-            subView = new ProomImageView();
+            subView = new ProomImageView(needAddView);
         }
 
         if (subView != null) {
