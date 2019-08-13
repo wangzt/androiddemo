@@ -86,6 +86,7 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
                             String userStr = readKeyData(R.raw.p_user);
                             JSONObject jsonArray = new JSONObject(userStr);
                             ProomDataCenter.getInstance().addSyncData("p_user", jsonArray.optJSONArray("p_user"));
+
                             mHandler.sendEmptyMessage(MSG_UPDATE_VIEW);
                         } catch (Exception e) {
                             Log.e(TAG, "update", e);
@@ -128,7 +129,7 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
                         try {
                             String str = readKeyData(R.raw.h5_view);
                             JSONObject vObj = new JSONObject(str);
-                            ProomLayoutManager.getInstance().addViewByJSON("test_container", 0, vObj);
+                            ProomLayoutManager.getInstance().addViewByJSON("test_container", 10, vObj);
                         } catch (Exception e) {
                             Log.e(TAG, "update-h5-view", e);
                         }

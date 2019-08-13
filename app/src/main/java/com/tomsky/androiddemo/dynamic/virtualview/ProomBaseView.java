@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.tomsky.androiddemo.dynamic.Expression;
+import com.tomsky.androiddemo.dynamic.ProomExpression;
 import com.tomsky.androiddemo.dynamic.ProomDataCenter;
 import com.tomsky.androiddemo.dynamic.ProomDataObsever;
 import com.tomsky.androiddemo.dynamic.ProomLayoutManager;
@@ -72,7 +72,7 @@ public abstract class ProomBaseView implements ProomDataObsever {
     protected boolean widthAuto = false;
     protected boolean heightAuto = false;
 
-    protected Map<String, Expression> datas = new HashMap<>();
+    protected Map<String, ProomExpression> datas = new HashMap<>();
 
     /**
      * 以上是解析出来的属性
@@ -169,7 +169,7 @@ public abstract class ProomBaseView implements ProomDataObsever {
                 String prop = props.next();
                 String src = dataObject.optString(prop);
                 if (!TextUtils.isEmpty(src)) {
-                    datas.put(prop, new Expression(prop, src).parseKey());
+                    datas.put(prop, new ProomExpression(prop, src).parseKey());
                 }
             }
         }
@@ -187,8 +187,8 @@ public abstract class ProomBaseView implements ProomDataObsever {
         if (datas.size() == 0) return;
 
         JSONObject data = ProomDataCenter.getInstance().getData();
-        Collection<Expression> dataExp = datas.values();
-        for (Expression exp: dataExp) {
+        Collection<ProomExpression> dataExp = datas.values();
+        for (ProomExpression exp: dataExp) {
             if (exp.hasKeyChanged(key)) {
                 exp.parseValue(data);
                 dataChanged.set(true);
@@ -201,8 +201,8 @@ public abstract class ProomBaseView implements ProomDataObsever {
      */
     public void updateViewByData() {
         dataChanged.set(false);
-        List<Expression> dataList = new ArrayList<>(datas.values());
-        for (Expression exp: dataList) {
+        List<ProomExpression> dataList = new ArrayList<>(datas.values());
+        for (ProomExpression exp: dataList) {
             updateViewValue(exp.getProp(), exp.getValue());
         }
     }
@@ -233,7 +233,7 @@ public abstract class ProomBaseView implements ProomDataObsever {
                 String prop = props.next();
                 String src = dataObject.optString(prop);
                 if (!TextUtils.isEmpty(src)) {
-                    datas.put(prop, new Expression(prop, src).parseKey());
+                    datas.put(prop, new ProomExpression(prop, src).parseKey());
                     hasChanged = true;
                 }
             }
@@ -242,8 +242,8 @@ public abstract class ProomBaseView implements ProomDataObsever {
 
         if (hasChanged) { // 有变化，计算新值并更新到view上
             JSONObject data = ProomDataCenter.getInstance().getData();
-            Collection<Expression> dataExp = datas.values();
-            for (Expression exp: dataExp) {
+            Collection<ProomExpression> dataExp = datas.values();
+            for (ProomExpression exp: dataExp) {
                 exp.parseValue(data);
                 dataChanged.set(true);
             }

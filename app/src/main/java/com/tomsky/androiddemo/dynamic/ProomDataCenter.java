@@ -120,7 +120,7 @@ public class ProomDataCenter {
 //            String key = "sync:p_game.scores[2].cc.value[1]";
 //            String key = "sync:p_game.scores[uid=$sync:p_user[pos=2].uid].cc.value[1]";
 //            String key = "sync:p_game.scores[uid=$sync:p_user[pos=2].uid].nickname";
-            Expression exp = new Expression("aa", src);
+            ProomExpression exp = new ProomExpression("aa", src);
             exp.parseValue(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();

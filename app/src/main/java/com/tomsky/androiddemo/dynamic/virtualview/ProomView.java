@@ -116,9 +116,9 @@ public class ProomView extends ProomBaseView {
         int size = child.size();
         if (size > 0) {
             if (index > -1 && index < size) {
-                addChildViewToIndex(index, viewObject, rootView);
+                addChildViewToIndex(index, viewObject, rootView, false);
             } else { // 放到最后
-                addChildViewToIndex(size - 1, viewObject, rootView);
+                addChildViewToIndex(size - 1, viewObject, rootView, true);
             }
         } else {
             ProomBaseView subView = ProomLayoutManager.parseSubView(viewObject, rootView, this, false, true);
@@ -136,11 +136,14 @@ public class ProomView extends ProomBaseView {
         }
     }
 
-    private void addChildViewToIndex(int index, JSONObject viewObject, ProomRootView rootView) {
+    private void addChildViewToIndex(int index, JSONObject viewObject, ProomRootView rootView, boolean appendEnd) {
         ProomBaseView childView = child.get(index);
         View view = childView.getView();
         if (view != null) {
             int realIndex = ((ConstraintLayout)view.getParent()).indexOfChild(view);
+            if (appendEnd) {
+                realIndex = realIndex + 1;
+            }
             ProomBaseView subView = ProomLayoutManager.parseSubView(viewObject, rootView, this, false, true);
             if (subView != null && subView.getView() != null) {
                 child.add(index, subView);

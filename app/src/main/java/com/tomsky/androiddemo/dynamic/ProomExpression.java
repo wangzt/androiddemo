@@ -1,6 +1,5 @@
 package com.tomsky.androiddemo.dynamic;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.tomsky.androiddemo.util.StringUtil;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class Expression {
+public class ProomExpression {
 
     private static final String TAG = "wzt-exp";
 
@@ -23,7 +22,7 @@ public class Expression {
 
     private List<String> observable = new ArrayList<>();
 
-    public Expression(String key,String src) {
+    public ProomExpression(String key, String src) {
         this.prop = key;
         this.src = src;
     }
@@ -36,7 +35,7 @@ public class Expression {
         return value;
     }
 
-    public Expression parseKey() {
+    public ProomExpression parseKey() {
         char[] keyArray = src.toCharArray();
         StringBuilder sb = new StringBuilder();
         boolean isKey = false;
