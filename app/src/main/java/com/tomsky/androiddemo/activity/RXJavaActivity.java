@@ -25,6 +25,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.Scheduler;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
@@ -47,9 +48,9 @@ public class RXJavaActivity extends Activity {
             @Override
             public void onClick(View v) {
 //                testObservable();
-//                testThread();
+                testThread();
 //                testOperators();
-                testFlowable();
+//                testFlowable();
             }
         });
     }

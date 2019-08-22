@@ -1,5 +1,6 @@
 package com.tomsky.androiddemo.dynamic;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.tomsky.androiddemo.util.StringUtil;
@@ -72,6 +73,12 @@ public class ProomExpression {
     }
 
     public void parseValue(JSONObject data) {
+        if (!src.contains(":")) {
+            value = src;
+            Log.d(TAG, "prop:"+prop+" : " + value);
+            return;
+        }
+
         if (data == null) return;
 
         StackFrame currentFrame = new StackFrame();
@@ -106,9 +113,9 @@ public class ProomExpression {
                 if (!currentFrame.shouldCalc) {
                     currentFrame.value = value;
                     StackFrame stackFrame = stack.pop();
-                    if (stackFrame.shouldCalc || currentFrame.key == null) {
+//                    if (stackFrame.shouldCalc || currentFrame.key == null) {
                         stackFrame.parseJSON(data, currentFrame);
-                    }
+//                    }
                     currentFrame = stackFrame;
                 } else {
                     currentFrame.add(value);

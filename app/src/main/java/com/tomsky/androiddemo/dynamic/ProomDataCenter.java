@@ -116,12 +116,13 @@ public class ProomDataCenter {
     public static void parseKey(String data) {
         try {
             JSONObject jsonObject = new JSONObject(data);
-            String src = "sync:p_test.user.anchor.avatar";
-//            String key = "sync:p_game.scores[2].cc.value[1]";
-//            String key = "sync:p_game.scores[uid=$sync:p_user[pos=2].uid].cc.value[1]";
-//            String key = "sync:p_game.scores[uid=$sync:p_user[pos=2].uid].nickname";
-            ProomExpression exp = new ProomExpression("aa", src);
-            exp.parseValue(jsonObject);
+
+            parse(jsonObject, "sync:p_test.user.anchor.avatar");
+            parse(jsonObject, "sync:p_game.scores[2].cc.value[1]");
+            parse(jsonObject, "sync:p_game.scores[uid=200]");
+            parse(jsonObject, "sync:p_game.scores[uid=$sync:p_user[pos=2].uid].cc.value[1]");
+            parse(jsonObject, "sync:p_game.scores[uid=$sync:p_user[pos=2].uid].nickname");
+            parse(jsonObject, "1");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -129,6 +130,9 @@ public class ProomDataCenter {
 
     }
 
-
+    private static void parse(JSONObject jsonObject, String src) {
+        ProomExpression exp = new ProomExpression("aa", src);
+        exp.parseValue(jsonObject);
+    }
 
 }
