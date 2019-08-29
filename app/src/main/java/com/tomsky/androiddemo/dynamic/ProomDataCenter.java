@@ -123,6 +123,9 @@ public class ProomDataCenter {
             parse(jsonObject, "sync:p_game.scores[uid=$sync:p_user[pos=2].uid].cc.value[1]");
             parse(jsonObject, "sync:p_game.scores[uid=$sync:p_user[pos=2].uid].nickname");
             parse(jsonObject, "1");
+            parse(jsonObject, "sync:p_tt.users[uid=100].user.avatar");
+            parse(jsonObject, "sync:p_tt.users[uid=100]");
+            parse(jsonObject, "sync:p_game.scores[uid=400]");
         } catch (JSONException e) {
             e.printStackTrace();
         }

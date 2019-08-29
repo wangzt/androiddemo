@@ -190,10 +190,16 @@ public class ProomExpression {
                 if (obj instanceof JSONObject) {
                     jsonObject = (JSONObject) obj;
                 } else if (obj instanceof JSONArray) {
-                    if (subFrame == null) break;
+                    if (subFrame == null) {
+                        canCalc = false;
+                        break;
+                    }
                     String key = subFrame.key;
                     String value = subFrame.getValue();
-                    if (value == null) break;
+                    if (value == null) {
+                        canCalc = false;
+                        break;
+                    }
 
                     if (key == null) { // value[2]
                         val = value;
@@ -201,6 +207,10 @@ public class ProomExpression {
                     } else { // value[key=2]
                         JSONArray array = (JSONArray)obj;
                         int size = array.length();
+                        if (size <= 0) {
+                            canCalc = false;
+                            break;
+                        }
                         for (int i = 0; i < size; i++) {
                             JSONObject subObj = array.optJSONObject(i);
                             if (subObj != null && subObj.has(key)) {
@@ -209,6 +219,10 @@ public class ProomExpression {
                                     break;
                                 }
                             }
+                        }
+                        canCalc = !"".equals(val);
+                        if (!canCalc) {
+                            break;
                         }
                     }
 
