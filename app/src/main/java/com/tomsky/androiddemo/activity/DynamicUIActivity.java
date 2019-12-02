@@ -8,16 +8,27 @@ import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewCompat;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.eclipsesource.v8.V8;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.GenericDraweeView;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.dynamic.ProomDataCenter;
 import com.tomsky.androiddemo.dynamic.ProomLayoutManager;
@@ -58,7 +69,8 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
         findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProomDataCenter.parseKey(readData());
+                testImage();
+//                ProomDataCenter.parseKey(readData());
 //                if (hasAdd) return;
 //                hasAdd = true;
 //
@@ -74,32 +86,34 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
         findViewById(R.id.update_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            String gameStr = readKeyData(R.raw.p_game);
-                            JSONObject jsonObject = new JSONObject(gameStr);
-
-                            ProomDataCenter.getInstance().addSyncData("p_game", jsonObject.optJSONObject("p_game"));
-
-                            String userStr = readKeyData(R.raw.p_user);
-                            JSONObject jsonArray = new JSONObject(userStr);
-                            ProomDataCenter.getInstance().addSyncData("p_user", jsonArray.optJSONArray("p_user"));
-
-                            mHandler.sendEmptyMessage(MSG_UPDATE_VIEW);
-                        } catch (Exception e) {
-                            Log.e(TAG, "update", e);
-                        }
-
-                    }
-                }.start();
+                emptyImage();
+//                new Thread() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            String gameStr = readKeyData(R.raw.p_game);
+//                            JSONObject jsonObject = new JSONObject(gameStr);
+//
+//                            ProomDataCenter.getInstance().addSyncData("p_game", jsonObject.optJSONObject("p_game"));
+//
+//                            String userStr = readKeyData(R.raw.p_user);
+//                            JSONObject jsonArray = new JSONObject(userStr);
+//                            ProomDataCenter.getInstance().addSyncData("p_user", jsonArray.optJSONArray("p_user"));
+//
+//                            mHandler.sendEmptyMessage(MSG_UPDATE_VIEW);
+//                        } catch (Exception e) {
+//                            Log.e(TAG, "update", e);
+//                        }
+//
+//                    }
+//                }.start();
             }
         });
 
         findViewById(R.id.h5_update_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                testScale();
 //                try {
 //                    String str = readKeyData(R.raw.h5_prop);
 //                    JSONObject pObj = new JSONObject(str);
@@ -123,19 +137,19 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
 //                    }
 //                }.start();
 
-                new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            String str = readKeyData(R.raw.h5_view);
-                            JSONObject vObj = new JSONObject(str);
-                            ProomLayoutManager.getInstance().addViewByJSON("test_container", 10, vObj);
-                        } catch (Exception e) {
-                            Log.e(TAG, "update-h5-view", e);
-                        }
-
-                    }
-                }.start();
+//                new Thread() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            String str = readKeyData(R.raw.h5_view);
+//                            JSONObject vObj = new JSONObject(str);
+//                            ProomLayoutManager.getInstance().addViewByJSON("test_container", 10, vObj);
+//                        } catch (Exception e) {
+//                            Log.e(TAG, "update-h5-view", e);
+//                        }
+//
+//                    }
+//                }.start();
             }
         });
 //
@@ -179,6 +193,7 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
 
         ProomDataCenter.getInstance().init();
 
+        testMarquee();
     }
 
     @Override
@@ -312,5 +327,107 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
 
         findViewById(R.id.test_view).setBackground(drawable);
 
+    }
+
+    SimpleDraweeView imageView;
+    private void testImage() {
+        if (imageView == null) {
+            imageView = new SimpleDraweeView(this);
+            imageView.setBackgroundColor(Color.RED);
+            int size = UIUtils.dp2px(80);
+            int border = UIUtils.dp2px(1);
+            int radius = UIUtils.dp2px(15);
+            imageView.setLayoutParams(new RelativeLayout.LayoutParams(size, size));
+            GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
+            if (hierarchy != null) {
+//                hierarchy.setFailureImage(R.drawable.icon_bar_full_heart3x);
+//                hierarchy.setPlaceholderImage(R.drawable.ic_launcher);
+                hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
+                RoundingParams params = RoundingParams.fromCornersRadius(radius);
+//                params.setBorder(Color.GREEN, border);
+                hierarchy.setRoundingParams(params);
+            }
+            RelativeLayout container = findViewById(R.id.dynamic_container);
+            container.addView(imageView);
+        }
+        UIUtils.displayImage(imageView, "http://p1.qhimg.com/t01e48912fed40b0890.jpg");
+    }
+
+    private void emptyImage() {
+        if (imageView != null) {
+//            imageView.setImageResource(0);
+//            imageView.setImageDrawable(null);
+            GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
+            if (hierarchy != null) {
+//                hierarchy.setFailureImage(R.drawable.icon_bar_full_heart3x);
+//                hierarchy.setPlaceholderImage(R.drawable.ic_launcher);
+                hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
+            }
+        }
+    }
+
+    private void testScale() {
+        View container = findViewById(R.id.dynamic_test_layout);
+        container.setPivotX(0f);
+        container.setPivotY(0f);
+
+        container.setScaleX(1.5f);
+        container.setScaleY(1.5f);
+    }
+
+    private void testV8() {
+        V8 runtime = V8.createV8Runtime();
+
+        runtime.release();
+    }
+
+    private void testMarquee() {
+        TextView marqueeView = findViewById(R.id.test_marquee);
+        String m1 = "aaaaaaaaaaaaaaaaaaaaa";
+        String m2 = "bbbbbbbbbbbbbbbbbbbbb";
+        String m3 = "ccccccccccccccccccccc";
+        String m4 = "ddddddddddddddddddddd";
+        String m5 = "eeeeeeeeeeeeeeeeeeeee";
+        String blank = "     ";
+        StringBuilder sb = new StringBuilder();
+        sb.append(m1);
+        sb.append(blank);
+        sb.append(m2);
+        sb.append(blank);
+        sb.append(m3);
+        sb.append(blank);
+        sb.append(m4);
+        sb.append(blank);
+        sb.append(m5);
+
+        String res = sb.toString();
+        SpannableString spanStr = new SpannableString(res);
+        spanStr.setSpan(new MarqueeClickSpan(m1), 0, m1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spanStr.setSpan(new MarqueeClickSpan(m2), res.indexOf(m2), res.indexOf(m2) + m2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spanStr.setSpan(new MarqueeClickSpan(m3), res.indexOf(m3), res.indexOf(m3) + m3.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spanStr.setSpan(new MarqueeClickSpan(m4), res.indexOf(m4), res.indexOf(m4) + m4.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spanStr.setSpan(new MarqueeClickSpan(m5), res.indexOf(m5), res.indexOf(m5) + m5.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        marqueeView.setSelected(true);
+        marqueeView.setFocusable(true);
+        marqueeView.setFocusableInTouchMode(true);
+        marqueeView.setClickable(true);
+//        marqueeView.setMovementMethod(LinkMovementMethod.getInstance());
+        marqueeView.setText(spanStr);
+
+
+    }
+
+    public static class MarqueeClickSpan extends ClickableSpan {
+
+        private String value;
+        public MarqueeClickSpan(String str) {
+            this.value = str;
+        }
+
+        @Override
+        public void onClick(@NonNull View widget) {
+            Log.i("click-marquee", "value:"+value);
+        }
     }
 }
