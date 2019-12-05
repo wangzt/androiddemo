@@ -30,6 +30,7 @@ import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.GenericDraweeView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.tomsky.androiddemo.R;
+import com.tomsky.androiddemo.aop.DebugLog;
 import com.tomsky.androiddemo.dynamic.ProomDataCenter;
 import com.tomsky.androiddemo.dynamic.ProomLayoutManager;
 import com.tomsky.androiddemo.dynamic.virtualview.ProomRootView;
@@ -69,7 +70,8 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
         findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                testImage();
+                click(" add button");
+//                testImage();
 //                ProomDataCenter.parseKey(readData());
 //                if (hasAdd) return;
 //                hasAdd = true;
@@ -429,5 +431,11 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
         public void onClick(@NonNull View widget) {
             Log.i("click-marquee", "value:"+value);
         }
+    }
+
+    @DebugLog
+    public int click(String param) {
+        Log.i("wzt-aop", "onclick:"+param);
+        return 100;
     }
 }
