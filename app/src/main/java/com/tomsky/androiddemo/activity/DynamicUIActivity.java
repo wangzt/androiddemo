@@ -34,6 +34,7 @@ import com.tomsky.androiddemo.aop.DebugLog;
 import com.tomsky.androiddemo.dynamic.ProomDataCenter;
 import com.tomsky.androiddemo.dynamic.ProomLayoutManager;
 import com.tomsky.androiddemo.dynamic.virtualview.ProomRootView;
+import com.tomsky.androiddemo.test.TestKotlin;
 import com.tomsky.androiddemo.util.RegexUtils;
 import com.tomsky.androiddemo.util.UIUtils;
 import com.tomsky.androiddemo.util.WeakHandler;
@@ -70,7 +71,8 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
         findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                click(" add button");
+                TestKotlin.Singleton.INSTANCE.test();
+//                click(" add button");
 //                testImage();
 //                ProomDataCenter.parseKey(readData());
 //                if (hasAdd) return;
