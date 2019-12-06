@@ -71,7 +71,7 @@ public class DynamicUIActivity extends FragmentActivity implements WeakHandler.I
         findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TestKotlin.Singleton.INSTANCE.test();
+                new TestKotlin().coroutineTest();
 //                click(" add button");
 //                testImage();
 //                ProomDataCenter.parseKey(readData());

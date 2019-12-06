@@ -37,6 +37,12 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+
+    kotlin{
+        experimental {
+            coroutines 'enable'
+        }
+    }
 }
 
 dependencies {
@@ -70,6 +76,9 @@ dependencies {
 
     implementation project(':flutter')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
 }
 
 project.android.applicationVariants.all { variant ->
