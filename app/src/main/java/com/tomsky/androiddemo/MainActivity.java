@@ -19,6 +19,7 @@ import com.tomsky.androiddemo.util.UIUtils;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends Activity{
 
@@ -134,6 +135,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("String Encode activity", "com.tomsky.androiddemo.StringEncodeActivity"));
         datas.add(new ItemData("Flutter activity", "com.tomsky.androiddemo.activity.MyFlutterActivity"));
         datas.add(new ItemData("Dynamic activity", "com.tomsky.androiddemo.activity.DynamicUIActivity"));
+        datas.add(new ItemData("New Dynamic activity", "com.tomsky.androiddemo.activity.DyLayoutActivity"));
 
         return datas;
     }

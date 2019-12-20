@@ -1,21 +1,16 @@
 {
-    "layout": {
-        "l": 10,
-        "t": 120,
-        "w": 180,
-        "h": 50
-    },
-    "text": "center",
-    "textSize": 15,
-    "textColor": {
-        "color": "FFFF00"
-    },
-    "gravity": 2,
-    "round": {
-      "cornerRadius": 0,
-      "borderWidth": 0,
-      "borderColor": {
-        "color": "0000ff"
+    "test_view": {
+      "setter": {
+        "layout": {
+          "l": 20,
+          "t": 10,
+          "w": 60,
+          "h": 60
+        },
+        "bgColor": {
+          "color": "#FFFF00",
+          "alpha": 1
+        }
       }
     }
 }

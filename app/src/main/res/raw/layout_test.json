@@ -1,0 +1,36 @@
+{
+    "name": "root",
+    "desc": "画布",
+    "id": "test_root",
+    "prop": {
+        "layout": {
+            "l": 0,
+            "t": 0,
+            "w": 375,
+            "h": 420
+        },
+        "bgColor": {
+            "color": "#00FF00",
+            "alpha": 1
+        }
+    },
+    "child": [
+        {
+            "name": "view",
+            "desc": "view测试",
+            "id": "test_view",
+            "prop": {
+                "layout": {
+                    "l": 10,
+                    "t": 10,
+                    "w": 50,
+                    "h": 50
+                },
+                "bgColor": {
+                    "color": "#FF0000",
+                    "alpha": 1
+                }
+            }
+        }
+    ]
+}
