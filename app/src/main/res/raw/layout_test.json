@@ -31,6 +31,33 @@
                     "alpha": 1
                 }
             }
+        },
+        {
+            "name": "label",
+            "desc": "文字",
+            "id": "test_label",
+            "prop": {
+                "layout": {
+                    "l": 10,
+                    "t": 100,
+                    "w": 80,
+                    "h": 50,
+                    "centerLand": true
+                },
+                "text": "center",
+                "textSize": 12,
+                "textColor": {
+                    "color": "#FF0000"
+                },
+                "gravity": 2,
+                "round": {
+                    "radius": 5,
+                    "borderWidth": 2,
+                    "borderColor": {
+                        "color": "#0000ff"
+                    }
+                }
+            }
         }
     ]
 }

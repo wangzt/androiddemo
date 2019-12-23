@@ -6,6 +6,9 @@ import android.support.v4.view.ViewCompat
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import com.tomsky.androiddemo.dylayout.render.DyBaseRenderView
+import com.tomsky.androiddemo.dylayout.render.DyRenderView
+import com.tomsky.androiddemo.dylayout.render.IRenderView
 import com.tomsky.androiddemo.dylayout.utils.DyUtils
 import com.tomsky.androiddemo.dylayout.virtual.DyContext
 import com.tomsky.androiddemo.dylayout.virtual.beans.DyColorBean
@@ -23,6 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 abstract class DyBaseView constructor(protected val dyContext: DyContext, jsonObj: JSONObject, parentView:DyView?) {
 
     companion object {
+        const val TAG = "dy_layout"
         const val P_ID = "id"
         const val P_NAME = "name"
         const val P_DESC = "desc"
@@ -51,18 +55,13 @@ abstract class DyBaseView constructor(protected val dyContext: DyContext, jsonOb
     var action:Boolean = false
 
 
-    protected var viewId = 0//real view的id
+//    protected var viewId = 0//real view的id
     protected var parentView:DyView? = null // 父容器
 
     init {
         id = if (TextUtils.isEmpty(id)) ViewCompat.generateViewId().toString() else id
-        viewId = ViewCompat.generateViewId()
-        val propJson = jsonObj.optJSONObject(P_PROP)
-        if (propJson != null) {
-            parseCommonProps(propJson)
-            parseCustomProps(propJson)
-        }
-        onCreate(jsonObj, parentView)
+//        viewId = ViewCompat.generateViewId()
+
     }
 
     /*解析通用属性，控件都需要的*/
@@ -94,19 +93,22 @@ abstract class DyBaseView constructor(protected val dyContext: DyContext, jsonOb
         action = propJson.optBoolean(P_IS_DISPATCH_ONCLICK, false)
     }
 
-    /*解析自定义的属性*/
-    open fun parseCustomProps(propJson: JSONObject) {}
-
     protected open fun onCreate(jsonObj: JSONObject, parentView: DyView?) {
         this.parentView = parentView
+        val propJson = jsonObj.optJSONObject(P_PROP)
+        if (propJson != null) {
+            parseCommonProps(propJson)
+            parseCustomProps(propJson)
+        }
         dyContext.addChildView(id, this)
     }
 
+    open fun parseCustomProps(propJson: JSONObject){}
 
-    protected var layoutChanged = AtomicBoolean(false)
-    protected var bgChanged = AtomicBoolean(false)
-    protected var visibleChanged = AtomicBoolean(false)
-    protected var actionChanged = AtomicBoolean(false)
+    var layoutChanged = AtomicBoolean(false)
+    var bgChanged = AtomicBoolean(false)
+    var visibleChanged = AtomicBoolean(false)
+    var actionChanged = AtomicBoolean(false)
 
     open fun updateProp(propJson: JSONObject) {
         val layoutJson = propJson.optJSONObject(P_LAYOUT)
@@ -152,172 +154,22 @@ abstract class DyBaseView constructor(protected val dyContext: DyContext, jsonOb
     /**
      * ===================以下都是NativeView相关操作，放在主线程=====================
      */
-    protected var renderView:View? = null // 要渲染的view
 
-    fun createRenderView(context: Context):View? {
-        renderView = onCreateRenderView(context)
-        renderView?.let {
-            if (layoutBean != null) {
-                it.layoutParams = calcLayoutParams(layoutBean!!, parentView)
-            }
+    protected var mRenderView: IRenderView? = null
 
-            handleBackground(it)
-            handleAction()
-            it.visibility = visibility
-        }
-        return renderView
+    fun createRenderView(context: Context):IRenderView? {
+        mRenderView = onCreateRenderView()
+        mRenderView?.createNativeView(context)
+        return mRenderView
     }
 
-    abstract fun onCreateRenderView(context: Context):View?
+    abstract fun onCreateRenderView(): IRenderView?
 
+    fun getRenderViewId():Int {
+        return mRenderView?.getRenderViewId() ?: 0
+    }
 
     fun updateRenderView(context: Context) {
-        renderView?.let {
-            if (layoutChanged.get()) {
-                it.layoutParams = calcLayoutParams(layoutBean!!, parentView)
-                layoutChanged.set(false)
-            }
-
-            if (bgChanged.get()) {
-                handleBackground(it)
-                bgChanged.set(false)
-            }
-
-            if (visibleChanged.get()) {
-                it.visibility = visibility
-                visibleChanged.set(false)
-            }
-
-            if (actionChanged.get()) {
-                handleAction()
-                actionChanged.set(false)
-            }
-        }
-
-    }
-    /*计算控件对应的 LayoutParams*/
-    private fun calcLayoutParams(layoutBean: DyLayoutBean, parentView: DyView?): ConstraintLayout.LayoutParams {
-        var width = layoutBean.width
-        var height = layoutBean.height
-        if (layoutBean.widthAuto) {
-            width = ConstraintLayout.LayoutParams.WRAP_CONTENT
-        }
-        if (layoutBean.heightAuto) {
-            height = ConstraintLayout.LayoutParams.WRAP_CONTENT
-        }
-
-        // 兼容iOS逻辑
-        if (width == Integer.MIN_VALUE) {
-            if (layoutBean.left > Integer.MIN_VALUE && layoutBean.right > Integer.MIN_VALUE) {
-                width = 0
-            } else {
-                width = ConstraintLayout.LayoutParams.WRAP_CONTENT
-            }
-        }
-        if (height == Integer.MIN_VALUE) {
-            if (layoutBean.top > Integer.MIN_VALUE && layoutBean.bottom > Integer.MIN_VALUE) {
-                height = 0
-            } else {
-                height = ConstraintLayout.LayoutParams.WRAP_CONTENT
-            }
-        }
-        if (layoutBean.width == 0) {
-            width = -10 // fix ConstraintLayout的bug,设置为0的情况会铺满父容器，测试发现小于-4就不可见了,shit
-        }
-        if (layoutBean.height == 0) {
-            height = -10 // fix ConstraintLayout的bug,设置为0的情况会铺满父容器，测试发现小于-4就不可见了,shit
-        }
-
-        val lp = ConstraintLayout.LayoutParams(width, height)
-
-        if (parentView != null) {
-            val parentId = parentView.viewId
-            if (layoutBean.centerLand) {
-                lp.leftToLeft = parentId
-                lp.rightToRight = parentId
-                if (layoutBean.centerPort) {
-                    lp.topToTop = parentId
-                    lp.bottomToBottom = parentId
-                } else {
-                    if (layoutBean.bottom > Integer.MIN_VALUE) {
-                        lp.bottomToBottom = parentId
-                        lp.bottomMargin = layoutBean.bottom
-                    }
-                    if (layoutBean.top > Integer.MIN_VALUE){
-                        lp.topToTop = parentId
-                        lp.topMargin = layoutBean.top
-                    }
-                }
-            } else if (layoutBean.centerPort) {
-                lp.topToTop = parentId
-                lp.bottomToBottom = parentId
-                if (layoutBean.centerLand) {
-                    lp.leftToLeft = parentId
-                    lp.rightToRight = parentId
-                } else {
-                    if (layoutBean.right > Integer.MIN_VALUE) {
-                        lp.rightToRight = parentId
-                        lp.rightMargin = layoutBean.right
-                    }
-                    if (layoutBean.left > Integer.MIN_VALUE){
-                        lp.leftToLeft = parentId
-                        lp.leftMargin = layoutBean.left
-                    }
-                }
-            } else {
-                if (layoutBean.right > Integer.MIN_VALUE) {
-                    lp.rightToRight = parentId
-                    lp.rightMargin = layoutBean.right
-                }
-                if (layoutBean.left > Integer.MIN_VALUE){
-                    lp.leftToLeft = parentId
-                    lp.leftMargin = layoutBean.left
-                }
-                if (layoutBean.bottom > Integer.MIN_VALUE) {
-                    lp.bottomToBottom = parentId
-                    lp.bottomMargin = layoutBean.bottom
-                }
-                if (layoutBean.top > Integer.MIN_VALUE){
-                    lp.topToTop = parentId
-                    lp.topMargin = layoutBean.top
-                }
-            }
-        }
-
-        return lp
-    }
-
-    protected open fun handleBackground(view: View) {
-        if (bgGradientBean != null) {
-            val bgDrawable = bgGradientBean?.toDrawable() ?: return
-            roundBean?.setRound(bgDrawable)
-            @Suppress("DEPRECATION")
-            view.setBackgroundDrawable(bgDrawable)
-        } else if (bgColorBean != null) {
-            if (roundBean != null) {
-                val bgDrawable = roundBean?.toDrawable() ?: return
-                bgDrawable.setColor(bgColorBean!!.color)
-                @Suppress("DEPRECATION")
-                view.setBackgroundDrawable(bgDrawable)
-            } else {
-                view.setBackgroundColor(bgColorBean!!.color)
-            }
-
-        } else if (roundBean != null) {
-            val bgDrawable = roundBean?.toDrawable() ?: return
-            @Suppress("DEPRECATION")
-            view.setBackgroundDrawable(bgDrawable)
-        }
-    }
-
-    private fun handleAction() {
-        if (action) {
-            renderView?.setOnClickListener {
-                dyContext.onViewAction(id)
-            }
-        } else {
-            renderView?.setOnClickListener(null)
-            renderView?.isClickable = false
-        }
+        mRenderView?.updateRenderView(context)
     }
 }

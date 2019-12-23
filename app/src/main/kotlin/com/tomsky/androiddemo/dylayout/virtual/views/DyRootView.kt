@@ -1,6 +1,5 @@
 package com.tomsky.androiddemo.dylayout.virtual.views
 
-import android.util.Log
 import com.tomsky.androiddemo.dylayout.virtual.DyContext
 import org.json.JSONObject
 
@@ -16,6 +15,5 @@ class DyRootView constructor(dyContext: DyContext, jsonObject: JSONObject, paren
 
         const val P_SETTING = "setting" // 动态布局额外配置
     }
-
 
 }

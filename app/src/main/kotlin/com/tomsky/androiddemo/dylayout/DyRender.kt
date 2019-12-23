@@ -18,7 +18,7 @@ class DyRender {
         var rootRenderView = rootView.createRenderView(context)
         rootRenderView?.let {
             containerView.removeAllViews()
-            containerView.addView(it)
+            containerView.addView(it.getRenderView())
         }
     }
 
