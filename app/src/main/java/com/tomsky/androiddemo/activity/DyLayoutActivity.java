@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.dylayout.DyManager;
+import com.tomsky.androiddemo.dylayout.virtual.DyExpression;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +19,8 @@ import java.io.InputStream;
  * Created by wangzhitao on 2019/12/19
  **/
 public class DyLayoutActivity extends FragmentActivity {
+
+    private static final String TAG = "dy_layout";
 
     private DyManager dyManager = new DyManager();
 
@@ -56,6 +59,42 @@ public class DyLayoutActivity extends FragmentActivity {
                 dyManager.invokeLayoutFromH5(jsonObject);
             }
         });
+
+        findViewById(R.id.expression_btn).setOnClickListener(v -> {
+            testExpression();
+        });
+    }
+
+    private void testExpression() {
+        try {
+            JSONObject dataObj = new JSONObject();
+
+            JSONObject syncObj = new JSONObject();
+            dataObj.put("sync", syncObj);
+            JSONObject gameObj = new JSONObject(readKeyData(R.raw.p_game));
+            JSONObject userObj = new JSONObject(readKeyData(R.raw.p_user));
+            syncObj.put("p_game", gameObj.optJSONObject("p_game"));
+            syncObj.put("p_user", userObj.optJSONArray("p_user"));
+
+            JSONObject apiObj = new JSONObject();
+            JSONObject feedObj = new JSONObject();
+            JSONObject relayObj = new JSONObject();
+
+            dataObj.put("api", apiObj);
+            apiObj.put("feedinfo", feedObj);
+            feedObj.put("relay", relayObj);
+            relayObj.put("sn", "sn1234353452345");
+
+            String src = "sync(proomid):p_game.scores[uid=$sync(liveid):p_user[pos=1].uid].nickname";
+//            String src = "api:feedinfo.relay.sn";
+            DyExpression expression = new DyExpression("text", src);
+            expression.parseKey();
+            expression.parseValue(dataObj);
+
+            Log.i(TAG, "value:"+expression.getValue()+", sync: "+expression.getSyncObservable()+", api: "+expression.getApiObservable());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private String readKeyData(int data) {
