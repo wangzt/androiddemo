@@ -83,7 +83,7 @@ public class DrawingCacheActivity extends FragmentActivity implements View.OnCli
                                         cv.drawBitmap(bgBmp, 0, 0, null);
                                         cv.drawBitmap(bmp, 100, 50, null);
                                         // save all clip
-                                        cv.save(Canvas.ALL_SAVE_FLAG);// 保存
+//                                        cv.save(Canvas.ALL_SAVE_FLAG);// 保存
                                         // store
                                         cv.restore();// 存储
                                         gifRecorder.onImageAvailable(newbmp);
