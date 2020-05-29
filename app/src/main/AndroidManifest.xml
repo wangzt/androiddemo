@@ -137,6 +137,11 @@
         <activity android:name=".activity.DyLayoutActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.PicInPicActivity"
+            android:supportsPictureInPicture="true"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:launchMode="singleTask"/>
+
         <service android:name="com.tomsky.androiddemo.UploadService"
             android:process=":back">
             <intent-filter>

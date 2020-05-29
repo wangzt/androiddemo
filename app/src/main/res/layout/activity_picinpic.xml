@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/pic_top_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#ff0000"/>
+    <View
+        android:id="@+id/pic_center_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="100dp"
+        android:background="#00ff00"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PicInPic"
+        android:layout_centerInParent="true"
+        android:onClick="picinpic"/>
+</RelativeLayout>
