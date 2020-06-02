@@ -19,7 +19,7 @@ public class LogUtils {
 
     public static void d(String tag, String msg) {
         if (DEBUG) {
-            Log.e(tag, msg);
+            Log.d(tag, msg);
         }
     }
 

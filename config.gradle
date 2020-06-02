@@ -30,6 +30,7 @@ ext {
             frescoOkHttp:         "com.facebook.fresco:imagepipeline-okhttp3:$fresco_version",
             frescoWebp:           "com.facebook.fresco:animated-webp:$fresco_version",
             frescoWebpsupport:    "com.facebook.fresco:webpsupport:$fresco_version",
-            okhttp:             "com.squareup.okhttp3:okhttp:$okhttp_version"
+            frescoAnimate:        "com.facebook.fresco:animated-drawable:$fresco_version",
+            okhttp:               "com.squareup.okhttp3:okhttp:$okhttp_version"
     ]
 }

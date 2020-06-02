@@ -42,9 +42,9 @@ public class MainActivity extends Activity{
                         Intent intent = new Intent();
                         intent.setClassName(MainActivity.this, data.name);
                         intent.putExtra("just_for_like", 100L);
-                        for (int i = 0; i < 3000; i++) {
-                            intent.putExtra("my_extra_"+i, "gfapdgdapgfjkgpaergkdfgsdfvalue_"+i);
-                        }
+//                        for (int i = 0; i < 3000; i++) {
+//                            intent.putExtra("my_extra_"+i, "gfapdgdapgfjkgpaergkdfgsdfvalue_"+i);
+//                        }
                         startActivity(intent);
                     } else {
                         if (data.name.equals("test_regex")) {

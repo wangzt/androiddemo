@@ -94,4 +94,13 @@
         <!-- 模糊 -->
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+    <style name="TranslucentAppBaseTheme" parent="android:Theme.Translucent.NoTitleBar">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 模糊 -->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>
