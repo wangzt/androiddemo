@@ -137,6 +137,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("Dynamic activity", "com.tomsky.androiddemo.activity.DynamicUIActivity"));
         datas.add(new ItemData("New Dynamic activity", "com.tomsky.androiddemo.activity.DyLayoutActivity"));
         datas.add(new ItemData("PicInPic activity", "com.tomsky.androiddemo.activity.PicInPicActivity"));
+        datas.add(new ItemData("Float activity", "com.tomsky.androiddemo.activity.FloatActivity"));
 
         return datas;
     }

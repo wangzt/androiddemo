@@ -76,14 +76,26 @@ public class PicInPicActivity extends FragmentActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LogUtils.e(TAG, "----onStart");
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onStop() {
         super.onStop();
+        LogUtils.e(TAG, "----onStop");
         if (mIsInPictureInPictureMode) {
-            LogUtils.e(TAG, "----onStop in pip");
             finish();
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        LogUtils.e(TAG, "----onRestart");
     }
 
     @Override

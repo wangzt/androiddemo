@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <uses-sdk tools:overrideLibrary="com.tencent.mmkv"/>
 
@@ -142,12 +143,22 @@
             android:excludeFromRecents="true"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"/>
 
+        <activity android:name=".activity.FloatActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
+
         <service android:name="com.tomsky.androiddemo.UploadService"
             android:process=":back">
             <intent-filter>
                     <action android:name="com.tomsky.androiddemo.upload" />
                 </intent-filter>
         </service>
+
+        <service android:name=".service.FloatWindowService"
+            android:exported="false"/>
 
         <provider
             android:authorities="com.tomsky.sphelper"
