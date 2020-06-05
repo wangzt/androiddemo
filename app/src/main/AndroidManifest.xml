@@ -138,7 +138,6 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".activity.PicInPicActivity"
-            android:theme="@style/TranslucentAppBaseTheme"
             android:supportsPictureInPicture="true"
             android:excludeFromRecents="true"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"/>

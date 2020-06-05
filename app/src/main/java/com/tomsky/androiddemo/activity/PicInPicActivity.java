@@ -1,10 +1,15 @@
 package com.tomsky.androiddemo.activity;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.PictureInPictureParams;
+import android.app.RemoteAction;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +18,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.util.Rational;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -28,6 +34,8 @@ import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.util.LogUtils;
 import com.tomsky.androiddemo.util.UIUtils;
 
+import java.util.ArrayList;
+
 /**
  * Created by wangzhitao on 2020/05/29
  **/
@@ -37,6 +45,7 @@ public class PicInPicActivity extends FragmentActivity {
 
     private PictureInPictureParams.Builder mPictureInPictureParamsBuilder;
 
+    private View rootView;
     private View containerView;
     private View centerView;
 
@@ -47,6 +56,7 @@ public class PicInPicActivity extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picinpic);
+        rootView = findViewById(R.id.pic_root_view);
         centerView = findViewById(R.id.pic_center_view);
         simpleDraweeView = findViewById(R.id.test_webp_img);
         containerView = findViewById(R.id.pic_container);
@@ -86,6 +96,15 @@ public class PicInPicActivity extends FragmentActivity {
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
         mIsInPictureInPictureMode = isInPictureInPictureMode;
         if (isInPictureInPictureMode) {
+//            WindowManager.LayoutParams lp=getWindow().getAttributes();
+//            lp.alpha = 0.1f;
+//            lp.dimAmount = 0f;
+//            getWindow().setAttributes(lp);
+//            getWindow().setBackgroundDrawable(null);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
+//            rootView.setAlpha(1.0f);
+
             if (containerView != null) {
                 containerView.setVisibility(View.GONE);
             }
@@ -103,6 +122,10 @@ public class PicInPicActivity extends FragmentActivity {
             if (mPictureInPictureParamsBuilder == null) {
                 mPictureInPictureParamsBuilder = new PictureInPictureParams.Builder();
             }
+            final ArrayList<RemoteAction> actions = new ArrayList<>();
+            final PendingIntent intentLast = PendingIntent.getBroadcast(this, 100, new Intent("mute_audio"), 0);
+            actions.add(new RemoteAction(Icon.createWithResource(this, R.drawable.arrow_red), "", "", intentLast));
+            mPictureInPictureParamsBuilder.setActions(actions);
 
             View decorView = getWindow().getDecorView();
             int width = decorView.getWidth();
@@ -112,8 +135,8 @@ public class PicInPicActivity extends FragmentActivity {
             if (width > 0 && height > 0) {
                 Rect bounds = new Rect();
                 centerView.getDrawingRect(bounds);
-                bounds.top += top;
-                bounds.bottom += top;
+//                bounds.top += top;
+//                bounds.bottom += top;
                 LogUtils.e(TAG, "-----width="+width+", height="+height+", bounds="+bounds);
                 Rational aspectRatio = new Rational(bounds.width(), bounds.height());
 //                mPictureInPictureParamsBuilder.setSourceRectHint(bounds);
