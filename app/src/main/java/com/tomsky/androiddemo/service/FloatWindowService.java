@@ -11,14 +11,19 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 
 import com.tomsky.androiddemo.R;
+import com.tomsky.androiddemo.activity.FloatActivity;
+import com.tomsky.androiddemo.util.LogUtils;
 
 /**
  * Created by wangzhitao on 2020/06/05
  **/
 public class FloatWindowService extends Service {
+
+    private static final String TAG = "float-window";
 
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams wmParams;
@@ -30,6 +35,7 @@ public class FloatWindowService extends Service {
     //view
     private View mFloatingLayout;    //浮动布局
     private LinearLayout smallSizePreviewLayout; //容器父布局
+    private WebView mWebView; // H5界面
 
     @Nullable
     @Override
@@ -52,7 +58,15 @@ public class FloatWindowService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return super.onStartCommand(intent, flags, startId);
+        int result = super.onStartCommand(intent, flags, startId);
+
+        if (intent != null) {
+            if (intent.hasExtra(FloatActivity.EXTRA_NAME)) {
+                String name = intent.getStringExtra(FloatActivity.EXTRA_NAME);
+                LogUtils.i(TAG, "name: "+name);
+            }
+        }
+        return result;
     }
 
 
@@ -83,6 +97,9 @@ public class FloatWindowService extends Service {
         mFloatingLayout = inflater.inflate(R.layout.alert_float_window_layout, null);
         // 添加悬浮窗的视图
         mWindowManager.addView(mFloatingLayout, wmParams);
+
+        mWebView = mFloatingLayout.findViewById(R.id.float_webview);
+        mWebView.loadUrl("http://www.baidu.com");
     }
 
 
@@ -110,6 +127,7 @@ public class FloatWindowService extends Service {
             @Override
             public void onClick(View v) {
                 //在这里实现点击重新回到Activity
+                startActivity(new Intent(getApplicationContext(), FloatActivity.class));
             }
         });
 

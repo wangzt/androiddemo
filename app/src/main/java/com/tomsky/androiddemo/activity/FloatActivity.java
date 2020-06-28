@@ -25,10 +25,15 @@ public class FloatActivity extends FragmentActivity {
     private static final String TAG = "FloatActivity";
     private static final int OVERLAY_PERMISSION_REQ_CODE = 100;
 
+    public static final String EXTRA_NAME = "extra_name";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_float);
+
+        Intent intent = new Intent(getApplicationContext(), FloatWindowService.class);//开启服务显示悬浮框
+        stopService(intent);
     }
 
     @Override
@@ -60,7 +65,7 @@ public class FloatActivity extends FragmentActivity {
         super.onRestart();
         LogUtils.e(TAG, "---onRestart");
 
-        unbindService(mVideoServiceConnection); // 不显示悬浮窗
+//        unbindService(mVideoServiceConnection); // 不显示悬浮窗
     }
 
     @Override
@@ -95,10 +100,14 @@ public class FloatActivity extends FragmentActivity {
     }
 
     private void startFloatService() {
-        moveTaskToBack(true);
+//        moveTaskToBack(true);
 
-        Intent intent = new Intent(this, FloatWindowService.class);//开启服务显示悬浮框
-        bindService(intent, mVideoServiceConnection, Context.BIND_AUTO_CREATE);
+        finish();
+
+        Intent intent = new Intent(getApplicationContext(), FloatWindowService.class);//开启服务显示悬浮框
+        intent.putExtra(EXTRA_NAME, "float activity");
+        startService(intent);
+//        bindService(intent, mVideoServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
     //判断权限
