@@ -1,7 +1,5 @@
 package com.tomsky.androiddemo.dynamic.virtualview;
 
-import android.graphics.Color;
-import android.support.constraint.ConstraintLayout;
 import android.view.View;
 
 import com.facebook.drawee.drawable.ScalingUtils;

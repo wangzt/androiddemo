@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -18,6 +17,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupWindow;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.util.BiliDanmukuParser;

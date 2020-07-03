@@ -18,14 +18,15 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.Dimension;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.Dimension;
 
 import com.tomsky.androiddemo.R;
 
@@ -67,7 +68,8 @@ public class SimpleRatingBar extends View {
   }
 
   // Configurable variables
-  private @ColorInt int borderColor;
+  private @ColorInt
+  int borderColor;
   private @ColorInt int fillColor;
   private @ColorInt int backgroundColor;
   private @ColorInt int starBackgroundColor;

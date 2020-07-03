@@ -1,16 +1,11 @@
 package com.tomsky.androiddemo.activity;
 
-import android.animation.FloatArrayEvaluator;
 import android.animation.IntArrayEvaluator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -18,7 +13,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.androidadvance.topsnackbar.TSnackbar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.tencent.mmkv.MMKV;
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.view.CircleProgressBar;

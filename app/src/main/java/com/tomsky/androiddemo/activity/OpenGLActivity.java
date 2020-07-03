@@ -3,7 +3,7 @@ package com.tomsky.androiddemo.activity;
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.tomsky.androiddemo.R;
 

@@ -4,21 +4,19 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+
 import com.tomsky.androiddemo.R;
-import com.tomsky.androiddemo.util.BitmapUtils;
-import com.tomsky.androiddemo.util.FileUtils;
 import com.tomsky.androiddemo.util.GifRecorder;
 import com.tomsky.androiddemo.util.WeakHandler;
 import com.tomsky.androiddemo.view.ENLoadingView;
 import com.tomsky.androiddemo.view.ENSearchView;
 
-import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**

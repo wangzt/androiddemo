@@ -1,9 +1,9 @@
 package com.tomsky.androiddemo.dylayout.render
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
-import android.support.v4.view.ViewCompat
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
 import com.tomsky.androiddemo.dylayout.virtual.DyContext
 import com.tomsky.androiddemo.dylayout.virtual.beans.DyLayoutBean
 import com.tomsky.androiddemo.dylayout.virtual.views.DyBaseView

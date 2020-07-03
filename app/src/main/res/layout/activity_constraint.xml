@@ -21,7 +21,7 @@
         android:background="#770"
         android:text="test_pbtn2" />
 
-    <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/test_layout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -231,5 +231,5 @@
                 android:background="#00ff00"/>
         </RelativeLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

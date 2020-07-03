@@ -1,13 +1,13 @@
 package com.tomsky.androiddemo.adapter;
 
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.tomsky.androiddemo.BaseApplication;
 import com.tomsky.androiddemo.R;
@@ -61,7 +61,7 @@ public class GridRecycleAdapter extends RecyclerView.Adapter<GridRecycleAdapter.
         return datas != null ? datas.size() : 0;
     }
 
-    class MyViewHolder extends ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
         public MyViewHolder(View itemView) {
             super(itemView);

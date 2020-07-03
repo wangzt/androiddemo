@@ -1,13 +1,12 @@
 package com.tomsky.androiddemo.widget;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.annotation.Px;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import com.tomsky.androiddemo.util.LogUtils;
-import com.tomsky.androiddemo.util.UIUtils;
 
 /**
  * Created by j-wangzhitao on 17-6-13.

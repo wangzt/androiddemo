@@ -1,17 +1,13 @@
 package com.tomsky.androiddemo.activity;
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
-import android.widget.RelativeLayout;
+
+import androidx.annotation.Nullable;
 
 import com.tomsky.androiddemo.R;
-import com.tomsky.androiddemo.animation.evaluator.RectEvaluator;
 import com.tomsky.androiddemo.view.DrawingAnimView;
 
 /**

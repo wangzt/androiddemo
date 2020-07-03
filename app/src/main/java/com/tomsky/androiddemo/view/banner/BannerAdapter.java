@@ -1,12 +1,13 @@
 package com.tomsky.androiddemo.view.banner;
 
 import android.graphics.Color;
-import android.support.v4.view.PagerAdapter;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -1,8 +1,9 @@
 package com.tomsky.androiddemo.widget;
 
 import android.graphics.Rect;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by j-wangzhitao on 17-6-20.

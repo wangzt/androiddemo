@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.tomsky.androiddemo.provider.SPHelper;
 import com.tomsky.androiddemo.service.IUploadCallback;

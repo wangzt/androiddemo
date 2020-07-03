@@ -1,11 +1,10 @@
 package com.tomsky.androiddemo.dylayout.virtual.views
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
-import android.support.v4.view.ViewCompat
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import androidx.core.view.ViewCompat
 import com.tomsky.androiddemo.dylayout.render.DyBaseRenderView
 import com.tomsky.androiddemo.dylayout.render.DyRenderView
 import com.tomsky.androiddemo.dylayout.render.IRenderView

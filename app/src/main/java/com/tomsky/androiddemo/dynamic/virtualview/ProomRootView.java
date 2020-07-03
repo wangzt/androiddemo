@@ -2,12 +2,12 @@ package com.tomsky.androiddemo.dynamic.virtualview;
 
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.ViewCompat;
 
 import com.tomsky.androiddemo.dynamic.ProomLayoutManager;
 import com.tomsky.androiddemo.dynamic.ProomLayoutUtils;

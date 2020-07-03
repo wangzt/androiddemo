@@ -1,12 +1,12 @@
 package com.tomsky.androiddemo.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+
 import com.tomsky.androiddemo.R;
-import com.tomsky.androiddemo.util.StringUtil;
 import com.tomsky.androiddemo.view.gridpasswordview.GridPasswordView;
 
 /**

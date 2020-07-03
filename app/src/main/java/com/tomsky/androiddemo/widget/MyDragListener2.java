@@ -1,10 +1,11 @@
 package com.tomsky.androiddemo.widget;
 
-import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.core.view.MotionEventCompat;
 
 import com.tomsky.androiddemo.util.LogUtils;
 

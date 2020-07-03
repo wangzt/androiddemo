@@ -6,11 +6,13 @@ ext {
     kotlin_version = '1.3.50'
     kotlin_coroutineversion = '1.3.2'
     kotlin_androidversion = '1.3.2'
-    lottie_version = '2.7.0'
+    lottie_version = '3.4.1'
     constraint_layout_version = '1.1.3'
-    support_version = '28.0.0'
     junit_version = '4.12'
-    fresco_version = '1.10.0'
+    mock_version = '3.1.0'
+    espresso_version = '3.2.0'
+    test_runner_version = '1.0.2'
+    fresco_version = '2.0.0'
     okhttp_version = '3.12.8'
 
     depen = [
@@ -18,13 +20,11 @@ ext {
             kotlinStd:            "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
             kotlinCoroutine:      "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutineversion",
             kotlinAndroid:        "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_androidversion",
-            constraintLayout:     "com.android.support.constraint:constraint-layout:$constraint_layout_version",
-            appcompat:            "com.android.support:appcompat-v7:$support_version",
-            recycleview:          "com.android.support:recyclerview-v7:$support_version",
-            support:              "com.android.support:support-v4:$support_version",
-            cardview:             "com.android.support:cardview-v7:$support_version",
-            design:               "com.android.support:design:$support_version",
-            annotation:           "com.android.support:support-annotations:$support_version",
+            constraintLayout:     "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
+            appcompat:            "androidx.appcompat:appcompat:1.0.0",
+            support:              'androidx.legacy:legacy-support-v4:1.0.0',
+            cardview:             'androidx.cardview:cardview:1.0.0',
+            design:               'com.google.android.material:material:1.0.0',
             fresco:               "com.facebook.fresco:fresco:$fresco_version",
             frescoGif:            "com.facebook.fresco:animated-gif:$fresco_version",
             frescoOkHttp:         "com.facebook.fresco:imagepipeline-okhttp3:$fresco_version",
@@ -32,5 +32,23 @@ ext {
             frescoWebpsupport:    "com.facebook.fresco:webpsupport:$fresco_version",
             frescoAnimate:        "com.facebook.fresco:animated-drawable:$fresco_version",
             okhttp:               "com.squareup.okhttp3:okhttp:$okhttp_version"
+    ]
+
+    unitTest = [
+            junit:                "junit:junit:$junit_version",
+            mockito:              "org.mockito:mockito-core:$mock_version"
+    ]
+
+    androidTestDep = [
+            testRunner: 'androidx.test.ext:junit:1.1.1',
+            testRules:           "com.android.support.test:rules:$test_runner_version",
+            espressoCore          : "androidx.test.espresso:espresso-core:$espresso_version",
+            espressoContrib       : "androidx.test.espresso:espresso-contrib:$espresso_version",
+            espressoIntents       : "androidx.test.espresso:espresso-intents:$espresso_version",
+            espressoAccessibility : "androidx.test.espresso:espresso-accessibility:$espresso_version",
+            espressoWeb           : "androidx.test.espresso:espresso-web:$espresso_version",
+            espressoIdling        : "androidx.test.espresso.idling:idling-concurrent:$espresso_version",
+            espressoIdlingResource: "androidx.test.espresso:espresso-idling-resource:$espresso_version",
+            mockWeb:               "com.squareup.okhttp3:mockwebserver:$okhttp_version"
     ]
 }

@@ -1,32 +1,28 @@
 package com.tomsky.androiddemo.activity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.tomsky.androiddemo.R;
 import com.tomsky.androiddemo.adapter.MainPagerAdapter;
 import com.tomsky.androiddemo.adapter.RecyclerAdapter;
@@ -177,14 +173,14 @@ public class CoordinatorLayoutActivity extends AppCompatActivity implements Swip
 
             @Override
             public void onPageSelected(int position) {
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), PAGE_RESOURCE[position % PAGE_RESOURCE.length]);
-                Palette palette = Palette.from(bitmap).generate();
-                Palette.Swatch swatch = palette.getVibrantSwatch();
-                if (swatch == null) {
-                    swatch = palette.getMutedSwatch();
-                }
-                int color = swatch.getRgb();
-                collapsingToolbarLayout.setContentScrimColor(color);
+//                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), PAGE_RESOURCE[position % PAGE_RESOURCE.length]);
+//                Palette palette = Palette.from(bitmap).generate();
+//                Palette.Swatch swatch = palette.getVibrantSwatch();
+//                if (swatch == null) {
+//                    swatch = palette.getMutedSwatch();
+//                }
+//                int color = swatch.getRgb();
+//                collapsingToolbarLayout.setContentScrimColor(color);
             }
 
             @Override

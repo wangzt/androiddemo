@@ -1,13 +1,11 @@
 package com.tomsky.androiddemo.widget;
 
 import android.app.Activity;
-import android.graphics.Rect;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.tomsky.androiddemo.R;
-import com.tomsky.androiddemo.activity.RecycleActivity;
 import com.tomsky.androiddemo.adapter.GridRecycleAdapter;
 import com.tomsky.androiddemo.util.UIUtils;
 
