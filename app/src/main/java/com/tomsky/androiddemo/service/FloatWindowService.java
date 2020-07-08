@@ -3,8 +3,11 @@ package com.tomsky.androiddemo.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Binder;
 import android.os.IBinder;
+import android.text.Layout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 
@@ -35,7 +39,7 @@ public class FloatWindowService extends Service {
 
     //view
     private View mFloatingLayout;    //浮动布局
-    private LinearLayout smallSizePreviewLayout; //容器父布局
+    private RelativeLayout smallSizePreviewLayout; //容器父布局
     private WebView mWebView; // H5界面
 
     @Nullable
@@ -100,7 +104,12 @@ public class FloatWindowService extends Service {
         mWindowManager.addView(mFloatingLayout, wmParams);
 
         mWebView = mFloatingLayout.findViewById(R.id.float_webview);
-        mWebView.loadUrl("http://www.baidu.com");
+
+        mFloatingLayout.findViewById(R.id.float_load_btn).setOnClickListener(v -> {
+            if (mWebView != null) {
+                mWebView.loadUrl("https://wenku.baidu.com/topic/composition2020?channel=pcbd");
+            }
+        });
     }
 
 
@@ -128,7 +137,10 @@ public class FloatWindowService extends Service {
             @Override
             public void onClick(View v) {
                 //在这里实现点击重新回到Activity
-                startActivity(new Intent(getApplicationContext(), FloatActivity.class));
+                Intent intent = new Intent();
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setClass(getApplicationContext(), FloatActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -143,6 +155,7 @@ public class FloatWindowService extends Service {
     //判断悬浮窗口是否移动，这里做个标记，防止移动后松手触发了点击事件
     private boolean isMove;
 
+    private int tempY = 0;
     private class FloatingListener implements View.OnTouchListener {
 
         @Override
@@ -153,24 +166,34 @@ public class FloatWindowService extends Service {
                     isMove = false;
                     mTouchStartX = (int) event.getRawX();
                     mTouchStartY = (int) event.getRawY();
-                    mStartX = (int) event.getX();
-                    mStartY = (int) event.getY();
+                    mStartX = mTouchStartX;
+                    mStartY = mTouchStartY;
                     break;
                 case MotionEvent.ACTION_MOVE:
                     mTouchCurrentX = (int) event.getRawX();
                     mTouchCurrentY = (int) event.getRawY();
                     wmParams.x += mTouchCurrentX - mTouchStartX;
-                    wmParams.y += mTouchCurrentY - mTouchStartY;
+//                    wmParams.y += mTouchCurrentY - mTouchStartY;
+
+                    tempY = wmParams.y + mTouchCurrentY - mTouchStartY;
+                    if (tempY < 80) {
+                        tempY = 80;
+                    }
+                    wmParams.y = tempY;
+
                     mWindowManager.updateViewLayout(mFloatingLayout, wmParams);
 
                     mTouchStartX = mTouchCurrentX;
                     mTouchStartY = mTouchCurrentY;
                     break;
                 case MotionEvent.ACTION_UP:
-                    mStopX = (int) event.getX();
-                    mStopY = (int) event.getY();
-                    if (Math.abs(mStartX - mStopX) >= 1 || Math.abs(mStartY - mStopY) >= 1) {
+                    mStopX = (int) event.getRawX();
+                    mStopY = (int) event.getRawY();
+                    if (Math.abs(mStartX - mStopX) >= 2 || Math.abs(mStartY - mStopY) >= 2) {
                         isMove = true;
+                    }
+                    if (isMove) {
+                        slideToBorder();
                     }
                     break;
             }
@@ -179,4 +202,24 @@ public class FloatWindowService extends Service {
             return isMove;
         }
     }
+
+    private void slideToBorder() {
+        Point point = new Point();
+        mWindowManager.getDefaultDisplay().getSize(point);
+        int width = mFloatingLayout.getWidth();
+//        Log.i(TAG, "width:"+width+", pWidth:"+point.x+", pHeight:"+point.y+", wmParams.x:"+wmParams.x+", wmParams.y:"+wmParams.y);
+    }
 }
+
+//    int leftLimit = (getWidth() - dragView.getWidth()) / 2;
+//    //在最中间的时候动画所需最大执行时间
+//    int maxDuration = 500;
+//    int duration;
+//                        if (dragView.getLeft() < leftLimit) {
+//        //根据距离边界的距离，弹性计算动画执行时间，防止距离边界很近的时候执行时间仍是过长
+//        duration = maxDuration * (dragView.getLeft() + hideSize) / (leftLimit + hideSize);
+//        animSlide(dragView, dragView.getLeft(), -hideSize, duration);
+//        } else {
+//        duration = maxDuration * (getWidth() + hideSize - dragView.getRight()) / (leftLimit + hideSize);
+//        animSlide(dragView, dragView.getLeft(), getWidth() - dragView.getWidth() + hideSize, duration);
+//        }

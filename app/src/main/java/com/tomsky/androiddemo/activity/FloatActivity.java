@@ -112,7 +112,7 @@ public class FloatActivity extends FragmentActivity {
     //判断权限
     private void tryToMinimize() {
 
-        if ( Build.VERSION.SDK_INT >= 23 ) {
+        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
             if (Settings.canDrawOverlays(this)) {
                 //有悬浮窗权限开启服务绑定 绑定权限
 //                Intent intent = new Intent(this, MyService.class);

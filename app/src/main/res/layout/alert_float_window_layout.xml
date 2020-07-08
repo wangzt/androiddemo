@@ -7,15 +7,21 @@
         android:layout_height="200dp"
         android:background="#80000000">
 
-        <LinearLayout
-            android:id="@+id/small_size_preview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#00000000"
-            android:orientation="vertical" />
         <WebView
             android:id="@+id/float_webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+        <RelativeLayout
+            android:id="@+id/small_size_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/float_load_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="load web"/>
+        </RelativeLayout>
     </FrameLayout>
 </RelativeLayout>
