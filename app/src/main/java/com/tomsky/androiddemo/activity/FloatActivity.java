@@ -3,6 +3,7 @@ package com.tomsky.androiddemo.activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -22,7 +23,7 @@ import com.tomsky.androiddemo.util.LogUtils;
  **/
 public class FloatActivity extends FragmentActivity {
     private static final String TAG = "FloatActivity";
-    private static final int OVERLAY_PERMISSION_REQ_CODE = 100;
+    private static final int OVERLAY_PERMISSION_REQ_CODE = 1010;
 
     public static final String EXTRA_NAME = "extra_name";
 
@@ -122,17 +123,18 @@ public class FloatActivity extends FragmentActivity {
             } else {
                 //没有悬浮窗权限m,去开启悬浮窗权限
                 try {
-                    Intent  intent=new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                    Intent  intent=new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
                     startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        } else {
+        } else { // 6.0以下机型不支持
             // 默认有悬浮窗权限  但是 华为, 小米,oppo 等手机会有自己的一套 Android6.0 以下
             // 会有自己的一套悬浮窗权限管理 也需要做适配
 
-            startFloatService();
+            Toast.makeText(this, "Your system is bellow android 6.0, not support minimize!", Toast.LENGTH_LONG).show();
+//            startFloatService();
         }
     }
 
