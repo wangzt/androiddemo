@@ -3,6 +3,8 @@ package com.tomsky.androiddemo.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaCodecInfo;
+import android.media.MediaCodecList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -47,6 +49,30 @@ public class Camera2Activity extends FragmentActivity {
         }
 
     }
+
+    private MediaCodecInfo listVideoEncoder() {
+        int nbCodecs = MediaCodecList.getCodecCount();
+        for (int i = 0; i < nbCodecs; i++) {
+            MediaCodecInfo mci = MediaCodecList.getCodecInfoAt(i);
+            if (!mci.isEncoder()) {
+                continue;
+            }
+            String[] types = mci.getSupportedTypes();
+            for (int j = 0; j < types.length; j++) {
+                LogUtils.i(TAG, String.format("vencoder %s types: %s", mci.getName(), types[j]));
+//                if (types[j].equalsIgnoreCase(VCODEC)) {
+//                    if (name == null) {
+//                        return mci;
+//                    }
+//                    if (mci.getName().contains(name)) {
+//                        return mci;
+//                    }
+//                }
+            }
+        }
+        return null;
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
