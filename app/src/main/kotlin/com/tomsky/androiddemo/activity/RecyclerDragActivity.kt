@@ -137,6 +137,8 @@ class RecyclerDragActivity : AppCompatActivity() {
         companion object {
             const val TAG = "wzt-drag"
         }
+        private var selectPos:Int = -1
+
         override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
             var dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
             if (viewHolder.adapterPosition == 5) {
@@ -162,13 +164,18 @@ class RecyclerDragActivity : AppCompatActivity() {
 
         override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
             LogUtils.i(TAG, "onSelectedChanged, position: ${viewHolder?.adapterPosition}, actionState: $actionState")
+            if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                selectPos = viewHolder?.adapterPosition ?: -1
+            }
             super.onSelectedChanged(viewHolder, actionState)
         }
 
         override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
             LogUtils.i(TAG, "clearView, position: ${viewHolder.adapterPosition}")
             super.clearView(recyclerView, viewHolder)
-            adapter.onChangeFinished()
+            if (selectPos != viewHolder.adapterPosition) { // has changed
+                adapter.onChangeFinished()
+            }
         }
     }
 }
