@@ -155,6 +155,9 @@
         <activity android:name=".activity.RecyclerDragActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.ExpandLayoutActivity"
+            android:screenOrientation="portrait"/>
+
         <service android:name="com.tomsky.androiddemo.UploadService"
             android:process=":back">
             <intent-filter>
