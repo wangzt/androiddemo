@@ -23,6 +23,9 @@ public class ExpandableLayout extends ViewGroup {
     private List<Integer> mLineHeight = new ArrayList<>();
 
     private int mMinLine = -1;
+    private boolean mExpand = false;
+
+    private LayoutLineListener mLayoutLineListener;
 
     public ExpandableLayout(Context context) {
         this(context, null);
@@ -38,6 +41,15 @@ public class ExpandableLayout extends ViewGroup {
 
     public void setMinLine(int minLine) {
         this.mMinLine = minLine;
+    }
+
+    public void setExpand(boolean expand) {
+        this.mExpand = expand;
+        requestLayout();
+    }
+
+    public void setLayoutLineListener(LayoutLineListener measureLineListener) {
+        this.mLayoutLineListener = measureLineListener;
     }
 
     @Override
@@ -89,9 +101,10 @@ public class ExpandableLayout extends ViewGroup {
             }
         }
 
-        if (mMinLine > 0 && mMinLine < row) {
+        if (!mExpand && mMinLine > 0 && mMinLine < row) {
             row = mMinLine;
         }
+
         LogUtils.e(TAG,"row :"+row);
         //wrap_content
         setMeasuredDimension(modeWidth == MeasureSpec.EXACTLY ? sizeWidth : width,row * height);
@@ -141,8 +154,18 @@ public class ExpandableLayout extends ViewGroup {
         //获取行数
         int lineCount = mAllChildViews.size();
         if (mMinLine > 0 && mMinLine < lineCount) {
-            lineCount = mMinLine;
+            if (!mExpand) {
+                lineCount = mMinLine;
+            }
+            if (mLayoutLineListener != null) {
+                mLayoutLineListener.onLayoutLine(true);
+            }
+        } else {
+            if (mLayoutLineListener != null) {
+                mLayoutLineListener.onLayoutLine(false);
+            }
         }
+
         for (int i = 0; i < lineCount; i++) {
             //当前行的views和高度
             lineViews = mAllChildViews.get(i);
@@ -170,5 +193,9 @@ public class ExpandableLayout extends ViewGroup {
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new MarginLayoutParams(getContext(), attrs);
+    }
+
+    public interface LayoutLineListener {
+        void onLayoutLine(boolean hasMore);
     }
 }

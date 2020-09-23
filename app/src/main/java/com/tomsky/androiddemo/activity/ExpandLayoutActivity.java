@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tomsky.androiddemo.R;
+import com.tomsky.androiddemo.widget.expand.ExpandableLayout;
 import com.tomsky.androiddemo.widget.expand.TagExpandableLayout;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class ExpandLayoutActivity extends AppCompatActivity {
     private Button btn;
     private TextView textView;
 
-    private boolean expand = true;
+    private boolean expand = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,24 +32,37 @@ public class ExpandLayoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_expand_layout);
 
         expandableLayout = findViewById(R.id.expand_layout);
+        expandableLayout.setMinLine(2);
+        expandableLayout.setLayoutLineListener(new ExpandableLayout.LayoutLineListener() {
+
+            @Override
+            public void onLayoutLine(boolean hasMore) {
+                if (hasMore) {
+                    btn.setVisibility(View.VISIBLE);
+                }  else {
+                    btn.setVisibility(View.GONE);
+                }
+            }
+        });
         List<String> tags = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             tags.add("Tag "+i);
         }
         expandableLayout.addTags(tags, tags.get(1));
 
+        expandableLayout.setExpand(expand);
+
         btn = findViewById(R.id.expand_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (expand) {
-                    expandableLayout.setMinLine(2);
+                    expandableLayout.setExpand(false);
                     btn.setText("展开");
                 } else {
-                    expandableLayout.setMinLine(-1);
+                    expandableLayout.setExpand(true);
                     btn.setText("收起");
                 }
-                expandableLayout.requestLayout();
                 expand = !expand;
             }
         });

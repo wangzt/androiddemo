@@ -8,7 +8,7 @@
         android:id="@+id/expand_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="收起"
+        android:text="展开"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="10dp"/>
