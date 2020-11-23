@@ -140,6 +140,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("Float activity", "com.tomsky.androiddemo.activity.FloatActivity"));
         datas.add(new ItemData("Recycler Drag activity", "com.tomsky.androiddemo.activity.RecyclerDragActivity"));
         datas.add(new ItemData("ExpandLayout activity", "com.tomsky.androiddemo.activity.ExpandLayoutActivity"));
+        datas.add(new ItemData("OutLine activity", "com.tomsky.androiddemo.activity.OutLineActivity"));
 
         return datas;
     }
