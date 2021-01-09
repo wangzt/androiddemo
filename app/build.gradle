@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 //import org.aspectj.bridge.IMessage
 //import org.aspectj.bridge.MessageHandler
@@ -43,6 +44,9 @@ android {
             coroutines 'enable'
         }
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -59,6 +63,7 @@ dependencies {
     api depen.support
     api depen.design
     api depen.cardview
+    api depen.viewpager2
     api 'io.reactivex.rxjava2:rxjava:2.1.5'
     api 'io.reactivex.rxjava2:rxandroid:2.0.1'
     api depen.constraintLayout
@@ -68,6 +73,7 @@ dependencies {
     api depen.frescoWebp
     api depen.frescoWebpsupport
     api depen.frescoAnimate
+    implementation depen.lifecycleExtention
     implementation 'com.tencent:mmkv:1.0.19'
     api 'com.eclipsesource.j2v8:j2v8:4.5.0@aar'
 

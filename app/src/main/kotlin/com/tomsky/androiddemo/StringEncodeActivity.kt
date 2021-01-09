@@ -192,11 +192,11 @@ class StringEncodeActivity : AppCompatActivity(), InputListener{
 }
 
 class MyClickableSpan(val name:String): ClickableSpan() {
-    override fun onClick(widget: View?) {
+    override fun onClick(widget: View) {
         Log.d("TestStringEncode", "onClick:$name")
     }
 
-    override fun updateDrawState(ds: TextPaint?) {
+    override fun updateDrawState(ds: TextPaint) {
         ds?.color = Color.BLUE
         ds?.isUnderlineText = false
     }
@@ -204,7 +204,7 @@ class MyClickableSpan(val name:String): ClickableSpan() {
 }
 
 
-class InputDialog(context: Context?) : Dialog(context, R.style.Base_Theme_AppCompat_Dialog) {
+class InputDialog(context: Context) : Dialog(context, R.style.Base_Theme_AppCompat_Dialog) {
 
     var type = 0
 
