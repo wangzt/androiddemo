@@ -142,6 +142,7 @@ public class MainActivity extends Activity{
         datas.add(new ItemData("ExpandLayout activity", "com.tomsky.androiddemo.activity.ExpandLayoutActivity"));
         datas.add(new ItemData("OutLine activity", "com.tomsky.androiddemo.activity.OutLineActivity"));
         datas.add(new ItemData("ViewPager2 activity", "com.tomsky.androiddemo.activity.ViewPager2Activity"));
+        datas.add(new ItemData("Kotlin grammar activity", "com.tomsky.androiddemo.activity.GrammarRecyclerActivity"));
 
         return datas;
     }

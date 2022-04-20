@@ -167,6 +167,9 @@
 
         <activity android:name=".activity.ViewPager2Activity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.GrammarRecyclerActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".UploadService"
