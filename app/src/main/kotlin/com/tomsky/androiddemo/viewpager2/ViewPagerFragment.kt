@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
+import com.tomsky.androiddemo.ViewModelProviders
 import com.tomsky.androiddemo.databinding.Viewpager2ItemBinding
 import com.tomsky.androiddemo.util.ThreadUtils
 

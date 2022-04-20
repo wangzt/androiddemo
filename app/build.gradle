@@ -73,7 +73,9 @@ dependencies {
     api depen.frescoWebp
     api depen.frescoWebpsupport
     api depen.frescoAnimate
-    implementation depen.lifecycleExtention
+    implementation depen.lifecycleRuntime
+    implementation depen.lifecycleViewModel
+    implementation depen.lifecycleRuntimeKtx
     implementation 'com.tencent:mmkv:1.0.19'
     api 'com.eclipsesource.j2v8:j2v8:4.5.0@aar'
 
