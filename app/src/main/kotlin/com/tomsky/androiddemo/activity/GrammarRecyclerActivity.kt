@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.tomsky.androiddemo.NoDoubleClickListener
 import com.tomsky.androiddemo.R
-import com.tomsky.androiddemo.grammar.flowSequence
-import com.tomsky.androiddemo.grammar.flowSuspend
+import com.tomsky.androiddemo.grammar.asyncFlow
+import com.tomsky.androiddemo.grammar.mapFlow
+import com.tomsky.androiddemo.grammar.timeoutFlow
+import com.tomsky.androiddemo.grammar.transformFlow
 import com.tomsky.androiddemo.util.UIUtils
 import com.tomsky.androiddemo.view.ItemDivider
 
@@ -38,7 +40,7 @@ class GrammarRecyclerActivity : AppCompatActivity() {
         recyclerView?.run {
             layoutManager = LinearLayoutManager(this@GrammarRecyclerActivity, LinearLayoutManager.VERTICAL, false)
             var dataList: MutableList<GrammarItem> = mutableListOf()
-            dataList.add(GrammarItem("异步流") { flowSuspend() })
+            dataList.add(GrammarItem("异步流") { transformFlow() })
 
             val dragAdapter = GrammarAdapter()
             dragAdapter.setData(dataList)
