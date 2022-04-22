@@ -13,7 +13,7 @@ import kotlin.system.*
 class CoroutineGrammar {
 
     fun test() {
-        seqCall()
+        subCoroutine()
     }
 
     private fun scope() = runBlocking {
@@ -122,4 +122,36 @@ class CoroutineGrammar {
         one.await() + two.await()
     }
 
+    private fun coroutineDispatchers() = runBlocking {
+        launch { // 运行在父协程的上下文中，即 runBlocking 主协程
+            Log.i(GRAMMAR_TAG, "main runBlocking      : I'm working in thread ${Thread.currentThread().name}")
+        }
+
+        launch(Dispatchers.Unconfined) { // 不受限的——将工作在主线程中
+            Log.i(GRAMMAR_TAG, "Unconfined            : I'm working in thread ${Thread.currentThread().name}")
+        }
+
+        launch(Dispatchers.Default) { // 将会获取默认调度器
+            Log.i(GRAMMAR_TAG, "Default            : I'm working in thread ${Thread.currentThread().name}")
+        }
+
+        launch(newSingleThreadContext("MyOwnThread")) { // 将使它获得一个新的线程
+            Log.i(GRAMMAR_TAG, "MyOwnThread            : I'm working in thread ${Thread.currentThread().name}")
+        }
+    }
+
+    private fun subCoroutine() = runBlocking {
+        // 启动一个协程来处理某种传入请求（request）
+        val request = launch {  
+            repeat(3) { i -> // 启动少量的子作业
+                launch  {
+                    delay((i + 1) * 200L) // 延迟 200 毫秒、400 毫秒、600 毫秒的时间
+                    Log.i(GRAMMAR_TAG,"Coroutine $i is done")
+                }
+            }
+            Log.i(GRAMMAR_TAG,"request: I'm done and I don't explicitly join my children that are still active")
+        }
+        request.join() // 等待请求的完成，包括其所有子协程
+        Log.i(GRAMMAR_TAG,"Now processing of the request is complete")
+    }
 }

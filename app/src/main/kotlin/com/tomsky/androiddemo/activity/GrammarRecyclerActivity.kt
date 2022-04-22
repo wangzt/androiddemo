@@ -1,6 +1,7 @@
 package com.tomsky.androiddemo.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.tomsky.androiddemo.R
 import com.tomsky.androiddemo.grammar.*
 import com.tomsky.androiddemo.util.UIUtils
 import com.tomsky.androiddemo.view.ItemDivider
+import kotlinx.coroutines.*
 
 /**
  * kotlin语法
@@ -24,6 +26,8 @@ import com.tomsky.androiddemo.view.ItemDivider
 class GrammarRecyclerActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
+
+    private val mainScope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +43,7 @@ class GrammarRecyclerActivity : AppCompatActivity() {
             var dataList: MutableList<GrammarItem> = mutableListOf()
             dataList.add(GrammarItem("协程") { CoroutineGrammar().test() })
             dataList.add(GrammarItem("异步流") { transformFlow() })
+            dataList.add(GrammarItem("作用域") { doSome() })
 
             val dragAdapter = GrammarAdapter()
             dragAdapter.setData(dataList)
@@ -47,6 +52,31 @@ class GrammarRecyclerActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    private fun doSome() = mainScope.launch {
+        doSomething()
+        Log.i(GRAMMAR_TAG, "Launched coroutines")
+        delay(500L)
+        Log.i(GRAMMAR_TAG, "Finished activity")
+        finish()
+        delay(1000L)
+    }
+
+    fun doSomething() {
+        // 在示例中启动了 10 个协程，且每个都工作了不同的时长
+        repeat(10) { i ->
+            Log.i(GRAMMAR_TAG,"Coroutine repeat $i ")
+            mainScope.launch {
+                delay((i + 1) * 200L) // 延迟 200 毫秒、400 毫秒、600 毫秒等等不同的时间
+                Log.i(GRAMMAR_TAG,"Coroutine $i is done")
+            }
+        }
+    }
+
+    override fun finish() {
+        super.finish()
+        mainScope.cancel()
     }
 
     class GrammarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
