@@ -44,6 +44,8 @@ class GrammarRecyclerActivity : AppCompatActivity() {
             dataList.add(GrammarItem("协程") { CoroutineGrammar().test() })
             dataList.add(GrammarItem("异步流") { transformFlow() })
             dataList.add(GrammarItem("作用域") { doSome() })
+            dataList.add(GrammarItem("通道") { CoroutineChannel().test() })
+
 
             val dragAdapter = GrammarAdapter()
             dragAdapter.setData(dataList)
