@@ -41,6 +41,7 @@ class GrammarRecyclerActivity : AppCompatActivity() {
         recyclerView?.run {
             layoutManager = LinearLayoutManager(this@GrammarRecyclerActivity, LinearLayoutManager.VERTICAL, false)
             var dataList: MutableList<GrammarItem> = mutableListOf()
+            dataList.add(GrammarItem("基本语法") { BaseGrammar().test() })
             dataList.add(GrammarItem("协程") { CoroutineGrammar().test() })
             dataList.add(GrammarItem("异步流") { transformFlow() })
             dataList.add(GrammarItem("作用域") { doSome() })
