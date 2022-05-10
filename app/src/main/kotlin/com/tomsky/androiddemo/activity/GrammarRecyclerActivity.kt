@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -15,7 +17,12 @@ import com.tomsky.androiddemo.R
 import com.tomsky.androiddemo.grammar.*
 import com.tomsky.androiddemo.util.UIUtils
 import com.tomsky.androiddemo.view.ItemDivider
-import kotlinx.coroutines.*
+import com.tomsky.androiddemo.viewmodel.GrammarViewModel
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 /**
  * kotlin语法
@@ -27,10 +34,14 @@ class GrammarRecyclerActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
 
+    private lateinit var viewModel: GrammarViewModel
     private val mainScope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val instance = ViewModelProvider.AndroidViewModelFactory
+            .getInstance(getApplication())
+        viewModel = ViewModelProvider(this).get(GrammarViewModel::class.java)
         setContentView(R.layout.activity_recycler_grammar)
         initView()
     }
@@ -43,9 +54,12 @@ class GrammarRecyclerActivity : AppCompatActivity() {
             var dataList: MutableList<GrammarItem> = mutableListOf()
             dataList.add(GrammarItem("基本语法") { BaseGrammar().test() })
             dataList.add(GrammarItem("协程") { CoroutineGrammar().test() })
-            dataList.add(GrammarItem("异步流") { transformFlow() })
+            dataList.add(GrammarItem("流语法") { FlowGrammar().test(mainScope, lifecycleScope) })
+//            dataList.add(GrammarItem("异步流") { transformFlow() })
             dataList.add(GrammarItem("作用域") { doSome() })
             dataList.add(GrammarItem("通道") { CoroutineChannel().test() })
+            dataList.add(GrammarItem("SharedFlow") { viewModel.emitShareFlow() })
+            dataList.add(GrammarItem("SharedFlow collect") { collectNew() })
 
 
             val dragAdapter = GrammarAdapter()
@@ -55,6 +69,27 @@ class GrammarRecyclerActivity : AppCompatActivity() {
 
         }
 
+        lifecycleScope.launch {
+            viewModel.sharedFlow.collect {
+                Log.i(GRAMMAR_TAG, "$it")
+
+            }
+        }
+
+        lifecycleScope.launch {
+
+
+        }
+
+    }
+
+    private fun collectNew() {
+        mainScope.launch {
+            viewModel.sharedFlow.collect {
+                Log.i(GRAMMAR_TAG, "2---:$it")
+
+            }
+        }
     }
 
     private fun doSome() = mainScope.launch {

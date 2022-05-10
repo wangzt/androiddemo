@@ -79,7 +79,7 @@ dependencies {
     implementation 'com.tencent:mmkv:1.0.19'
     api 'com.eclipsesource.j2v8:j2v8:4.5.0@aar'
 
-    implementation 'org.aspectj:aspectjrt:1.8.13'
+//    implementation 'org.aspectj:aspectjrt:1.8.13'
 
     api project(':danmaku')
     api project(':topsnackbar')
