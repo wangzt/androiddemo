@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
 
 //import org.aspectj.bridge.IMessage
 //import org.aspectj.bridge.MessageHandler
@@ -60,7 +61,7 @@ dependencies {
     androidTestImplementation androidTestDep.espressoIdling
     androidTestImplementation androidTestDep.espressoIdlingResource
     api depen.appcompat
-    api depen.support
+//    api depen.support
     api depen.design
     api depen.cardview
     api depen.viewpager2
@@ -76,7 +77,7 @@ dependencies {
     implementation depen.lifecycleRuntime
     implementation depen.lifecycleViewModel
     implementation depen.lifecycleRuntimeKtx
-    implementation 'com.tencent:mmkv:1.0.19'
+    implementation 'com.tencent:mmkv:1.2.13'
     api 'com.eclipsesource.j2v8:j2v8:4.5.0@aar'
 
 //    implementation 'org.aspectj:aspectjrt:1.8.13'
@@ -92,96 +93,7 @@ dependencies {
     implementation depen.kotlinAndroid
 }
 
-//project.android.applicationVariants.all { variant ->
-//    JavaCompile javaCompile = variant.javaCompile
-//    javaCompile.doLast {
-//        String[] args = ["-showWeaveInfo",
-//                         "-1.8",
-//                         "-inpath", javaCompile.destinationDir.toString(),
-//                         "-aspectpath", javaCompile.classpath.asPath,
-//                         "-d", javaCompile.destinationDir.toString(),
-//                         "-classpath", javaCompile.classpath.asPath,
-//                         "-bootclasspath", project.android.bootClasspath.join(
-//                File.pathSeparator)]
-//        MessageHandler handler = new MessageHandler(true);
-//        new Main().run(args, handler)
-//        def log = project.logger
-//        for (IMessage message : handler.getMessages(null, true)) {
-//            switch (message.getKind()) {
-//                case IMessage.ABORT:
-//                case IMessage.ERROR:
-//                case IMessage.FAIL:
-//                    log.error message.message, message.thrown
-//                    break;
-//                case IMessage.WARNING:
-//                case IMessage.INFO:
-//                    log.info message.message, message.thrown
-//                    break;
-//                case IMessage.DEBUG:
-//                    log.debug message.message, message.thrown
-//                    break;
-//            }
-//        }
-//    }
-//}
 
-// task compileApi(type: JavaCompile) {
-    // doFirst {
-        //println "buildDir: $buildDir"
-        // println "projectDir: $projectDir"
-        //println "rootDir: $rootDir"
-        // javaCompile {
-            // source = src/main/java
-            // include 'com/tomsky/androiddemo/api/*.api'
-            //classpath = sourceSets.main.compileClasspath
-            // destinationDir = src/main/java
-        // }
-    // }
-// }
-
-task copyApi(type: Copy) {
-    //def destDir = file("build/tmp/interface/com/tomsky/androiddemo/api")
-    //destDir.mkdirs()
-
-    from 'src/main/java/com/tomsky/androiddemo/api'
-    into 'build/tmp/interface/com/tomsky/androiddemo/api'
-    //使用闭包映射文件名
-    rename { String fileName ->
-        fileName.replace('.api', '.java')
-    }
-    // 使用正则表达式映射文件名
-    //rename '(.+)-staging-(.+)', '$1$2'
-    //rename(/(.+)-staging-(.+)/, '$1$2')
-}
-
-afterEvaluate {  
-    tasks.matching {  
-        it.name == "generateDebugSources" || it.name == "generateReleaseSources"
-    }.each { tk -> 
-        tk.dependsOn(copyApi)  
-    }  
-}
-
-task buildApiJar(type: Jar, dependsOn: ['compileDebugSources']) {
-    //导出的jar文件名称
-    archiveName = 'interface.jar'
-    //从哪个目录打包jar
-    from('build/intermediates/classes/debug')
-    //导出的jar文件的存放目录（未指定则默认存放在build/libs下）
-    destinationDir = file('build/libs')
-    //去掉不要的类
-    //exclude('com/example/testapp/BuildConfig.class')
-    //exclude('com/example/testapp/BuildConfig\$*.class')
-    //exclude('**/R.class')
-    //exclude('**/R\$*.class')
-    //需要打包的类
-    include('com/tomsky/androiddemo/api/*.class')
-}
-
-task testPath() {
-    File file = new File('test.txt')
-    print 'file path:'+file.getAbsolutePath()
-}
 repositories {
     mavenCentral()
 }

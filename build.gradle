@@ -2,17 +2,20 @@
 apply from: 'config.gradle'
 
 buildscript {
-    ext.kotlin_version = '1.3.50'
+    ext.kotlin_version = '1.6.0'
     repositories {
         maven { url 'https://oss.jfrog.org/libs-snapshot' }
         maven { url 'https://maven.google.com' }
-        jcenter()
+        mavenCentral()
         google()
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            allowInsecureProtocol true
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
-        classpath 'com.android.tools.build:gradle-experimental:0.9.3'
+        classpath 'com.android.tools.build:gradle:7.0.2'
+//        classpath 'com.android.tools.build:gradle-experimental:0.9.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
 //        classpath 'org.aspectj:aspectjtools:1.8.13'    // add
@@ -28,9 +31,12 @@ allprojects {
     repositories {
         maven { url 'https://oss.jfrog.org/libs-snapshot' }
         maven { url 'https://maven.google.com' }
-        jcenter()
+        mavenCentral()
         google()
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            allowInsecureProtocol true
+        }
     }
 }
 
