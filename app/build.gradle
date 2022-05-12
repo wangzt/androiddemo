@@ -1,8 +1,11 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-//apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-parcelize'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs'
+//    id 'androidx.navigation.safeargs.kotlin'
+}
 
 //import org.aspectj.bridge.IMessage
 //import org.aspectj.bridge.MessageHandler
@@ -77,6 +80,9 @@ dependencies {
     implementation depen.lifecycleRuntime
     implementation depen.lifecycleViewModel
     implementation depen.lifecycleRuntimeKtx
+    implementation depen.navigationFragment
+    implementation depen.navigationUI
+    implementation depen.swiperefreshlayout
     implementation 'com.tencent:mmkv:1.2.13'
     api 'com.eclipsesource.j2v8:j2v8:4.5.0@aar'
 

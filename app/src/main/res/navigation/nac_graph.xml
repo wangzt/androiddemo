@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nac_graph"
+    app:startDestination="@id/fragmentA">
+
+    <fragment
+        android:id="@+id/fragmentA"
+        android:name="com.tomsky.androiddemo.FragmentA"
+        android:label="fragment_a"
+        tools:layout="@layout/fragment_a" >
+        <action
+            android:id="@+id/action_fragmentA_to_fragmentB"
+            app:destination="@id/fragmentB" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentB"
+        android:name="com.tomsky.androiddemo.FragmentB"
+        android:label="fragment_b"
+        tools:layout="@layout/fragment_b" >
+        <action
+            android:id="@+id/action_fragmentB_to_fragmentC"
+            app:destination="@id/fragmentC" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentC"
+        android:name="com.tomsky.androiddemo.FragmentC"
+        android:label="fragment_c"
+        tools:layout="@layout/fragment_c" >
+        <action
+            android:id="@+id/action_fragmentC_to_fragmentA2"
+            app:destination="@id/fragmentA"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/fragmentA"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

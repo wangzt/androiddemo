@@ -12,7 +12,7 @@ import com.tomsky.androiddemo.util.UIUtils
  * Created by wangzhitao on 2020/11/23
  *
  **/
-class CustomOutLineView (context: Context?, attrs: AttributeSet?) :
+class CustomOutLineView (context: Context, attrs: AttributeSet?) :
         ConstraintLayout(context, attrs) {
 
     init {
