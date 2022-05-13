@@ -3,7 +3,7 @@ ext {
     buildToolsVersion = "31.0.0"
     minSdkVersion = 21
     targetSdkVersion = 30
-    kotlin_version = '1.6.0'
+    kotlin_version = '1.6.10'
     kotlin_coroutineversion = '1.3.9'
     kotlin_androidversion = '1.3.9'
     lottie_version = '3.4.1'
@@ -27,6 +27,7 @@ ext {
             appcompat:            "androidx.appcompat:appcompat:1.4.1",
 //            support:              'androidx.legacy:legacy-support-v4:1.0.0',
             ktx:                  'androidx.core:core-ktx:1.7.0',
+            activity:             'androidx.activity:activity-ktx:1.4.0',
             viewpager2:           'androidx.viewpager2:viewpager2:1.0.0',
             cardview:             'androidx.cardview:cardview:1.0.0',
             lifecycleViewModel:   "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
@@ -34,6 +35,13 @@ ext {
             lifecycleRuntime  :   "androidx.lifecycle:lifecycle-runtime:$lifecycle_version",
             navigationFragment:   "androidx.navigation:navigation-fragment-ktx:$navigation_version",
             navigationUI:         "androidx.navigation:navigation-ui-ktx:$navigation_version",
+            composeActivity:      "androidx.activity:activity-compose:1.4.0",
+            composeMaterial:      "androidx.compose.material:material:1.1.1",
+            composeAnimation:     "androidx.compose.animation:animation:1.1.1",
+            composeUITool:        "androidx.compose.ui:ui-tooling:1.1.1",
+            composeViewModel:     "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1",
+            composeMDCTheme:      "com.google.android.material:compose-theme-adapter:1.1.1",
+            composeAppCompatTheme:"com.google.accompanist:accompanist-appcompat-theme:0.16.0",
             design:               'com.google.android.material:material:1.0.0',
             fresco:               "com.facebook.fresco:fresco:$fresco_version",
             frescoGif:            "com.facebook.fresco:animated-gif:$fresco_version",
@@ -46,7 +54,8 @@ ext {
 
     unitTest = [
             junit:                "junit:junit:$junit_version",
-            mockito:              "org.mockito:mockito-core:$mock_version"
+            mockito:              "org.mockito:mockito-core:$mock_version",
+            composeJUnit:          "androidx.compose.ui:ui-test-junit4:1.1.1"
     ]
 
     androidTestDep = [

@@ -173,6 +173,9 @@
         <activity
             android:name=".activity.NavigationActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ComposeActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".UploadService"

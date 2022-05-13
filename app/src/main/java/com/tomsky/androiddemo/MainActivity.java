@@ -110,6 +110,7 @@ public class MainActivity extends Activity{
         data.hasSub = false;
         datas.add(data);
         datas.add(new ItemData("Kotlin grammar activity", "com.tomsky.androiddemo.activity.GrammarRecyclerActivity"));
+        datas.add(new ItemData("Compose activity", "com.tomsky.androiddemo.activity.ComposeActivity"));
         datas.add(new ItemData("Navigation activity", "com.tomsky.androiddemo.activity.NavigationActivity"));
         datas.add(new ItemData("RecycleView demo", "com.tomsky.androiddemo.activity.RecycleActivity"));
         datas.add(new ItemData("DrawingCache demo", "com.tomsky.androiddemo.activity.DrawingCacheActivity"));
