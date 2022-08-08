@@ -171,6 +171,9 @@
             android:name=".activity.GrammarRecyclerActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.FragmentRecyclerActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.NavigationActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -109,6 +109,7 @@ public class MainActivity extends Activity{
         ItemData data = new ItemData("Test regex", "test_regex");
         data.hasSub = false;
         datas.add(data);
+        datas.add(new ItemData("Fragment recycle activity", "com.tomsky.androiddemo.activity.FragmentRecyclerActivity"));
         datas.add(new ItemData("Kotlin grammar activity", "com.tomsky.androiddemo.activity.GrammarRecyclerActivity"));
         datas.add(new ItemData("Compose activity", "com.tomsky.androiddemo.activity.ComposeActivity"));
         datas.add(new ItemData("Navigation activity", "com.tomsky.androiddemo.activity.NavigationActivity"));
