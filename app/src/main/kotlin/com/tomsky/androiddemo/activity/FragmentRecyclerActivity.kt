@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.tomsky.androiddemo.NoDoubleClickListener
 import com.tomsky.androiddemo.R
+import com.tomsky.androiddemo.fragment.BezierAnimFragment
 import com.tomsky.androiddemo.fragment.ShareModelFragment
 import com.tomsky.androiddemo.util.UIUtils
 import com.tomsky.androiddemo.view.ItemDivider
@@ -62,6 +63,7 @@ class FragmentRecyclerActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@FragmentRecyclerActivity, LinearLayoutManager.VERTICAL, false)
             var dataList: MutableList<FragItem> = mutableListOf()
             dataList.add(FragItem("共享ViewModel") { showFragment(ShareModelFragment(), "frag_share_viewmodel") })
+            dataList.add(FragItem("贝塞尔漂浮动画") { showFragment(BezierAnimFragment(), "frag_bezier_anim") })
 
 
             val dragAdapter = FragAdapter()
