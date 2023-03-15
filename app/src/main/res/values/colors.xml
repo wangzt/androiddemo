@@ -23,4 +23,8 @@
     <!-- 下拉刷新颜色 end -->
 
     <color name="default_rating_color">#FFFFBB33</color>
+
+    <color name="icActive">#FFFFFFFF</color>
+    <color name="icFocused">#DDFFFFFF</color>
+    <color name="icPressed">#AAFFFFFF</color>
 </resources>

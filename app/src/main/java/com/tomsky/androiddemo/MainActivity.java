@@ -109,17 +109,16 @@ public class MainActivity extends Activity{
         ItemData data = new ItemData("Test regex", "test_regex");
         data.hasSub = false;
         datas.add(data);
+        datas.add(new ItemData("Camera recycle activity", "com.tomsky.androiddemo.activity.CameraRecyclerActivity"));
         datas.add(new ItemData("Fragment recycle activity", "com.tomsky.androiddemo.activity.FragmentRecyclerActivity"));
         datas.add(new ItemData("Kotlin grammar activity", "com.tomsky.androiddemo.activity.GrammarRecyclerActivity"));
         datas.add(new ItemData("Compose activity", "com.tomsky.androiddemo.activity.ComposeActivity"));
         datas.add(new ItemData("Navigation activity", "com.tomsky.androiddemo.activity.NavigationActivity"));
         datas.add(new ItemData("RecycleView demo", "com.tomsky.androiddemo.activity.RecycleActivity"));
         datas.add(new ItemData("DrawingCache demo", "com.tomsky.androiddemo.activity.DrawingCacheActivity"));
-        datas.add(new ItemData("Camera2 demo", "com.tomsky.androiddemo.activity.Camera2Activity"));
         datas.add(new ItemData("UI demo", "com.tomsky.androiddemo.activity.AndroidUIActivity"));
         datas.add(new ItemData("Android View demo", "com.tomsky.androiddemo.activity.AndroidViewActivity"));
         datas.add(new ItemData("Rotation demo", "com.tomsky.androiddemo.activity.RotationActivity"));
-        datas.add(new ItemData("Camera demo", "com.tomsky.androiddemo.activity.CameraActivity"));
         datas.add(new ItemData("Bili danmuku demo", "com.tomsky.androiddemo.activity.BiliDanmukuActivity"));
         datas.add(new ItemData("Live danmuku demo", "com.tomsky.androiddemo.activity.LiveDanmuActivity"));
         datas.add(new ItemData("Lucky pan demo", "com.tomsky.androiddemo.activity.LuckyPanActivity"));

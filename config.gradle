@@ -16,6 +16,7 @@ ext {
     test_runner_version = '1.0.2'
     fresco_version = '2.0.0'
     okhttp_version = '3.12.8'
+    camerax_version = '1.1.0'
 
     depen = [
             lottie:               "com.airbnb.android:lottie:$lottie_version",
@@ -30,6 +31,11 @@ ext {
             activity:             'androidx.activity:activity-ktx:1.4.0',
             viewpager2:           'androidx.viewpager2:viewpager2:1.0.0',
             cardview:             'androidx.cardview:cardview:1.0.0',
+            concurrentFutures:    'androidx.concurrent:concurrent-futures-ktx:1.1.0',
+            cameraX:              "androidx.camera:camera-core:$camerax_version",
+            camera2:              "androidx.camera:camera-camera2:$camerax_version",
+            cameraLifecycle:      "androidx.camera:camera-lifecycle:$camerax_version",
+            cameraView:           "androidx.camera:camera-view:$camerax_version",
             lifecycleViewModel:   "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
             lifecycleRuntimeKtx:  "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version",
             lifecycleRuntime  :   "androidx.lifecycle:lifecycle-runtime:$lifecycle_version",

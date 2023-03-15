@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.ControllerListener;
@@ -32,6 +33,20 @@ public class UIUtils {
         return (int) ((dp * displayMetrics.density) + 0.5);
     }
 
+    /*获取当前屏幕的宽高中较小的那个*/
+    public static int getScreenMinLength() {
+        int width = BaseApplication.getContext().getResources().getDisplayMetrics().widthPixels;
+        int height = BaseApplication.getContext().getResources().getDisplayMetrics().heightPixels;
+        return Math.min(width, height);
+    }
+
+    /*获取当前屏幕的宽高中较大的那个*/
+    public static int getScreenMaxLength() {
+        int width = BaseApplication.getContext().getResources().getDisplayMetrics().widthPixels;
+        int height = BaseApplication.getContext().getResources().getDisplayMetrics().heightPixels;
+        return Math.max(width, height);
+    }
+
     public static int getStatusBarHeight() {
         int height = 0;
         int resourceId = BaseApplication.getContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -40,6 +55,10 @@ public class UIUtils {
         }
 
         return height;
+    }
+
+    public static void showToast(Context context, String toast) {
+        Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
     }
 
     public static void displayImage(SimpleDraweeView view, String uri) {
